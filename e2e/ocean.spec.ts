@@ -59,3 +59,31 @@ test("a large confirmed total keeps the scene bounded", async ({ page }) => {
   await expect(page.getByText("1,000,000 confirmed little lights")).toBeVisible();
   await expect(page.locator(".ocean-stars circle")).toHaveCount(42);
 });
+
+test("rate limits pause retries and remain effective after reload", async ({ page }) => {
+  let requests = 0;
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5 } }));
+  await page.route("**/api/ocean/contribute", route => { requests++; return route.fulfill({ status: 429, headers: { "Retry-After": "60" }, json: { status: "error" } }); });
+  await page.goto("/ocean");
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByRole("button", { name: "Please wait…" })).toBeDisabled();
+  await page.reload();
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByRole("button", { name: "Please wait…" })).toBeDisabled();
+  expect(requests).toBe(1);
+});
+
+test("a definite idempotency conflict permits a fresh retry key", async ({ page }) => {
+  const keys: string[] = [];
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5 } }));
+  await page.route("**/api/ocean/contribute", route => {
+    keys.push(route.request().postDataJSON().idempotencyKey);
+    return keys.length === 1 ? route.fulfill({ status: 409, json: { status: "error", code: "CONFLICT" } }) : route.fulfill({ json: { status: "already_contributed", totalLights: 5 } });
+  });
+  await page.goto("/ocean");
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByRole("status")).toContainText("wasn't confirmed");
+  await page.getByRole("button", { name: "Try again" }).click();
+  await expect(page.getByRole("status")).toContainText("already");
+  expect(keys[0]).not.toBe(keys[1]);
+});

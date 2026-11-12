@@ -1,14 +1,15 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { oceanFetch, submitLight } from "./live";
+import { OceanRateLimit, oceanFetch, submitLight } from "./live";
 
 const subscribe = () => () => {};
-type Status = "ready" | "pending" | "accepted" | "already_contributed" | "failed" | "offline";
+type Status = "ready" | "pending" | "accepted" | "already_contributed" | "failed" | "offline" | "rate_limited";
 const lights = Array.from({ length: 42 }, (_, i) => ({ cx: 5 + ((i * 37) % 90), cy: 8 + ((i * 23) % 62), r: i % 7 === 0 ? 1 : 0.5 }));
 
 export default function OceanExperience() {
   const hydrated = useSyncExternalStore(subscribe, () => true, () => false);
   const [status, setStatus] = useState<Status>("ready");
+  const [retryAt, setRetryAt] = useState(0);
   const [count, setCount] = useState<number | null>(null);
   const [image, setImage] = useState<string | null>(null);
   const [exportError, setExportError] = useState(false);
@@ -31,6 +32,11 @@ export default function OceanExperience() {
     return () => { window.clearTimeout(initial); window.clearInterval(timer); };
   }, [refresh]);
   useEffect(() => () => { if (image) URL.revokeObjectURL(image); }, [image]);
+  useEffect(() => {
+    if (status !== "rate_limited") return;
+    const timer = window.setTimeout(() => setStatus("failed"), Math.min(Math.max(0, retryAt - Date.now()), 2147483647));
+    return () => window.clearTimeout(timer);
+  }, [status, retryAt]);
 
   async function contribute() {
     if (submitting.current) return;
@@ -42,8 +48,9 @@ export default function OceanExperience() {
       confirmedAt.current = Date.now();
       setCount(result.totalLights);
       setStatus(result.status);
-    } catch {
-      setStatus(navigator.onLine ? "failed" : "offline");
+    } catch (error) {
+      if (error instanceof OceanRateLimit) { setRetryAt(error.retryAt); setStatus("rate_limited"); }
+      else setStatus(navigator.onLine ? "failed" : "offline");
     } finally {
       submitting.current = false;
     }
@@ -74,6 +81,7 @@ export default function OceanExperience() {
     already_contributed: "Your light is already part of the ocean.",
     failed: "Your light wasn't confirmed. Please try again.",
     offline: "You're offline. Reconnect and try again.",
+    rate_limited: "The sky needs a tiny pause. Please try again shortly.",
   };
   return <>
     <div className="ocean-scene ocean-preview" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none" className="ocean-stars">
@@ -85,7 +93,7 @@ export default function OceanExperience() {
     <div className="ocean-action">
       <p>{count === null ? "The shared light count is unavailable right now." : `${count.toLocaleString()} confirmed little lights`}</p>
       <p className="ocean-status" role="status" aria-live="polite">{message[status]}</p>
-      {!complete && <button className="button" type="button" disabled={!hydrated || status === "pending"} onClick={contribute}>{status === "pending" ? "Sending…" : status === "failed" || status === "offline" ? "Try again" : "Add my little light"}</button>}
+      {!complete && <button className="button" type="button" disabled={!hydrated || status === "pending" || status === "rate_limited"} onClick={contribute}>{status === "pending" ? "Sending…" : status === "rate_limited" ? "Please wait…" : status === "failed" || status === "offline" ? "Try again" : "Add my little light"}</button>}
       <p>Lights represent contributions, not verified unique people. One light per browser.</p>
       {complete && <div className="souvenir"><h2>A little keepsake</h2><p>Keep a memory of this little ocean.</p><button className="button" type="button" onClick={makeSouvenir}>Create keepsake image</button>{image && <p><a href={image} download="boraverse-ocean.png">Download keepsake</a> · <a href={image} target="_blank" rel="noreferrer">Open image</a> to save it manually</p>}{exportError && <p role="alert">The image couldn’t be created on this device. Please try another browser.</p>}</div>}
     </div>
