@@ -48,3 +48,5 @@ next-env.d.ts
 /PROJECT.md
 /DESIGN-SYSTEM.md
 /TECH-ARCHITECTURE.md
+
+/.next-e2e/

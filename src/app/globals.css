@@ -65,3 +65,11 @@ h2 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.7rem); font-we
   .mobile-nav { display:none; }
   footer { padding-bottom:2rem; }
 }
+.ocean-demo-label { margin:1.5rem 0 .75rem; color:var(--star-gold); font-size:.8rem; font-weight:700; letter-spacing:.04em; }
+.ocean-preview { overflow:hidden; position:relative; background:linear-gradient(#17142b,#554178); }
+.ocean-stars { width:100%; height:100%; position:absolute; inset:0; fill:#f4d78a; }
+.ocean-action { padding:1rem 0 2rem; }.ocean-status { min-height:3.5rem; }.ocean-action button { cursor:pointer; border:0; min-height:44px; }.ocean-action button:disabled { cursor:wait; opacity:.7; }.ocean-action button:focus-visible { outline:3px solid var(--star-gold); outline-offset:3px; }
+.souvenir { margin-top:1.5rem; padding:1.5rem; border-radius:1.25rem; background:#393052; }.souvenir a { display:inline-block; padding:.5rem 0; }
+.new-light { animation: light-rise 1s ease-out both; transform-box:fill-box; }
+@keyframes light-rise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .new-light { animation:none; } }
