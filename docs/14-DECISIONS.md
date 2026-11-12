@@ -22,7 +22,7 @@
 |---|---|
 | P001 | Use Supabase PostgreSQL for Ocean-only shared state through Next.js server routes |
 | P002 | Vercel Hobby as initial deployment if project complies with noncommercial-use rules |
-| P003 | Supabase transaction pooler + server-only Postgres.js access, minimal SQL schema |
+| P003 | Supabase transaction pooler + server-only PostgreSQL access, minimal SQL schema; **proposed:** use node-postgres without pipelining because Supabase documents a Postgres.js transaction-pooler incompatibility |
 | P004 | No login/Auth/Realtime/Storage or public free-text wall for first launch |
 | P005 | Ocean 1 accepted contribution per browser token, not guaranteed unique-person count |
 | P006 | Site initially English, Thai-ready; no autoplay audio |

@@ -5,7 +5,7 @@
 - React Server Components for route shell, headings, initial data, navigational content; Client Components for Canvas, gacha spins, localStorage, animations, downloads.
 - Tailwind CSS plus CSS custom properties for design tokens; Motion optional for selective reveal animations.
 - Supabase **hosted PostgreSQL**, **no Supabase Auth/Storage/Realtime needed at launch**.
-- Postgres access from **Next.js server-only Route Handlers** using Postgres.js via Supabase **transaction pooler** and a `DATABASE_URL` secret (not a `NEXT_PUBLIC_` key). This avoids browser DB access and permits atomic SQL transactions.
+- Postgres access from **Next.js server-only Route Handlers** using node-postgres via Supabase **transaction pooler** and a `DATABASE_URL` secret (not a `NEXT_PUBLIC_` key). This avoids browser DB access and permits atomic SQL transactions.
 - Vercel Hobby candidate for truly personal, non-commercial fan project; confirm plan/traffic limits and permissions before deployment. No production account set up by this pack.
 - Keep serverless function location reasonable for Supabase database region to reduce round trips; avoid per-request image generation.
 
@@ -47,18 +47,7 @@ supabase/migrations/
 - Auth and visitor token are **not** required for reading the page.
 
 ## Data access decision
-Use `postgres` (Postgres.js) in server-only module with database connection from dashboard's transaction pooler endpoint. Recommended serverless settings as per Supabase docs: `max:1`, `prepare:false`, SSL enforced. Do not connect directly from browser. Database credentials live only in deployment secrets.
-
-```ts
-// DESIGN REFERENCE ONLY; not an implemented file
-import 'server-only';
-import postgres from 'postgres';
-export const sql = postgres(process.env.DATABASE_URL!, {
-  max: 1,
-  prepare: false,
-  ssl: 'require',
-});
-```
+Use node-postgres in a server-only module with the transaction pooler. Use a pool size of one, unnamed queries, verified TLS, and one checked-out client for each transaction. Pipelining stays disabled. The previous Postgres.js proposal is superseded because Supabase documents an incompatibility with shared transaction pooling.
 
 Supabase's database region and pooler endpoint come from real project dashboardâ€”never guess them. Use versioned SQL migrations and private schema with minimal grants. Avoid Drizzle/Prisma until there is a demonstrated reason; direct SQL is enough for one small table.
 
@@ -70,7 +59,7 @@ Supabase's database region and pooler endpoint come from real project dashboardâ
 - Optional future: `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` only if abuse mitigation is added.
 
 ## Libraries / dependencies
-Essential only: next, react, react-dom, TypeScript, eslint, tailwindcss, postgres, a validation library (e.g. zod) and a light icon system. Motion / Canvas rendering dependencies only if needed; native CSS/SVG may be enough. Use `next/font` or licensed web fonts with fallback.
+Essential only: next, react, react-dom, TypeScript, eslint, tailwindcss, node-postgres, a validation library (e.g. zod) and a light icon system. Motion / Canvas rendering dependencies only if needed; native CSS/SVG may be enough. Use `next/font` or licensed web fonts with fallback.
 
 ## Deployment alternatives
 - Vercel for straightforward Next.js hosting, subject to Hobby's non-commercial use rules.
