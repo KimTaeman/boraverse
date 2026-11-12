@@ -73,3 +73,5 @@ h2 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.7rem); font-we
 .new-light { animation: light-rise 1s ease-out both; transform-box:fill-box; }
 @keyframes light-rise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .new-light { animation:none; } }
+
+.no-js { display: none; }

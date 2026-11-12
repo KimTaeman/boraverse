@@ -6,7 +6,7 @@ export default function Ocean() {
     <p className="eyebrow">A LITTLE LIGHT, TOGETHER</p>
     <h1>Our Little Purple Ocean</h1>
     <p>One little light. One beautiful memory.</p>
-    <OceanExperience />
-    <noscript><p>Adding a light needs JavaScript. You can still explore the village.</p></noscript>
+    <div className="requires-js"><OceanExperience /></div>
+    <noscript><style>{".requires-js{display:none}.no-js{display:block}"}</style></noscript><p className="no-js">Adding a light needs JavaScript. You can still explore the village.</p>
   </section>;
 }
