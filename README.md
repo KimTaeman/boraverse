@@ -1,6 +1,6 @@
 # The Little Boraverse — Codex Project Pack
 
-**Status:** Phase 1 homepage implemented; Ocean and other rooms are placeholders. **Prepared:** 2026-11-12. **First target event:** BTS ARIRANG Bangkok, 2026-12-03 (additional dates Dec 5 and 6). **Audience:** ARMY recipients of ~2,000 handmade paper freebies.
+**Status:** Village, Ocean interface, Arcade, Magic Shop and on-device keepsakes are implemented; final content and artwork remain in review. **Prepared:** 2026-11-12. **First target event:** BTS ARIRANG Bangkok, 2026-12-03 (additional dates Dec 5 and 6). **Audience:** ARMY recipients of ~2,000 handmade paper freebies.
 
 ## The 30-second decision summary
 
@@ -42,6 +42,6 @@ See [`docs/16-SOURCES.md`](docs/16-SOURCES.md) for current platform documentatio
 
 ## Local development
 
-Run `npm ci`, then `npm run dev` and open http://localhost:3000. The routes are early placeholders, and the Ocean does not yet save contributions. No external services or environment variables are needed for this phase. The artwork and design tokens are proposed placeholders.
+Run `npm ci`, then `npm run dev` and open http://localhost:3000. The Ocean does not yet save contributions until the database migration, server role, and write switch are configured. No external services or environment variables are needed for this phase. The artwork and design tokens are proposed placeholders.
 
 Checks: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, and `npm run test:e2e`. Install the browser for the latter with `npx playwright install chromium`.

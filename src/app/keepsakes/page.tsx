@@ -1,2 +1,3 @@
-import { ComingSoon } from "@/components/shell";
-export default function Keepsakes() { return <ComingSoon title="My Keepsakes" description="A place for your little memories." />; }
+import Link from "next/link";
+import KeepsakeList from "@/components/keepsakes/list";
+export default function Keepsakes() { return <><h1>My Keepsakes</h1><KeepsakeList /><p><Link href="/">Back to the village</Link></p></>; }
