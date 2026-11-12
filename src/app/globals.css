@@ -1,0 +1,67 @@
+@import "tailwindcss";
+:root {
+  --midnight: #241833;
+  --indigo: #17142b;
+  --violet: #6e4ea5;
+  --lavender: #b99ae7;
+  --blossom: #f4c6dc;
+  --paper: #fff5e9;
+  --star-gold: #f4d78a;
+  --ink-light: #fff;
+  --ink-dark: #30213d;
+  --muted-light: #dec9ef;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--midnight); color: var(--ink-light); font-family: Arial, sans-serif; line-height: 1.55; }
+a { color: inherit; }
+a:focus-visible { outline: 3px solid var(--star-gold); outline-offset: 3px; }
+.skip { position: absolute; top: -5rem; left: 1rem; z-index: 2; padding: .75rem; background: var(--paper); color: var(--ink-dark); }
+.skip:focus { top: 1rem; }
+header, main, footer { max-width: 75rem; margin: auto; padding: 1.25rem; }
+header { border-bottom: 1px solid var(--violet); font-weight: 700; }
+main { min-height: 60vh; }
+h1 { font-size: clamp(2rem, 7vw, 3rem); line-height: 1.15; margin: 1rem 0; }
+p { max-width: 38rem; margin: 1rem 0; }
+.button { display: inline-block; padding: .8rem 1.2rem; border-radius: 999px; background: var(--lavender); color: var(--ink-dark); font-weight: 700; text-decoration: none; }
+nav { position: fixed; z-index: 1; bottom: 0; width: 100%; background: var(--indigo); padding: .4rem .25rem calc(.4rem + env(safe-area-inset-bottom)); }
+nav ul { display: flex; justify-content: space-around; gap: .1rem; max-width: 55rem; margin: auto; padding: 0; list-style: none; }
+nav a { display: flex; align-items: center; justify-content: center; min-height: 44px; padding: .25rem; font-size: .8rem; }
+footer { color: var(--muted-light); padding-bottom: calc(6rem + env(safe-area-inset-bottom)); font-size: .875rem; }
+@media (min-width: 700px) { nav a { font-size: 1rem; padding-inline: 1rem; } }
+
+/* Proposed village styling; illustration assets remain placeholders. */
+.village-hero { min-height: 32rem; position: relative; overflow: hidden; isolation: isolate; border-radius: 1.5rem; background: linear-gradient(155deg, #30224a, #543b71 57%, #342642); }
+.hero-art { position: absolute; inset: 0; z-index: -2; background-size: cover; background-position: center; opacity: .38; }
+.hero-content { position: relative; z-index: 1; padding: 2.5rem 1.5rem 13rem; max-width: 36rem; }
+.eyebrow { color: var(--star-gold); font-size: .67rem; letter-spacing: .18em; font-weight: 700; }
+.village-hero h1 { font-family: Georgia, serif; font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 400; letter-spacing: -.045em; }
+.hero-content > p:not(.eyebrow):not(.hero-note) { color: #f1e7f8; max-width: 24rem; }
+.hero-button { margin-top: .5rem; background: var(--paper); }
+.hero-button span, .ocean-invitation .button span { margin-left: 1.5rem; }
+.hero-note { font-size: .75rem; color: #f1e7f8; }
+.hero-star { position: absolute; color: var(--star-gold); font-size: 2rem; }
+.star-one { right: 12%; top: 12%; }.star-two { right: 35%; top: 20%; font-size: 1.2rem; }
+.hero-hills { position: absolute; z-index: -1; bottom: -4rem; left: -10%; width: 120%; height: 15rem; border-radius: 50% 50% 0 0; background: #3e3151; display: flex; align-items: flex-start; justify-content: center; gap: 2rem; }
+.hill-door, .little-house { display: block; position: relative; margin-top: -4rem; width: 7rem; height: 10rem; border-radius: 5rem 5rem .5rem .5rem; background: #82628c; border: .35rem solid #b394a9; box-shadow: 0 0 3rem #e9c2a344; }
+.hill-door i { display: block; width: 2.6rem; height: 5rem; border-radius: 3rem 3rem 0 0; background: #392747; margin: 3rem auto 0; }
+.little-house { width: 4rem; height: 6rem; margin-top: -2rem; background: #675579; border-color: #826e8c; }.little-house i { display:block; width: 1.2rem; height: 1.4rem; margin: 2rem auto; background: #f4d78a; border-radius: 1rem 1rem 0 0; }.house-right { margin-top: -1rem; }
+.hero-bottom { position: absolute; bottom: 1rem; right: 2rem; color: var(--star-gold); }
+.village-section { padding: 4.5rem 0 3rem; }.section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: .5rem 2rem; }.section-heading > p { color: var(--muted-light); font-size: .9rem; }
+h2 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 400; line-height: 1.15; }
+.room-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-top: 1.5rem; }
+.room-card { display: flex; min-width: 0; flex-direction: column; padding: 1rem; border-radius: 1.2rem; color: var(--ink-dark); text-decoration: none; background: #d7c4eb; transition: transform .2s ease; }
+.room-card:hover { transform: translateY(-4px); }.room-arcade { background: #f0cada; }.room-magic { background: #f0decb; }.room-garden { background: #d5d9c7; }
+.room-number { font-size: .58rem; font-weight: 700; letter-spacing: .12em; }.room-art { min-height: 7rem; display: grid; place-items: center; position: relative; }.room-symbol { display: grid; place-items: center; width: 5rem; height: 5rem; border-radius: 50%; background: #ffffff75; font-size: 2.4rem; color: #5b3d70; }.room-orbit { position: absolute; right: 18%; top: 15%; font-size: 1.5rem; }
+.room-name { display: flex; justify-content: space-between; gap: .5rem; font-family: Georgia, serif; font-size: clamp(1rem, 3vw, 1.35rem); font-weight: 700; }.room-description { font-size: .75rem; margin-top: .35rem; }
+.ocean-invitation { overflow: hidden; display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 2rem; border-radius: 1.5rem; background: #393052; }.ocean-invitation p:not(.eyebrow) { color: #eee4f5; }.ocean-invitation .button { margin-top: .5rem; }.invitation-art { display: grid; place-items: center; min-height: 9rem; border-radius: 50% 50% 1rem 1rem; background: radial-gradient(ellipse at bottom, #8865ab, #26213e 70%); color: var(--star-gold); font-size: 2rem; }.invitation-art span { font-size: 3rem; }
+.discovery { display:flex; flex-wrap:wrap; align-items:center; gap:1rem; padding: 2.5rem 0; }.discovery > span { font-size: 2rem; color: var(--star-gold); }.discovery p { flex: 1; min-width: 10rem; margin:0; color:var(--muted-light); font-size:.8rem; }.discovery strong { display:block; color:white; font-family:Georgia,serif; font-size:1.15rem; }.discovery a { min-height:44px; display:flex; align-items:center; gap:.5rem; }
+.ocean-page { max-width: 60rem; margin: auto; }.back-link { display:inline-flex; align-items:center; min-height:44px; margin-bottom:1rem; }.ocean-scene { display:grid; place-items:center; min-height: clamp(18rem, 50vw, 28rem); border-radius:1.5rem; background-color:var(--indigo); background-size:cover; background-position:center; color:var(--star-gold); font-size:2rem; }.ocean-notice { padding:2rem 0; }
+@media (min-width: 700px) { .hero-content { padding: 4.5rem 3.5rem 5rem; }.hero-hills { left: 50%; width: 65%; bottom:-3rem; }.room-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }.room-art { min-height: 10rem; }.ocean-invitation { grid-template-columns: 1fr 1fr; padding: 3rem; }.invitation-art { min-height: 16rem; } }
+@media (prefers-reduced-motion: reduce) { .room-card { transition: none; }.room-card:hover { transform: none; } }
+.site-header { display:flex; align-items:center; justify-content:space-between; gap:1rem; }.desktop-nav { display:none; }
+@media (min-width: 700px) {
+  .desktop-nav { display:block; position:static; width:auto; padding:0; background:transparent; }
+  .desktop-nav ul { gap:.5rem; }
+  .mobile-nav { display:none; }
+  footer { padding-bottom:2rem; }
+}

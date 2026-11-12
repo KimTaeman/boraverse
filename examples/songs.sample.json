@@ -1,0 +1,35 @@
+{
+  "notes": "Example data model; verify exact official listen link and source before approving.",
+  "songs": [
+    {
+      "id": "spring-day",
+      "title": "Spring Day",
+      "artist": "BTS",
+      "releaseYear": 2017,
+      "albumOrEra": "You Never Walk Alone",
+      "moods": [
+        "comfort",
+        "nostalgic"
+      ],
+      "originalDescription": "A reflective song about longing and the hope of reunion.",
+      "officialListenUrl": null,
+      "sourceUrl": null,
+      "approved": false
+    },
+    {
+      "id": "magic-shop",
+      "title": "Magic Shop",
+      "artist": "BTS",
+      "releaseYear": 2018,
+      "albumOrEra": "Love Yourself: Tear",
+      "moods": [
+        "comfort",
+        "dreamy"
+      ],
+      "originalDescription": "A gentle reminder to find comfort and belonging.",
+      "officialListenUrl": null,
+      "sourceUrl": null,
+      "approved": false
+    }
+  ]
+}

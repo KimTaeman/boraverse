@@ -1,0 +1,62 @@
+{
+  "notes": "EXAMPLE ONLY. Illustrations and titles are placeholders, not approved print-ready variants.",
+  "variants": [
+    {
+      "family": "pokemon",
+      "variant": "01",
+      "title": "Moonchild (placeholder)",
+      "target": "/arcade/gacha",
+      "approved": false,
+      "artAsset": "home.sky"
+    },
+    {
+      "family": "tarot",
+      "variant": "01",
+      "title": "The Little Star (placeholder)",
+      "target": "/magic-shop/fortune",
+      "approved": false
+    },
+    {
+      "family": "license",
+      "variant": "01",
+      "title": "ARMY License (placeholder)",
+      "target": "/arcade",
+      "approved": false
+    },
+    {
+      "family": "meme",
+      "variant": "01",
+      "title": "Missing Jams (draft)",
+      "target": "/arcade",
+      "approved": false
+    },
+    {
+      "family": "quote",
+      "variant": "01",
+      "title": "A little letter (draft)",
+      "target": "/magic-shop/letters",
+      "approved": false
+    },
+    {
+      "family": "invitation",
+      "variant": "01",
+      "title": "Magic Shop Invitation (draft)",
+      "target": "/",
+      "approved": false
+    },
+    {
+      "family": "banknote",
+      "variant": "01",
+      "title": "Borabucks (draft)",
+      "target": "/arcade",
+      "approved": false
+    },
+    {
+      "family": "receipt",
+      "variant": "01",
+      "title": "Emotional Receipt (draft)",
+      "target": "/ocean",
+      "approved": false
+    }
+  ]
+}
