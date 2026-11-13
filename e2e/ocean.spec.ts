@@ -87,3 +87,25 @@ test("a definite idempotency conflict permits a fresh retry key", async ({ page 
   await expect(page.getByRole("status")).toContainText("already");
   expect(keys[0]).not.toBe(keys[1]);
 });
+
+test("unavailable Ocean keeps the count and pending request for retry", async ({ page }) => {
+  const keys: string[] = [];
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5 } }));
+  await page.route("**/api/ocean/contribute", route => {
+    keys.push(route.request().postDataJSON().idempotencyKey);
+    return route.fulfill({ status: 503, json: { status: "error" } });
+  });
+  await page.goto("/ocean");
+  await expect(page.getByText("5 confirmed little lights")).toBeVisible();
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByRole("status")).toContainText("taking a little rest");
+  await expect(page.getByText("5 confirmed little lights")).toBeVisible();
+  await expect(page.locator(".new-light")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Create keepsake image" })).toHaveCount(0);
+  await page.getByRole("button", { name: "Try again" }).click();
+  await expect(page.getByRole("status")).toContainText("taking a little rest");
+  expect(keys).toHaveLength(2);
+  expect(keys[1]).toBe(keys[0]);
+  await page.getByRole("link", { name: "← Back to the village" }).click();
+  await expect(page.getByRole("heading", { name: "A little magic found you." })).toBeVisible();
+});

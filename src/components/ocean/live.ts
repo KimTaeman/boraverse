@@ -4,6 +4,8 @@ const retryKey = "boraverse-ocean-retry-after";
 
 export class OceanRateLimit extends Error { constructor(public retryAt: number) { super("rate limited"); } }
 
+export class OceanUnavailable extends Error {}
+
 export type OceanReply = { status: "accepted" | "already_contributed"; totalLights: number };
 
 export async function oceanFetch(input: RequestInfo | URL, init: RequestInit = {}) {
@@ -38,6 +40,7 @@ export async function submitLight(): Promise<OceanReply> {
     localStorage.setItem(retryKey, String(retryAt));
     throw new OceanRateLimit(retryAt);
   }
+  if (response.status === 503) throw new OceanUnavailable("unavailable");
   if (response.status === 409) localStorage.removeItem(pendingKey);
   if (!response.ok) throw new Error("unavailable");
   const result = await response.json();

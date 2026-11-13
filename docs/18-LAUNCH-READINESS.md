@@ -44,3 +44,7 @@ Lighthouse 13.6.0 audited the local production build at `/` and `/ocean` using i
 | Speed index | 2.7 s | 0.8 s |
 
 Reproduce after `npm run build` and starting the production server: set `CHROME_PATH` to the installed Chromium executable and run `npx --yes lighthouse@13.6.0 <local-page-url> --chrome-flags="--headless" --only-categories=performance,accessibility`. This is a single local lab sample per page, not field Core Web Vitals or a full accessibility certification. Recheck after deployment and final artwork; test screen readers and actual devices manually. Framework JavaScript and render-blocking CSS diagnostics remain optimization opportunities, with no launch-blocking issue identified by this sample.
+
+## Ocean unavailable fallback
+
+A contribution receiving HTTP 503 now displays an explicit resting-ocean message and offers a retry. The confirmed count stays unchanged, no accepted light or keepsake is shown, and the unresolved idempotency key is preserved. All seven Ocean browser tests passed in Chromium; the targeted unavailable-state test also passed in WebKit. These responses were mocked and do not verify production host recovery.
