@@ -9,3 +9,5 @@ For rollback, disable writes first. Back up the contribution table if its data m
 The draft uses node-postgres with pipelining disabled and one checked-out client per transaction. Configure `DATABASE_CA_CERT_PATH` to point to the trusted root certificate downloaded from Supabase when the system trust store does not recognize the database certificate. Certificate and hostname verification must remain enabled.
 
 The rollback-only database setup tests require the administrator credentials, not the restricted app role. Use a separate development database or the ignored administrator backup and do not run destructive tests against real contributions.
+
+The restricted login can be checked without leaving data by running `node --env-file=.env.local tests/ocean-live-rollback.integration.mjs` while `OCEAN_WRITE_ENABLED=false`. This exercises the database operations inside a transaction and verifies rollback; it does not test a committed contribution or the live HTTP write endpoint.
