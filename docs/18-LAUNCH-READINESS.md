@@ -19,7 +19,7 @@ Status reviewed 2026-11-13. This is a pre-launch checklist, not an approval to d
 
 ## Local evidence
 
-The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The iPhone-sized WebKit suite passed all 20 tests using `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. A full performance audit and physical-device checks remain outstanding.
+The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The iPhone-sized WebKit suite passed all 20 tests using `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. Performance auditing on the deployed site and physical-device checks remain outstanding.
 
 ## Local performance sample
 
@@ -30,3 +30,17 @@ The two placeholder illustrations total 2,160 bytes uncompressed, below the prop
 ## Keyboard and reduced-motion evidence
 
 The three targeted tests in `e2e/accessibility.spec.ts` passed in Chromium and iPhone-sized WebKit. At 390px and 1024px, keyboard-only navigation reveals the skip link, bypasses the header, shows a focus outline on the primary Ocean link and opens the Ocean with Enter. With reduced motion enabled, village hover movement and the accepted Ocean light animation are disabled while confirmation and keepsake actions remain available. Ocean responses are mocked; these checks do not replace screen-reader or physical-device testing.
+
+## Production Lighthouse sample
+
+Lighthouse 13.6.0 audited the local production build at `/` and `/ocean` using its default mobile simulation and the installed Playwright Chromium. Both pages scored **99 performance / 100 automated accessibility**, with no run warnings or failing automated accessibility checks. Ocean was measured in its initial state without submitting a contribution.
+
+| Metric | Home | Ocean |
+|---|---|---|
+| First contentful paint | 0.8 s | 0.8 s |
+| Largest contentful paint | 0.8 s | 0.8 s |
+| Total blocking time | 70 ms | 90 ms |
+| Cumulative layout shift | 0 | 0 |
+| Speed index | 2.7 s | 0.8 s |
+
+Reproduce after `npm run build` and starting the production server: set `CHROME_PATH` to the installed Chromium executable and run `npx --yes lighthouse@13.6.0 <local-page-url> --chrome-flags="--headless" --only-categories=performance,accessibility`. This is a single local lab sample per page, not field Core Web Vitals or a full accessibility certification. Recheck after deployment and final artwork; test screen readers and actual devices manually. Framework JavaScript and render-blocking CSS diagnostics remain optimization opportunities, with no launch-blocking issue identified by this sample.
