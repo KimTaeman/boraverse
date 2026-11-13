@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ComingSoon } from "@/components/shell";
 import { approvedFreebie } from "@/content/freebies";
 
+export const metadata = { title: "A little surprise" };
+
 export default async function Card({ params }: { params: Promise<{ family: string; variant: string }> }) {
   const { family, variant } = await params;
   const card = approvedFreebie(family, variant);

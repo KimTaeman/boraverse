@@ -33,3 +33,18 @@ test("navigation destinations and missing pages have a way home", async ({ page 
     await expect(page.getByRole("link", { name: "Back to the village" })).toBeVisible();
   }
 });
+
+test("page titles describe each destination", async ({ page }) => {
+  for (const [path, title] of [
+    ["/", "The Little Boraverse"], ["/ocean", "Our Little Purple Ocean"], ["/arcade", "Bangtan Arcade"],
+    ["/arcade/gacha", "Little Surprise Gacha"], ["/arcade/music", "Let a song find you"], ["/magic-shop", "Magic Shop"],
+    ["/keepsakes", "My Keepsakes"], ["/garden", "Memory Garden"], ["/about", "About"], ["/privacy", "Privacy"],
+    ["/c/example/unknown", "A little surprise"],
+  ]) {
+    await page.goto(path);
+    await expect(page).toHaveTitle(path === "/" ? title : `${title} | The Little Boraverse`);
+  }
+  await page.goto("/");
+  await page.getByRole("link", { name: "Light up our ocean" }).click();
+  await expect(page).toHaveTitle("Our Little Purple Ocean | The Little Boraverse");
+});

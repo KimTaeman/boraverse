@@ -1,5 +1,7 @@
 import Link from "next/link";
 import OceanExperience from "@/components/ocean/experience";
+export const metadata = { title: "Our Little Purple Ocean" };
+
 export default function Ocean() {
   return <section className="ocean-page">
     <Link className="back-link" href="/">← Back to the village</Link>
