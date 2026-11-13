@@ -26,3 +26,7 @@ The production dependency audit, lint, TypeScript, unit tests, production build 
 On 2026-11-13, a production build was measured in headless Chromium with an iPhone 13 viewport, an empty cache, 4× CPU slowdown, 150 ms latency and 1.6 Mbps download throughput. The Ocean API response was mocked. First contentful paint was 0.83 s on home, 0.52 s on Ocean, 0.53 s on gacha and 0.50 s on Magic Shop; load events were 1.46–1.74 s. Browser-reported document and resource transfers totaled approximately 164–172 kB per page during the sample. These local measurements are indicative, not a Lighthouse score or production/mobile-device result.
 
 The two placeholder illustrations total 2,160 bytes uncompressed, below the proposed 400 kB compressed critical-art target even before compression. Repeat performance and accessibility measurements after final art and deployment, including actual phones and cellular networks.
+
+## Keyboard and reduced-motion evidence
+
+The three targeted tests in `e2e/accessibility.spec.ts` passed in Chromium and iPhone-sized WebKit. At 390px and 1024px, keyboard-only navigation reveals the skip link, bypasses the header, shows a focus outline on the primary Ocean link and opens the Ocean with Enter. With reduced motion enabled, village hover movement and the accepted Ocean light animation are disabled while confirmation and keepsake actions remain available. Ocean responses are mocked; these checks do not replace screen-reader or physical-device testing.
