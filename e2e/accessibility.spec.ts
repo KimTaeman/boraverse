@@ -20,7 +20,7 @@ for (const width of [390, 1024]) {
 
 test("reduced motion keeps the village and accepted Ocean light static", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5 } }));
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5, writesEnabled: true } }));
   await page.route("**/api/ocean/contribute", route => route.fulfill({ status: 201, json: { status: "accepted", totalLights: 6 } }));
   await page.goto("/");
   const portal = page.locator(".room-card").first();

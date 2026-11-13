@@ -9,6 +9,7 @@ const lights = Array.from({ length: 42 }, (_, i) => ({ cx: 5 + ((i * 37) % 90), 
 export default function OceanExperience() {
   const hydrated = useSyncExternalStore(subscribe, () => true, () => false);
   const [status, setStatus] = useState<Status>("ready");
+  const [writesEnabled, setWritesEnabled] = useState<boolean | null>(null);
   const [retryAt, setRetryAt] = useState(0);
   const [count, setCount] = useState<number | null>(null);
   const [image, setImage] = useState<string | null>(null);
@@ -20,11 +21,12 @@ export default function OceanExperience() {
     const started = Date.now();
     try {
       const response = await oceanFetch("/api/ocean", { cache: "no-store" });
-      if (!response.ok) return;
+      if (!response.ok) { setWritesEnabled(false); return; }
       const result = await response.json();
+      setWritesEnabled(result.writesEnabled === true);
       if (started < confirmedAt.current + 30000 && confirmedAt.current !== 0) return;
       if (Number.isSafeInteger(result.totalLights) && result.totalLights >= 0) setCount(result.totalLights);
-    } catch { /* Keep the last confirmed count when the ocean is unavailable. */ }
+    } catch { setWritesEnabled(false); }
   }, []);
   useEffect(() => {
     const initial = window.setTimeout(() => void refresh(), 0);
@@ -39,7 +41,7 @@ export default function OceanExperience() {
   }, [status, retryAt]);
 
   async function contribute() {
-    if (submitting.current) return;
+    if (submitting.current || writesEnabled !== true) return;
     if (!navigator.onLine) { setStatus("offline"); return; }
     submitting.current = true;
     setStatus("pending");
@@ -94,8 +96,8 @@ export default function OceanExperience() {
     </svg></div>
     <div className="ocean-action">
       <p>{count === null ? "The shared light count is unavailable right now." : `${count.toLocaleString()} confirmed little lights`}</p>
-      <p className="ocean-status" role="status" aria-live="polite">{message[status]}</p>
-      {!complete && <button className="button" type="button" disabled={!hydrated || status === "pending" || status === "rate_limited"} onClick={contribute}>{status === "pending" ? "Sending…" : status === "rate_limited" ? "Please wait…" : status === "failed" || status === "offline" || status === "unavailable" ? "Try again" : "Add my little light"}</button>}
+      <p className="ocean-status" role="status" aria-live="polite">{!complete && status === "ready" && writesEnabled !== true ? writesEnabled === null ? "Checking whether the ocean is ready for little lights…" : "The ocean is taking a little rest. You can still enjoy the sky and explore the village." : message[status]}</p>
+      {!complete && writesEnabled !== false && <button className="button" type="button" disabled={!hydrated || writesEnabled !== true || status === "pending" || status === "rate_limited"} onClick={contribute}>{status === "pending" ? "Sending…" : status === "rate_limited" ? "Please wait…" : status === "failed" || status === "offline" || status === "unavailable" ? "Try again" : "Add my little light"}</button>}
       <p>Lights represent contributions, not verified unique people. One light per browser.</p>
       {complete && <div className="souvenir"><h2>A little keepsake</h2><p>Keep a memory of this little ocean.</p><button className="button" type="button" onClick={makeSouvenir}>Create keepsake image</button>{image && <p><a href={image} download="boraverse-ocean.png">Download keepsake</a> · <a href={image} target="_blank" rel="noreferrer">Open image</a> to save it manually</p>}{exportError && <p role="alert">The image couldn’t be created on this device. Please try another browser.</p>}</div>}
     </div>

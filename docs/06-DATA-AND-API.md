@@ -48,11 +48,14 @@ Response example:
 ```json
 {
   "status":"ok",
+  "writesEnabled":true,
   "totalLights":1240,
   "byDay":{"2026-12-03":600,"2026-12-05":320,"2026-12-06":120,"unspecified":200},
   "updatedAt":"2026-12-03T10:15:00Z"
 }
 ```
+`writesEnabled` is a public availability hint from the server kill switch; POST independently enforces it. Cached availability may lag by up to the aggregate cache window. Failed aggregate reads put the UI into view-only mode until a later refresh succeeds.
+
 All numbers above are **illustrative, not real data**. Client may receive cached aggregate on initial read with a short TTL (e.g. 15–30 s) but POST always returns authoritative result. Do not serve GET with infinite static caching.
 
 ### `POST /api/ocean/contribute`

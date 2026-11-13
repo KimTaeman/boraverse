@@ -48,3 +48,7 @@ Reproduce after `npm run build` and starting the production server: set `CHROME_
 ## Ocean unavailable fallback
 
 A contribution receiving HTTP 503 now displays an explicit resting-ocean message and offers a retry. The confirmed count stays unchanged, no accepted light or keepsake is shown, and the unresolved idempotency key is preserved. All seven Ocean browser tests passed in Chromium; the targeted unavailable-state test also passed in WebKit. These responses were mocked and do not verify production host recovery.
+
+## Initial Ocean view-only mode
+
+The aggregate endpoint now includes the public `writesEnabled` hint. The UI waits for availability before allowing a submission, shows view-only mode when writes are disabled or reads fail, and retries availability on its existing 30-second refresh. Previously confirmed totals are preserved on read failures. POST still enforces the kill switch independently; cached availability can lag by the aggregate cache window. Twelve Ocean/accessibility checks passed in Chromium and both new view-only/recovery checks passed in WebKit, alongside lint, TypeScript, six unit tests and the production build. Production host verification remains outstanding.
