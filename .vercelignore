@@ -1,0 +1,17 @@
+.git
+.vercel
+.env*
+.next*
+node_modules
+phase0-scaffold
+test-results
+playwright-report
+coverage
+docs
+tests
+e2e
+supabase
+examples
+*.md
+*.tsbuildinfo
+playwright*.config.ts
