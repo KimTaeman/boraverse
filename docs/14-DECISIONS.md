@@ -16,6 +16,7 @@
 | D009 | **Next.js App Router** preferred over plain React/Vite |
 | D010 | Homepage and Purple Ocean designed/implemented first |
 | D011 | QR entry should be friendly, cute, not scary technical warnings |
+| D012 | 2026-11-13: Owner approved initial Vercel deployment with placeholder art and Ocean writes disabled. Deployed to https://little-boraverse.vercel.app; printed QR destination remains unfrozen. |
 
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
