@@ -50,3 +50,6 @@ next-env.d.ts
 /TECH-ARCHITECTURE.md
 
 /.next-e2e/
+
+# Supabase CLI scratch data
+/supabase/.temp/
