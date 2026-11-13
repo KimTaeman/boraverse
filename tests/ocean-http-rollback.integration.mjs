@@ -1,0 +1,56 @@
+import assert from "node:assert/strict";
+import { createHmac, randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
+import pg from "pg";
+import { handleContribution } from "../src/lib/ocean/http.ts";
+import { writeOcean } from "../src/lib/ocean/store.ts";
+
+if (process.env.OCEAN_WRITE_ENABLED !== "false") throw new Error("The public write switch must be explicitly disabled");
+const ca = await readFile(process.env.DATABASE_CA_CERT_PATH, "utf8");
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL, ssl: { ca, rejectUnauthorized: true }, max: 1, connectionTimeoutMillis: 10000 });
+const client = await pool.connect();
+let active = false;
+const token = randomUUID();
+const key = randomUUID();
+const hash = createHmac("sha256", process.env.OCEAN_HMAC_SECRET).update(token).digest("hex");
+const persist = body => writeOcean(client, createHmac("sha256", process.env.OCEAN_HMAC_SECRET).update(body.visitorToken).digest("hex"), body);
+const request = body => new Request("http://localhost/api/ocean/contribute", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+try {
+  const role = await client.query("select current_user = $1 as restricted", ["ocean_login"]);
+  assert.equal(role.rows[0].restricted, true);
+  await client.query("BEGIN"); active = true;
+  await client.query("set local lock_timeout = '5s'");
+  await client.query("set local statement_timeout = '10s'");
+  const before = (await client.query("select count(*)::int as n from app_private.ocean_contributions")).rows[0].n;
+  const body = { visitorToken: token, idempotencyKey: key };
+  const first = await handleContribution(request(body), true, persist);
+  assert.equal(first.status, 201);
+  assert.equal(first.headers.get("cache-control"), "no-store");
+  const accepted = await first.json();
+  assert.equal(accepted.status, "accepted");
+  assert.equal(accepted.totalLights, before + 1);
+  assert.ok(!JSON.stringify(accepted).includes(token));
+  const retry = await handleContribution(request(body), true, persist);
+  assert.equal(retry.status, 201);
+  assert.equal((await retry.json()).lightId, accepted.lightId);
+  const duplicate = await handleContribution(request({ ...body, idempotencyKey: randomUUID() }), true, persist);
+  assert.equal(duplicate.status, 200);
+  const duplicateBody = await duplicate.json();
+  assert.equal(duplicateBody.status, "already_contributed");
+  assert.equal(duplicateBody.totalLights, before + 1);
+  assert.equal((await handleContribution(request({ ...body, visitorToken: randomUUID() }), true, persist)).status, 409);
+  await handleContribution(request(body), true, persist);
+  await handleContribution(request(body), true, persist);
+  const limited = await handleContribution(request(body), true, persist);
+  assert.equal(limited.status, 429);
+  assert.equal(limited.headers.get("retry-after"), "60");
+  assert.equal((await handleContribution(request(body), false, persist)).status, 503);
+  await client.query("ROLLBACK"); active = false;
+  const remaining = await client.query("select count(*)::int as n from app_private.ocean_contributions where visitor_hash = $1", [hash]);
+  assert.equal(remaining.rows[0].n, 0);
+  console.log("HTTP response and restricted database checks passed; rollback verified.");
+} finally {
+  if (active) await client.query("ROLLBACK").catch(() => {});
+  client.release();
+  await pool.end();
+}

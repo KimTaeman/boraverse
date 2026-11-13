@@ -11,3 +11,5 @@ The draft uses node-postgres with pipelining disabled and one checked-out client
 The rollback-only database setup tests require the administrator credentials, not the restricted app role. Use a separate development database or the ignored administrator backup and do not run destructive tests against real contributions.
 
 The restricted login can be checked without leaving data by running `node --env-file=.env.local tests/ocean-live-rollback.integration.mjs` while `OCEAN_WRITE_ENABLED=false`. This exercises the database operations inside a transaction and verifies rollback; it does not test a committed contribution or the live HTTP write endpoint.
+
+`node --env-file=.env.local tests/ocean-http-rollback.integration.mjs` also exercises the actual contribution handler against the restricted login within a rolled-back transaction. It checks responses and confirmed counts without committing a contribution; it does not replace a controlled deployed HTTP test.
