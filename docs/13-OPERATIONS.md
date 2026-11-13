@@ -44,3 +44,23 @@
 - Owner should publish a concise privacy statement matching actual deployed technology, including anonymous browser token storage and approximate retention.
 - If owner retires site, stop writes, export aggregate/reports as appropriate, and delete stored hashed contributions per policy.
 - Backups are not guaranteed on Supabase Free; save migration source and consider safe one-off aggregate export if valuable.
+
+## Proposed Vercel deployment setup
+
+Owner approval is required before project creation or deployment. Use the Next.js preset, repository root, `npm run build` and framework-default output. Keep the current placeholder art and QR fallbacks. Vercel Hobby remains a proposal, subject to personal/noncommercial eligibility: https://vercel.com/docs/plans/hobby.
+
+Configure these variables separately for the intended Preview/Production environment using the platform environment settings (https://vercel.com/docs/environment-variables):
+
+| Variable | Value |
+|---|---|
+| `DATABASE_URL` | Existing restricted-login transaction-pooler URL, server-only |
+| `DATABASE_CA_CERT` | Actual multiline PEM contents from the trusted database CA file, server-only |
+| `OCEAN_HMAC_SECRET` | Existing private HMAC secret, server-only |
+| `OCEAN_WRITE_ENABLED` | `false` |
+| `NEXT_PUBLIC_SITE_URL` | Real assigned HTTPS destination once known |
+
+Leave `DATABASE_CA_CERT_PATH` unset on the host; the local absolute path is not portable. Inline `DATABASE_CA_CERT` takes precedence when both are present. TLS verification remains enabled. Do not set `NEXT_E2E` on the host. Never put secret values in commands, source, screenshots or logs. Environment changes require a new deployment to take effect.
+
+After an approved deployment, verify home/navigation, the Ocean aggregate with `writesEnabled:false`, contribution 503, image saving, headers, and failed-request fallback before sharing the link. Production QR approval and print testing remain separate gates.
+
+Local verification: the production API successfully read the real aggregate using inline CA contents with `DATABASE_CA_CERT_PATH` deliberately pointing to a missing file; `writesEnabled` remained false. Lint, TypeScript, six unit tests and build passed. Vercel account verification currently fails because the CLI token is invalid; renew authentication with `vercel login` before an approved deployment. No hosted project was created or deployed during preparation.
