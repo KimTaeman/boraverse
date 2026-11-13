@@ -19,7 +19,7 @@ Status reviewed 2026-11-13. This is a pre-launch checklist, not an approval to d
 
 ## Local evidence
 
-The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The iPhone-sized WebKit suite passed all 20 tests using `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. Performance auditing on the deployed site and physical-device checks remain outstanding.
+The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The complete Chromium and iPhone-sized WebKit suites each passed all 27 tests after the availability changes; the WebKit command is `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. Performance auditing on the deployed site and physical-device checks remain outstanding.
 
 ## Local performance sample
 
@@ -52,3 +52,9 @@ A contribution receiving HTTP 503 now displays an explicit resting-ocean message
 ## Initial Ocean view-only mode
 
 The aggregate endpoint now includes the public `writesEnabled` hint. The UI waits for availability before allowing a submission, shows view-only mode when writes are disabled or reads fail, and retries availability on its existing 30-second refresh. Previously confirmed totals are preserved on read failures. POST still enforces the kill switch independently; cached availability can lag by the aggregate cache window. Twelve Ocean/accessibility checks passed in Chromium and both new view-only/recovery checks passed in WebKit, alongside lint, TypeScript, six unit tests and the production build. Production host verification remains outstanding.
+
+## Local regression handoff
+
+The complete browser suites passed: Chromium 27/27 and WebKit 27/27. `npm audit --omit=dev` reported zero known vulnerabilities. An exact-value scan of 18 files in `.next/static` found neither the configured database URL nor Ocean HMAC secret; this checks those configured values only, not every possible secret. The tracked environment/certificate filename check returned only `.env.example`. No application change was needed during this regression pass.
+
+Next: choose the host and stable HTTPS destination, then approve deployment with placeholders and Ocean writes disabled. After deployment, verify TLS, server-only configuration, database CA availability, aggregate reads, view-only mode and recovery. Review trusted ingress limits and retention before enabling writes. Final artwork/copy/QR approvals, actual phone and screen-reader testing, and print/sleeve checks remain owner-dependent launch gates.
