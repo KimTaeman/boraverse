@@ -21,7 +21,7 @@
 
 ## Ocean UI direction — 2026-11-14
 
-Owner selected **Dreamy whale galaxy** from the supplied reference boards (Image 3, B). Build a quiet cinematic purple sky, original luminous whale, a small crowd below, and a light rising only after server acceptance. Original SVG layers remain placeholders; final art and rights approval are still pending. Counts/density remain server-authoritative and bounded, and reduced motion skips the ascent. No official logos or flattened storyboard imagery are included in the implementation.
+Owner selected **Dreamy whale galaxy** from the supplied reference boards (Image 3, B). Build a quiet cinematic purple sky, original luminous whale, a small crowd below, and a light rising only after server acceptance. Generated illustrations are integrated as replaceable draft layers; final art and rights approval are still pending. Counts/density remain server-authoritative and bounded, and reduced motion skips the ascent. No official logos or flattened storyboard imagery are included in the implementation.
 
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |

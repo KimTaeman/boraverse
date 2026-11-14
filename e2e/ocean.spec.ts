@@ -24,6 +24,13 @@ test("a failed request retries with the same key and only confirms after the ser
   expect(keys[0]).toBe(keys[1]);
   await page.getByRole("button", { name: "Save my moment" }).click();
   await expect(page.getByRole("link", { name: "Download keepsake" })).toBeVisible();
+  const dimensions = await page.getByRole("link", { name: "Download keepsake" }).evaluate(link => new Promise<number[]>((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve([image.naturalWidth, image.naturalHeight]);
+    image.onerror = reject;
+    image.src = (link as HTMLAnchorElement).href;
+  }));
+  expect(dimensions).toEqual([1080, 1920]);
 });
 
 test("duplicate does not animate a new light", async ({ page }) => {
@@ -162,3 +169,22 @@ for (const width of [320, 390, 430]) {
     await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
   });
 }
+
+
+test("missing artwork leaves controls usable and a failed keepsake can retry", async ({ page }) => {
+  await page.route("**/art/ocean/**/*.webp", route => route.abort());
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5, writesEnabled: true } }));
+  await page.route("**/api/ocean/contribute", route => route.fulfill({ status: 201, json: { status: "accepted", totalLights: 6 } }));
+  await page.goto("/ocean");
+  await expect(page.getByRole("heading", { name: "Our Little Purple Ocean" })).toBeVisible();
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByText("6 confirmed little lights")).toBeVisible();
+  await page.getByRole("button", { name: "Save my moment" }).click();
+  await expect(page.locator(".ocean-souvenir").getByRole("alert")).toContainText("image couldn’t be created");
+  await expect(page.getByRole("link", { name: "Download keepsake" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Save my moment" })).toBeEnabled();
+  await page.unroute("**/art/ocean/**/*.webp");
+  await page.getByRole("button", { name: "Save my moment" }).click();
+  await expect(page.getByRole("link", { name: "Download keepsake" })).toBeVisible();
+  await expect(page.locator(".ocean-souvenir").getByRole("alert")).toHaveCount(0);
+});

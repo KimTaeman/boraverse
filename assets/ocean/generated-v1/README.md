@@ -9,4 +9,4 @@ Ten separate PNG masters generated with the built-in image_gen tool in the owner
 - stage-horizon: distant stage and low hills.
 - moon / contribution-light: standalone accent layers.
 
-Keep these as source masters. Optimize web derivatives separately before integrating through the artwork manifest; keep UI text and confirmed contribution lights in code. Preserve alpha on transparent layers. The existing SVG implementation remains the live review baseline until artwork integration.
+Keep these as source masters. Optimize web derivatives separately before integrating through the artwork manifest; keep UI text and confirmed contribution lights in code. Preserve alpha on transparent layers. Optimized derivatives are integrated from `public/art/ocean/v1/`; source masters stay excluded from deployment. The art remains a review draft.
