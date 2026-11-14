@@ -19,7 +19,7 @@ Status reviewed 2026-11-14. This is a pre-launch checklist, not an approval to d
 
 ## Local evidence
 
-The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The complete Chromium and iPhone-sized WebKit suites each passed all 27 tests after the availability changes; the WebKit command is `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. Performance auditing on the deployed site and physical-device checks remain outstanding.
+The production dependency audit, lint, TypeScript, unit tests, production build and browser smoke suite were run locally. Browser tests use mocked Ocean responses or the disabled write switch; a local API read against the configured database succeeded, but these are not evidence of a successful production contribution. The two placeholder SVG files occupy approximately 8 KiB combined on disk. The complete Chromium and iPhone-sized WebKit suites each passed all 27 tests after the availability changes; the WebKit command is `npm run test:e2e -- --config=playwright.webkit.config.ts`. It uses a single worker and extended timeouts for the slow local filesystem. This emulation does not replace testing on an actual iPhone. The deployed mobile Lighthouse sample is recorded below; physical-device checks remain outstanding.
 
 ## Local performance sample
 
@@ -78,3 +78,21 @@ After the owner updated GitHub App access, the connection succeeded. The Vercel 
 ## Rollback drill — 2026-11-14
 
 Vercel successfully rolled production back from the GitHub build to the previous CLI build, then promoted the GitHub build again. Both builds use the same application code. Live checks passed before and after both switches: homepage 200, aggregate 200 with writes disabled, contribution 503, and unchanged aggregate count. The current build is restored. See the operations runbook for commands and the deployment-environment caveat. This checks application recovery with writes disabled; it does not test recovery during live writes or a database incident.
+
+## Deployed Lighthouse sample — 2026-11-14
+
+Lighthouse 13.6.0 audited the public HTTPS homepage and Ocean sequentially with default mobile simulation, using the installed Playwright Chromium. These are single lab samples of the deployed placeholder site, not field measurements. Ocean was audited in view-only mode without submitting a contribution. Neither report contained a runtime error, run warning or failing automated accessibility check.
+
+| Metric | Home | Ocean |
+|---|---|---|
+| Performance score | 92 | 94 |
+| Automated accessibility score | 100 | 100 |
+| First contentful paint | 1.5 s | 0.9 s |
+| Largest contentful paint | 1.5 s | 0.9 s |
+| Total blocking time | 290 ms | 300 ms |
+| Cumulative layout shift | 0 | 0.008 |
+| Speed index | 3.7 s | 2.3 s |
+
+Unused/legacy framework JavaScript and render-blocking CSS remain optimization opportunities; the Ocean report also flagged forced reflow. This audit alone does not establish a launch-blocking defect. Repeat after final artwork or material code changes, and assess responsiveness on actual phones. To reproduce, use the existing Lighthouse command above with the public HTTPS page URL instead of the local URL.
+
+Next owner check: open the public site on an actual iPhone and Android phone over cellular data, navigate Home → Ocean → Gacha → Keepsakes, draw/save a result, and verify that the downloaded or manually opened image can be saved. Test larger text and a screen reader; record device/browser and any failure. QR artwork/content approval, ingress/retention decisions and print tests remain separate launch gates.
