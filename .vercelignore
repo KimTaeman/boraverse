@@ -15,3 +15,7 @@ examples
 *.md
 *.tsbuildinfo
 playwright*.config.ts
+
+# Generated source masters are reviewed before web optimization/integration.
+/assets/ocean/
+/out/

@@ -1,0 +1,140 @@
+{
+  "generator": "built-in image_gen",
+  "status": "AI-generated draft artwork for review",
+  "assets": [
+    {
+      "id": "whale",
+      "file": "whale.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: one standalone transparent whale illustration for the Little Boraverse Purple Ocean website, dreamy whale-galaxy art direction. Subject: one elegant humpback whale swimming diagonally upward toward the right, full body including both flippers and graceful tail visible with generous transparent margin. Delicate luminous lavender contour, translucent violet body, pearlescent belly, tiny restrained starlike flecks contained within the body, fine hand-painted celestial detailing, softly glowing edges. Dreamy, poetic, cinematic illustration, sophisticated rather than cute, quiet indigo/lavender/pink-lilac palette with a touch of warm ivory. Professional layered website asset, horizontal composition, whale fills about 75 percent of canvas. Genuinely transparent background and preserved alpha; no sky, no water, no clouds, no other creatures, no text, no logo, no watermark, no border. Avoid a rectangular haze or backdrop; glow should taper naturally to transparency.",
+      "width": 1774,
+      "height": 887,
+      "bytes": 1239912,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "sky-mobile",
+      "file": "sky-mobile.png",
+      "transparentRequested": false,
+      "prompt": "Use case: stylized-concept. Asset type: portrait mobile website background, 9:16 composition. Create a quiet cinematic midnight-purple night sky for a dreamy whale-galaxy illustration. Fine painterly grain, deep indigo at the upper center, subtle violet and lavender nebula haze only toward the outer edges and lower corners, very sparse distant pinprick stars. The middle 65 percent must stay dark, quiet and uncluttered to place a separately drawn luminous whale and readable UI over it. Soft atmospheric depth, poetic and hopeful, sophisticated hand-painted fantasy illustration. Palette midnight #100f27, indigo #211841, plum #4e356f, restrained dusty lavender. Continuous sky all the way to the bottom: no horizon, landscape, sea, stage, moon, people, whale, big bright star, constellation, text, symbols, logo, watermark, UI or frame. Background only; opaque full bleed. Vertical portrait canvas.",
+      "width": 941,
+      "height": 1672,
+      "bytes": 1728796,
+      "hasAlpha": false,
+      "alphaRange": null
+    },
+    {
+      "id": "sky-desktop",
+      "file": "sky-desktop.png",
+      "transparentRequested": false,
+      "prompt": "Use case: stylized-concept. Asset type: landscape desktop website background, 16:9 composition. Create a quiet cinematic midnight-purple night sky for a dreamy whale-galaxy illustration. Fine painterly grain, deep indigo across the upper center and central region, subtle violet and lavender nebula haze toward the far left, far right and lower corners, very sparse distant pinprick stars. The middle 65 percent must stay dark, quiet and uncluttered to place a separately drawn luminous whale and readable UI over it. Soft atmospheric depth, poetic and hopeful, sophisticated hand-painted fantasy illustration. Palette midnight #100f27, indigo #211841, plum #4e356f, restrained dusty lavender. Continuous sky: no horizon, landscape, sea, stage, moon, people, whale, big bright star, constellation, text, symbols, logo, watermark, UI or frame. Background only; opaque full bleed. Wide horizontal canvas.",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1867005,
+      "hasAlpha": false,
+      "alphaRange": null
+    },
+    {
+      "id": "cloud-left",
+      "file": "cloud-left.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: transparent left framing cloud layer for a dreamy purple whale-galaxy website. One soft hand-painted bank of curled lavender and mauve clouds, strongest mass toward left, tapering delicately toward the right with transparent airy edges. Atmospheric, cinematic, faint warm pink rim light from upper right, deep muted purple shadows, subtle painterly detail. Cloud bank occupies lower left portion of a wide horizontal canvas with generous transparent space above and right, all forms entirely inside canvas. No sky or rectangular haze, no stars, no whale, no moon, no people, no text, no logo, no watermark, no border. Actual transparent background with alpha.",
+      "width": 1774,
+      "height": 887,
+      "bytes": 922495,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "cloud-right",
+      "file": "cloud-right.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: transparent right framing cloud layer for a dreamy purple whale-galaxy website. One soft hand-painted bank of curled lavender and mauve clouds, strongest mass toward right, tapering delicately toward the left with transparent airy edges. Atmospheric, cinematic, faint warm pink rim light from upper left, deep muted purple shadows, subtle painterly detail. Cloud bank occupies lower right portion of a wide horizontal canvas with generous transparent space above and left, all forms entirely inside canvas. No sky or rectangular haze, no stars, no whale, no moon, no people, no text, no logo, no watermark, no border. Actual transparent background with alpha.",
+      "width": 1774,
+      "height": 887,
+      "bytes": 1075025,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        253
+      ]
+    },
+    {
+      "id": "cloud-foreground",
+      "file": "cloud-foreground.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: transparent foreground cloud layer for a dreamy purple whale-galaxy website. A shallow broad bank of soft hand-painted violet clouds along the lower part of a wide horizontal canvas, gently rising at both sides and dipping in the middle. Rich muted plum shadows, delicate dusty lilac and blush rim light, natural swirling rounded volumes, dreamlike cinematic fantasy illustration. Airy softly tapering transparent silhouette and generous transparent space above; no rectangular background. No sky, no stars, no whale, no moon, no figures, no text, no logo, no watermark. Genuine transparent alpha background.",
+      "width": 2172,
+      "height": 724,
+      "bytes": 1318358,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        254
+      ]
+    },
+    {
+      "id": "crowd",
+      "file": "crowd.png",
+      "transparentRequested": true,
+      "prompt": "Use case: illustration-story. Asset type: transparent crowd foreground for a dreamy purple night-sky website. Seven original generic young adult concertgoers, rear view, standing shoulder to shoulder looking upward at a shared sky. Small simplified figures seen from behind, diverse hairstyles and heights, casual jackets in very dark indigo/plum, restrained soft lavender rim light from above. One near-center person holds a small plain glowing round light orb slightly above shoulder level. Warm togetherness; painterly anime-inspired illustration, sophisticated rather than chibi, no recognizable celebrity likeness. Full figures from head to mid-thigh within the canvas, horizontal group, no cropped heads, generous transparent margin. No background, no stage, no ground, no sky, no text, no insignia, no branded lightstick, no logos, no watermark. Actual transparent alpha.",
+      "width": 1774,
+      "height": 887,
+      "bytes": 1653635,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "stage-horizon",
+      "file": "stage-horizon.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: transparent distant stage and horizon layer for a dreamy purple whale-galaxy website. A very distant tiny generic concert stage centered between soft low violet hills, viewed from across a quiet dark plain. Stage structure is a small elegant rectangular silhouette with a restrained lavender glow inside and no imagery or screen graphics. Low horizon takes only the bottom quarter of a wide horizontal canvas; stage stays small, far away, understated. Painterly night illustration, deep muted indigo/plum, soft lavender edge light. Transparent space above the hills; no sky, stars, moon, clouds, whale, people, logos, text, watermark or frame. Genuine transparent alpha background.",
+      "width": 2172,
+      "height": 724,
+      "bytes": 509177,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "moon",
+      "file": "moon.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: one transparent crescent moon for a cinematic purple night-sky website. Single elegant thin waxing crescent, warm ivory surface with subtle pale lilac shading, delicate painterly texture and very restrained soft lavender glow fading naturally into transparency. Centered, moon fills about half a square canvas with generous clear margin. Flat celestial illustration, no face, no surrounding stars, no clouds, no sky, no landscape, no other objects, no text, no watermark, no logo, no circular or rectangular backdrop. Genuine transparent alpha background.",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1493865,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "contribution-light",
+      "file": "contribution-light.png",
+      "transparentRequested": true,
+      "prompt": "Use case: stylized-concept. Asset type: one transparent contribution star for a dreamy purple whale-galaxy website. One small four-point shooting-star head, warm ivory center with soft pink-lilac tips, a delicate luminous halo tapering smoothly to transparency. Centered with generous transparent margin, crisp light center and tasteful subtle bloom, poetic magical illustration. Standalone star only: no trail, no other stars, no sky, no clouds, no objects, no text, no logo, no watermark, no rectangle or opaque haze behind it. Genuine transparent alpha background.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1471705,
+      "hasAlpha": true,
+      "alphaRange": [
+        0,
+        253
+      ]
+    }
+  ]
+}

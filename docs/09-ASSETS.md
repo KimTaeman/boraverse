@@ -51,3 +51,9 @@ const art: Record<string, ArtAsset> = {
 ## Ocean reference implementation
 
 The owner selected Dreamy whale galaxy on 2026-11-14. `ocean.sky` still points to the lightweight original `/placeholders/ocean-scene.svg`; text and controls remain semantic DOM. Named procedural SVG layers live in `src/components/ocean/scene.tsx`; the original whale outline is shared with the canvas keepsake. These are placeholders for later original illustration, not crops of the supplied reference boards. No embedded logo, font, recording or reference image is distributed.
+
+## Generated raster review set — v1
+
+Ten AI-generated PNG masters are saved in `assets/ocean/generated-v1/`: mobile and desktop skies, main whale, left/right/foreground clouds, seven-person crowd, distant stage/horizon, crescent moon and contribution light. They were generated with the built-in image_gen tool in the selected Dreamy whale galaxy direction. Full prompts, actual pixel dimensions, byte sizes and alpha ranges are recorded in that folder’s `manifest.json`. All PNGs decoded successfully; the eight overlays have verified transparency.
+
+These are review drafts, not final approved artwork or optimized web exports. Source masters and downloadable ZIP output are excluded from deployment uploads. Integration should create web derivatives within the critical-art budget, preserve alpha and keep animation/counts/text separate from baked artwork.
