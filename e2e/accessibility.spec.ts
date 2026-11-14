@@ -32,5 +32,5 @@ test("reduced motion keeps the village and accepted Ocean light static", async (
   await expect(page.getByRole("status")).toContainText("joined");
   await expect(page.getByText("6 confirmed little lights")).toBeVisible();
   await expect(page.locator(".new-light")).toHaveCSS("animation-name", "none");
-  await expect(page.getByRole("button", { name: "Create keepsake image" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
 });

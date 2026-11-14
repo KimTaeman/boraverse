@@ -75,3 +75,46 @@ h2 { font-family: Georgia, serif; font-size: clamp(1.8rem, 4vw, 2.7rem); font-we
 @media (prefers-reduced-motion: reduce) { .new-light { animation:none; } }
 
 .no-js { display: none; }
+
+/* Ocean layers stay independent of the placeholder sky and semantic controls. */
+.ocean-page { max-width: 64rem; }
+.ocean-page > .back-link { font-size: .8rem; color: var(--muted-light); margin-bottom: .5rem; }
+.ocean-observatory { position: relative; isolation: isolate; overflow: hidden; border: 1px solid #a684c44d; border-radius: 1.75rem; background: #111027; box-shadow: 0 1.5rem 5rem #110b2244; }
+.ocean-intro { text-align: center; position: relative; z-index: 1; padding: 1.5rem 1rem .25rem; background: linear-gradient(#15122c,#15122c00); }
+.ocean-intro .eyebrow { font-size: .6rem; color: #d7b7ef; letter-spacing: .22em; margin: .25rem auto 1rem; }
+.ocean-intro h1 { font-family: Georgia,serif; font-size: clamp(1.15rem,3vw,1.6rem); font-weight: 400; margin: .5rem 0; color: #eee0fa; }
+.ocean-intro h1 em { display: block; font-size: clamp(2.6rem,8vw,4.8rem); line-height: 1.1; font-weight: 400; letter-spacing: -.045em; margin-top: .25rem; }
+.ocean-intro > p:last-child { font-size: .8rem; color: #ddcde9; margin: .8rem auto 0; }
+.ocean-preview { height: clamp(13rem,31svh,22rem); min-height: 0; border-radius: 0; background-size: cover; background-position: center 60%; font-size: 1rem; }
+.ocean-preview::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 65%, #bf86fa33, transparent 65%); opacity: var(--ocean-glow); }
+.ocean-preview .ocean-stars { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }
+.ocean-whale { filter: drop-shadow(0 0 12px #c194f566); }
+.ocean-moon { filter: drop-shadow(0 0 10px #f1d0ed66); }
+.ocean-contribution-light { filter: drop-shadow(0 0 3px #dcafff); }
+.ocean-scene-caption { position: absolute; bottom: .5rem; width: 100%; padding: 0 1rem; text-align: center; color: #e3d2f0; font: italic .75rem Georgia,serif; }
+.ocean-action { position: relative; padding: .5rem 1.25rem 1.5rem; text-align: center; background: linear-gradient(#18132c,#201830); }
+.ocean-counter { margin: .25rem auto .75rem; color: #e2d1ed; font-size: .72rem; }
+.ocean-counter strong { display: block; font-size: 2rem; font-weight: 400; line-height: 1.2; letter-spacing: -.035em; color: #fff1ff; }
+.ocean-status { min-height: 2.8rem; max-width: 28rem; margin: .5rem auto; font-size: .85rem; color: #f5eafc; }
+.ocean-action > .button, .ocean-souvenir .button { width: min(100%,22rem); background: linear-gradient(110deg,#ead5ff,#cfaaef); box-shadow: 0 0 1.5rem #c492f833,inset 0 1px 0 #fff8; border: 1px solid #e2c5ff; color: #30213d; }
+.ocean-action button:focus-visible, .ocean-explore:focus-visible { outline: 3px solid var(--star-gold); outline-offset: 4px; }
+.ocean-fine-print { font-size: .65rem; color: #c5b2d6; margin: 1rem auto .5rem; }
+.ocean-explore { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 1rem; color: #ead5f7; font-size: .8rem; text-underline-offset: .3rem; }
+.ocean-souvenir { margin: 0 auto; max-width: 30rem; }
+.ocean-souvenir p { font-size: .8rem; margin: .75rem auto; }
+.ocean-art-note { margin: 1rem auto; text-align: center; font-size: .65rem; color: var(--muted-light); }
+.ocean-observatory .no-js { padding: 2rem; margin: auto; text-align: center; }
+.waiting-light .your-light-trail, .pending-light .your-light-trail { display: none; }
+.your-light-orb { filter: drop-shadow(0 0 9px #e7b0ff); }
+.waiting-light { opacity: .5; }.pending-light { animation: ocean-wait 1.2s ease-in-out infinite alternate; }
+.ocean-preview .new-light { animation: ocean-ascent 1.8s ease-out both; transform-box: view-box; }
+@keyframes ocean-ascent { from { transform: translate(-55px,249px); opacity: 0; } 20% { opacity: 1; } to { transform: translate(0,0); opacity: 1; } }
+@keyframes ocean-wait { from { opacity: .35; } to { opacity: 1; } }
+@media (min-width: 700px) { .ocean-intro { padding-top: 2rem; }.ocean-preview { height: 24rem; }.ocean-action { padding-bottom: 2rem; } }
+@media (prefers-reduced-motion: reduce) { .ocean-preview .new-light, .pending-light { animation: none; } }
+
+.ocean-observatory { background-size: cover; background-position: center; }
+.ocean-preview { background: transparent; }
+.ocean-preview::before { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 17%; background: #201c35; clip-path: polygon(0 25%,15% 0,40% 25%,65% 10%,85% 30%,100% 0,100% 100%,0 100%); }
+.ocean-scene-caption { top: .9rem; bottom: auto; color: #e3d2f0; }
+.ocean-action { background: linear-gradient(#201c35,#201830); }

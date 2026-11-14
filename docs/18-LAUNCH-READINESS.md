@@ -116,3 +116,9 @@ The owner approved these choices on 2026-11-14 (D013). Vercel documents one rate
 ## Approved edge rule verification — 2026-11-14
 
 The contribution-only rule was staged, inspected and published within the existing Hobby plan. Conditions: path equals `/api/ocean/contribute` AND method equals POST. Fixed window: 120 requests per source IP per 60 seconds; excess action 429. No other draft rules were present. A bounded live test returned 120 handler 503 responses and 10 edge 429 responses. Home and aggregate reads remained 200, `writesEnabled` remained false and the count stayed unchanged. No successful contribution or database deletion occurred. Privacy copy now describes approved retention, opportunistic cleanup and provider-side IP counting.
+
+## Ocean visual refinement — Dreamy whale galaxy
+
+The owner selected the dreamy whale-galaxy reference direction. The redesigned screen uses original replaceable sky/whale/crowd layers, one contribution star per confirmed light up to a 120-star visual cap, a confirmation-gated 1.8-second ascent, reduced-motion fallback and a matching whale keepsake. The save action stays in the primary action area after confirmation. Empty/unavailable counts do not populate contribution stars.
+
+Lint, TypeScript, six unit tests and production build passed. The full Chromium and WebKit suites each passed 30 tests; after the final density refinement, the three mobile confirmation/star-count checks passed again in each browser. Mobile and desktop screenshots were visually reviewed with mocked totals, not production contributions. Previous Lighthouse figures predate this UI revision; re-audit after final artwork and verify actual phones. Ocean writes remain disabled.

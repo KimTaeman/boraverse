@@ -19,6 +19,10 @@
 | D012 | 2026-11-13: Owner approved initial Vercel deployment with placeholder art and Ocean writes disabled. Deployed to https://little-boraverse.vercel.app; printed QR destination remains unfrozen. |
 | D013 | 2026-11-14: Owner approved Ocean limits of 60 attempts/minute globally, 5/token/minute, and a Vercel edge rule of 120 POSTs/IP/minute for `/api/ocean/contribute` returning 429. Keep writes disabled pending a separate controlled live-write check. Rate buckets become cleanup-eligible after one day and are removed opportunistically; review cleanup before reopening/retiring an inactive site. Retain contributions until retirement, then review export/deletion. Stay within Hobby included capability; paid changes require separate approval. |
 
+## Ocean UI direction — 2026-11-14
+
+Owner selected **Dreamy whale galaxy** from the supplied reference boards (Image 3, B). Build a quiet cinematic purple sky, original luminous whale, a small crowd below, and a light rising only after server acceptance. Original SVG layers remain placeholders; final art and rights approval are still pending. Counts/density remain server-authoritative and bounded, and reduced motion skips the ascent. No official logos or flattened storyboard imagery are included in the implementation.
+
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
 |---|---|

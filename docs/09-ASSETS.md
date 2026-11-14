@@ -47,3 +47,7 @@ const art: Record<string, ArtAsset> = {
 3. Test responsive crop at 320px/390px/desktop; maintain visible button labels.
 4. Test contrast and overlays, loading fallback, reduced motion.
 5. Confirm file sizes and re-run build/performance checks.
+
+## Ocean reference implementation
+
+The owner selected Dreamy whale galaxy on 2026-11-14. `ocean.sky` still points to the lightweight original `/placeholders/ocean-scene.svg`; text and controls remain semantic DOM. Named procedural SVG layers live in `src/components/ocean/scene.tsx`; the original whale outline is shared with the canvas keepsake. These are placeholders for later original illustration, not crops of the supplied reference boards. No embedded logo, font, recording or reference image is distributed.

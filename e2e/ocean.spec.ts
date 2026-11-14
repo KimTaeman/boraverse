@@ -22,7 +22,7 @@ test("a failed request retries with the same key and only confirms after the ser
   await expect(page.getByRole("status")).toContainText("joined");
   await expect(page.getByText("6 confirmed little lights")).toBeVisible();
   expect(keys[0]).toBe(keys[1]);
-  await page.getByRole("button", { name: "Create keepsake image" }).click();
+  await page.getByRole("button", { name: "Save my moment" }).click();
   await expect(page.getByRole("link", { name: "Download keepsake" })).toBeVisible();
 });
 
@@ -57,7 +57,7 @@ test("a large confirmed total keeps the scene bounded", async ({ page }) => {
   await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 1000000, writesEnabled: true } }));
   await page.goto("/ocean");
   await expect(page.getByText("1,000,000 confirmed little lights")).toBeVisible();
-  await expect(page.locator(".ocean-stars circle")).toHaveCount(42);
+  await expect(page.locator(".ocean-contribution-light")).toHaveCount(120);
 });
 
 test("rate limits pause retries and remain effective after reload", async ({ page }) => {
@@ -101,7 +101,7 @@ test("unavailable Ocean keeps the count and pending request for retry", async ({
   await expect(page.getByRole("status")).toContainText("taking a little rest");
   await expect(page.getByText("5 confirmed little lights")).toBeVisible();
   await expect(page.locator(".new-light")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Create keepsake image" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Save my moment" })).toHaveCount(0);
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByRole("status")).toContainText("taking a little rest");
   expect(keys).toHaveLength(2);
@@ -133,3 +133,32 @@ test("an unavailable aggregate recovers on the next refresh", async ({ page }) =
   await expect(page.getByRole("button", { name: "Add my little light" })).toBeEnabled();
   await expect(page.getByText("5 confirmed little lights")).toBeVisible();
 });
+
+for (const width of [320, 390, 430]) {
+  test(`quiet Ocean fits at ${width}px and only launches after confirmation`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 0, writesEnabled: true } }));
+    let release!: () => void;
+    const pending = new Promise<void>(resolve => { release = resolve; });
+    await page.route("**/api/ocean/contribute", async route => {
+      await pending;
+      await route.fulfill({ status: 201, json: { status: "accepted", totalLights: 1 } });
+    });
+    await page.goto("/ocean");
+    await expect(page.getByText("0 confirmed little lights")).toBeVisible();
+    await expect(page.locator(".ocean-contribution-light")).toHaveCount(0);
+    await expect(page.locator(".ocean-whale")).toHaveAttribute("opacity", "0");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const button = page.getByRole("button", { name: "Add my little light" });
+    await expect(button).toBeInViewport();
+    await button.click();
+    await expect(page.locator(".new-light")).toHaveCount(0);
+    await expect(page.getByText("0 confirmed little lights")).toBeVisible();
+    release();
+    await expect(page.getByRole("status")).toContainText("joined");
+    await expect(page.locator(".new-light")).toHaveCount(1);
+    await expect(page.getByText("1 confirmed little lights")).toBeVisible();
+    await expect(page.locator(".ocean-contribution-light")).toHaveCount(1);
+    await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
+  });
+}

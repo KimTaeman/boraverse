@@ -67,7 +67,7 @@
 **Idempotency behavior:** persist unresolved request's UUID across retries; no new key until it is definitively resolved. Do not optimistically add confirmed count. GET count may be stale within bounded cache; POST returned count is definitive for that action.
 
 ### Canvas behavior
-- Render **bounded fixed number** of particles for density, e.g. <= 150 or based on measured device capability; don't render a DOM element per database record.
+- Render **bounded** particles for density (implemented maximum 120 contribution lights); don't render a DOM element per database record.
 - Density/brightness increases as total grows, not necessarily exact per-light mapping once total exceeds particle budget. Provide textual true count separately.
 - Resize and device pixel ratio handling; cap internal pixel ratio on low-end devices.
 - Pause animation when document hidden; honor reduced motion; avoid significant battery drain.
@@ -75,7 +75,7 @@
 
 ### Successful contribution micro-interaction
 1. User click produces immediate tactile visual response + pending status.
-2. On server `accepted`, spark of light rises for <= 1.2 s and joins sky, with skip/reduced-motion option.
+2. On server `accepted`, spark of light rises for <= 1.8 s and joins sky, with skip/reduced-motion option.
 3. Show `Your light has joined the others.` and share card preview.
 4. Visitor downloads a keepsake; if native download blocked, provide share-sheet/new-tab fallback.
 
@@ -121,3 +121,9 @@ OceanPage (server shell)
 
 ## Copy and naming caveats
 Use approved original textual content. The title and page names are working product identifiers. Avoid exact BTS lyrics and implying an official concert interaction. All final imagery and any 7-member mascots are future original assets; the current placeholder visual is not final.
+
+## Dreamy whale galaxy refinement — 2026-11-14
+
+Owner-selected direction: Image 3, B from the supplied concept boards. The Ocean is a continuous sky with crescent, distant stage and generic crowd silhouettes. A translucent original whale and shared-light density emerge from confirmed totals (one star per contribution until the 120-star cap); zero/unavailable totals render no contribution stars. The quiet backdrop has separate decorative stars, not fake contributions. SVG layers are named `distant-sky`, `moon`, `collective-lights`, `whale`, `contribution-stars`, `horizon-glow`, `distant-stage`, `crowd` and `your-light`; sky artwork comes from the existing manifest.
+
+Pending gives the horizon orb a gentle pulse, without a launch or count increment. Server acceptance triggers one 1.8-second ascent and exposes “Save my moment”; duplicates show no new ascent. Reduced motion makes feedback immediate and static. View-only, failure, offline and retry behavior remain available. Export is a 1080×1920 original whale-and-stars keepsake with download/open-image fallback. The whale and background remain replaceable original placeholders.

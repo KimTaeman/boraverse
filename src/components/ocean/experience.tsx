@@ -1,5 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
+import OceanScene, { whaleOutline } from "./scene";
 import { OceanUnavailable, OceanRateLimit, oceanFetch, submitLight } from "./live";
 
 const subscribe = () => () => {};
@@ -67,18 +69,20 @@ export default function OceanExperience() {
     if (!ctx) { setExportError(true); return; }
     const sky = ctx.createLinearGradient(0, 0, 0, 1920);
     sky.addColorStop(0, "#17142b"); sky.addColorStop(1, "#6e4ea5");
-    ctx.fillStyle = sky; ctx.fillRect(0, 0, 1080, 1920); ctx.fillStyle = "#f4d78a";
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, 1080, 1920);
+    ctx.save(); ctx.translate(-30, 240); ctx.scale(1.15, 1.15); ctx.fillStyle = "#b99ae755"; ctx.strokeStyle = "#e6c4ff"; ctx.lineWidth = 2; const whale = new Path2D(whaleOutline); ctx.fill(whale); ctx.stroke(whale); ctx.restore();
+    ctx.fillStyle = "#f4d78a";
     for (const light of lights) { ctx.beginPath(); ctx.arc(light.cx * 10.8, light.cy * 15, light.r * 4, 0, Math.PI * 2); ctx.fill(); }
-    ctx.textAlign = "center"; ctx.fillStyle = "#fff5e9"; ctx.font = "48px sans-serif"; ctx.fillText("A LITTLE LIGHT, TOGETHER", 540, 560);
-    ctx.font = "80px Georgia"; ctx.fillText("Our Little Purple Ocean", 540, 800);
-    ctx.font = "42px sans-serif"; ctx.fillText("One little light. One beautiful memory.", 540, 920);
+    ctx.textAlign = "center"; ctx.fillStyle = "#fff5e9"; ctx.font = "48px sans-serif"; ctx.fillText("A LITTLE LIGHT, TOGETHER", 540, 220);
+    ctx.font = "80px Georgia"; ctx.fillText("Our Little", 540, 1050); ctx.fillText("Purple Ocean", 540, 1150);
+    ctx.font = "42px sans-serif"; ctx.fillText("One little light. One beautiful memory.", 540, 1270);
     ctx.font = "30px sans-serif"; ctx.fillText("Unofficial ARMY-made keepsake · Bangkok 2026", 540, 1760);
     canvas.toBlob((blob) => { if (!blob) { setExportError(true); return; } setImage(URL.createObjectURL(blob)); }, "image/png");
   }
 
   const complete = status === "accepted" || status === "already_contributed";
   const message: Record<Status, string> = {
-    ready: "Add a little light to our shared ocean.",
+    ready: count === 0 ? "It’s quiet here. Be the first to add a little light." : "A little light from you. A little brighter for all of us.",
     pending: "Sending your little light…",
     accepted: "Your light has joined the others.",
     already_contributed: "Your light is already part of the ocean.",
@@ -88,18 +92,14 @@ export default function OceanExperience() {
     rate_limited: "The sky needs a tiny pause. Please try again shortly.",
   };
   return <>
-    <div className="ocean-scene ocean-preview" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none" className="ocean-stars">
-      {lights.map((light, i) => <circle key={i} {...light} />)}
-      {status === "accepted" && <circle className="new-light" cx="50" cy="32" r="1.3" />}
-      <path d="M0 77 Q25 70 50 77 T100 77 V100 H0Z" fill="#5a4583" opacity=".65" />
-      <path d="M0 85 Q25 78 50 85 T100 85 V100 H0Z" fill="#29214c" opacity=".8" />
-    </svg></div>
+    <OceanScene count={count} accepted={status === "accepted"} pending={status === "pending"} />
     <div className="ocean-action">
-      <p>{count === null ? "The shared light count is unavailable right now." : `${count.toLocaleString()} confirmed little lights`}</p>
+      <p className="ocean-counter">{count === null ? <span>The shared light count is unavailable right now.</span> : <><strong>{count.toLocaleString()}</strong>{" "}<span>confirmed little lights</span></>}</p>
       <p className="ocean-status" role="status" aria-live="polite">{!complete && status === "ready" && writesEnabled !== true ? writesEnabled === null ? "Checking whether the ocean is ready for little lights…" : "The ocean is taking a little rest. You can still enjoy the sky and explore the village." : message[status]}</p>
       {!complete && writesEnabled !== false && <button className="button" type="button" disabled={!hydrated || writesEnabled !== true || status === "pending" || status === "rate_limited"} onClick={contribute}>{status === "pending" ? "Sending…" : status === "rate_limited" ? "Please wait…" : status === "failed" || status === "offline" || status === "unavailable" ? "Try again" : "Add my little light"}</button>}
-      <p>Lights represent contributions, not verified unique people. One light per browser.</p>
-      {complete && <div className="souvenir"><h2>A little keepsake</h2><p>Keep a memory of this little ocean.</p><button className="button" type="button" onClick={makeSouvenir}>Create keepsake image</button>{image && <p><a href={image} download="boraverse-ocean.png">Download keepsake</a> · <a href={image} target="_blank" rel="noreferrer">Open image</a> to save it manually</p>}{exportError && <p role="alert">The image couldn’t be created on this device. Please try another browser.</p>}</div>}
+      {complete && <div className="ocean-souvenir"><button className="button" type="button" onClick={makeSouvenir}>Save my moment</button>{image && <p><a href={image} download="boraverse-ocean.png">Download keepsake</a> · <a href={image} target="_blank" rel="noreferrer">Open image</a> to save it manually</p>}{exportError && <p role="alert">The image couldn’t be created on this device. Please try another browser.</p>}</div>}
+      <p className="ocean-fine-print">One shared sky. One light per browser.<br />Lights represent contributions, not verified unique people.</p>
+      <Link className="ocean-explore" href="/arcade">Keep exploring <span aria-hidden="true">↗</span></Link>
     </div>
   </>;
 }

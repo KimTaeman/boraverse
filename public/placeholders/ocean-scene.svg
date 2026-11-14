@@ -1,3 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Placeholder illustration of a purple night sky and gentle ocean waves">
-<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#17142b"/><stop offset="1" stop-color="#513875"/></linearGradient><radialGradient id="moon"><stop stop-color="#f4c6dc" stop-opacity=".55"/><stop offset="1" stop-color="#f4c6dc" stop-opacity="0"/></radialGradient></defs>
-<rect width="1200" height="900" fill="url(#sky)"/><circle cx="910" cy="190" r="165" fill="url(#moon)"/><circle cx="910" cy="190" r="58" fill="#fff5e9"/><g fill="#b99ae7"><circle cx="150" cy="100" r="5"/><circle cx="310" cy="270" r="4"/><circle cx="440" cy="130" r="4"/><circle cx="680" cy="90" r="4"/><circle cx="1080" cy="360" r="5"/><circle cx="850" cy="480" r="3"/><circle cx="530" cy="430" r="3"/></g><path d="M0 710q140-70 300 0t300 0t300 0t300 0v190H0" fill="#573b89" opacity=".7"/><path d="M0 780q200-60 400 0t400 0t400 0" fill="none" stroke="#b99ae7" stroke-width="6" opacity=".5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#100f27"/><stop offset=".6" stop-color="#28204b"/><stop offset="1" stop-color="#65467e"/></linearGradient><radialGradient id="mist"><stop stop-color="#b88edb" stop-opacity=".3"/><stop offset="1" stop-color="#9870c6" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="900" fill="url(#sky)"/><ellipse cx="100" cy="450" rx="370" ry="250" fill="url(#mist)"/><ellipse cx="1110" cy="580" rx="360" ry="280" fill="url(#mist)"/>
+<path d="M0 430Q60 350 135 390Q150 310 235 338Q235 285 300 300Q370 276 400 320Q300 346 300 400Q180 385 150 463Q80 445 0 525Z" fill="#78548f" opacity=".16"/>
+<path d="M1200 410Q1130 380 1095 435Q1010 405 970 485Q890 450 850 505Q790 490 760 545Q900 526 930 590Q1030 549 1075 610Q1160 575 1200 635Z" fill="#bb85cf" opacity=".13"/>
+<path d="M0 700Q100 626 205 690T440 690Q340 740 280 750Q140 735 0 820Z" fill="#ba80c5" opacity=".12"/>
+</svg>
