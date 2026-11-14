@@ -62,6 +62,8 @@ Avoid mandatory waits. Honor `prefers-reduced-motion`; provide explicit reduced-
 6. Footer / unofficial fan project disclaimer.
 
 ## Ocean layout
+
+Ocean fills the viewport without card borders, rounded frame, outer gutters or the shared site bars. Independent artwork layers fill the background; copy, count, status and actions overlay it with contrast gradients. Keep safe-area padding on controls, not the scene. Short screens and enlarged text can scroll.
 1. Back to Village, `Our Little Purple Ocean`, emotional line.
 2. Large canvas or SVG/static scene with bounded particles, light-dense based on authoritative count.
 3. Primary `Add my little light`; pending state uses explicit status text, no inflated number.

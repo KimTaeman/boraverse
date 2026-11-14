@@ -28,6 +28,7 @@
 10. No server secret or raw browser token in client bundle, API response, error output or logs.
 
 ## Purple Ocean UI
+- Scene reaches every viewport edge at phone/desktop/landscape sizes; overlaid controls remain accessible with enlarged text and scrolling on short screens. Leaving Ocean restores the shared site shell.
 - Pending state disables multiple taps, never increments **confirmed** total before response.
 - Accepted animates new star once; duplicate shows `already added` without new star.
 - Server error shows retry while keeping same unresolved idempotency key.

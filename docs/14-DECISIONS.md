@@ -23,6 +23,8 @@
 
 Owner selected **Dreamy whale galaxy** from the supplied reference boards (Image 3, B). Build a quiet cinematic purple sky, original luminous whale, a small crowd below, and a light rising only after server acceptance. Generated illustrations are integrated as replaceable draft layers; final art and rights approval are still pending. Counts/density remain server-authoritative and bounded, and reduced motion skips the ascent. No official logos or flattened storyboard imagery are included in the implementation.
 
+Owner refinement: `/ocean` is a full-bleed, minimum-full-viewport environment. Sky, clouds, particles and glow reach the viewport edges; title, count, status and actions overlay the scene. Replace the shared header/footer/bottom bar on this route with an overlaid village link and compact project/privacy credits. Allow scrolling on short screens and enlarged text rather than clipping controls.
+
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
 |---|---|

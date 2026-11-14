@@ -188,3 +188,42 @@ test("missing artwork leaves controls usable and a failed keepsake can retry", a
   await expect(page.getByRole("link", { name: "Download keepsake" })).toBeVisible();
   await expect(page.locator(".ocean-souvenir").getByRole("alert")).toHaveCount(0);
 });
+
+for (const [width, height] of [[390, 844], [1440, 900], [844, 390]]) {
+  test(`Ocean fills ${width}×${height} and leaving restores the village shell`, async ({ page }) => {
+    await page.setViewportSize({ width, height });
+    await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5, writesEnabled: true } }));
+    await page.goto("/ocean");
+    await expect(page.getByRole("button", { name: "Add my little light" })).toBeEnabled();
+    const room = await page.locator(".ocean-observatory").boundingBox();
+    const scene = await page.locator(".ocean-scene").boundingBox();
+    expect(room?.x).toBe(0);
+    expect(room?.y).toBe(0);
+    expect(room?.width).toBe(width);
+    expect(room!.height).toBeGreaterThanOrEqual(height);
+    expect(scene).toEqual(room);
+    await expect(page.locator(".site-header")).toBeHidden();
+    await expect(page.getByRole("navigation", { name: "Main navigation", exact: true })).toBeHidden();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.getByRole("button", { name: "Add my little light" }).scrollIntoViewIfNeeded();
+    await expect(page.getByRole("button", { name: "Add my little light" })).toBeInViewport();
+    await page.getByRole("link", { name: "← Back to the village" }).click();
+    await expect(page.locator(".site-header")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "A little magic found you." })).toBeVisible();
+  });
+}
+
+test("enlarged text on a short phone can reach Ocean controls and privacy", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 568 });
+  await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5, writesEnabled: true } }));
+  await page.route("**/api/ocean/contribute", route => route.fulfill({ status: 503, json: { status: "error" } }));
+  await page.goto("/ocean");
+  await page.addStyleTag({ content: "html { font-size: 200%; }" });
+  await page.getByRole("button", { name: "Add my little light" }).click();
+  await expect(page.getByRole("status")).toContainText("wasn't confirmed");
+  await page.getByRole("button", { name: "Try again" }).scrollIntoViewIfNeeded();
+  await expect(page.getByRole("button", { name: "Try again" })).toBeInViewport();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole("link", { name: "Privacy", exact: true }).click();
+  await expect(page.locator(".site-header")).toBeVisible();
+});

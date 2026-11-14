@@ -43,13 +43,13 @@
 
 ### Main page composition
 1. **Back link + heading:** `Our Little Purple Ocean`; little introductory subtitle `One little light. One beautiful memory.`
-2. **Large starry-ocean scene:** gradient in indigo-purple with glowy lights and subtle reflected waves. Canvas can cover a responsive 280–520px viewport segment, with static image/SVG fallback.
+2. **Full-viewport environment:** an edge-to-edge indigo-purple sky with independent clouds, whale, crowd, particles and glow behind the content. No rounded scene card or outer gutters. Use minimum 100dvh (100svh fallback), allow vertical scrolling for short screens/enlarged text, and preserve static CSS/SVG fallbacks.
 3. **Community context:** server-authoritative count displayed with label `accepted lights` or `little lights`, never `people` unless proven.
-4. **Primary action:** `Add my little light` (>=44px tall), directly below/overlaid scene with safe contrast.
+4. **Primary action:** `Add my little light` (>=44px tall), overlaid on the scene with safe contrast.
 5. **Optional concert-day selection:** `December 3`, `December 5`, `December 6`, `Not attending / Prefer not to say`; default `unspecified`, no geolocation. Changing selected day **after** accepted contribution does not rewrite historical record.
 6. **Feedback area:** pending, accepted, previously-contributed, retry; consistent height to limit layout shift.
 7. **Keepsake panel:** appears after accepted or if previously contributed; option `Save my Bangkok star` as 1080×1920 export, alternative text share/copy.
-8. **More experiences:** return Village / visit Gacha / Magic Shop. In-page links plus persistent bottom nav.
+8. **More experiences:** return Village / visit Gacha / Magic Shop. Overlaid in-page links replace the shared header, footer and persistent bottom nav on Ocean. Compact unofficial/artwork credits and About/Privacy remain available.
 9. **Fine print:** contribution is anonymous per browser, may be repeated from different browsers, no unique-person claim.
 
 ### State machine: events and UI
