@@ -70,3 +70,11 @@ Local verification: the production API successfully read the real aggregate usin
 Production log-query access was verified on 2026-11-14 with `vercel logs --environment production --no-branch --since 24h --limit 10 --json --scope kimtaemans-projects`. Inspect logs privately; never publish visitor/request details or credentials. This is manual access, not automatic monitoring or alerting.
 
 On 2026-11-14, after the owner updated GitHub App access, Vercel connected successfully to `KimTaeman/boraverse`. The project API confirmed GitHub as provider and `main` as the production branch. Pushes to `main` now trigger production builds. Keep `OCEAN_WRITE_ENABLED=false`; verify deployment completion and the live API after release. CLI deployment remains available as a fallback.
+
+## Verified rollback and recovery
+
+On 2026-11-14, production was rolled back to the immediately previous verified build, checked, then restored by promoting the current verified build. After each switch, home returned 200, aggregate reads succeeded with `writesEnabled:false`, POST returned 503 and the count matched the pre-drill count. No database rollback, deletion or successful contribution was performed.
+
+Use `vercel rollback <previous-ready-production-url> --yes --scope kimtaemans-projects` for recovery, then verify the public site and Ocean. Restore the current known-good release with `vercel promote <current-ready-production-url> --yes --scope kimtaemans-projects`. Select URLs from the actual project deployment list, not a guessed hostname.
+
+Vercel rollback retains the target deployment configuration and temporarily disables automatic production-domain assignment; promoting a different deployment restores normal automatic assignment. Verify the write switch on the target build before choosing it: an old deployment may retain an older environment setting. Do not use application rollback as a database reset or assume it applies the latest secrets. Hobby supports the immediately previous deployment. Source: https://vercel.com/docs/instant-rollback.
