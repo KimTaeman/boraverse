@@ -96,3 +96,19 @@ Lighthouse 13.6.0 audited the public HTTPS homepage and Ocean sequentially with 
 Unused/legacy framework JavaScript and render-blocking CSS remain optimization opportunities; the Ocean report also flagged forced reflow. This audit alone does not establish a launch-blocking defect. Repeat after final artwork or material code changes, and assess responsiveness on actual phones. To reproduce, use the existing Lighthouse command above with the public HTTPS page URL instead of the local URL.
 
 Next owner check: open the public site on an actual iPhone and Android phone over cellular data, navigate Home → Ocean → Gacha → Keepsakes, draw/save a result, and verify that the downloaded or manually opened image can be saved. Test larger text and a screen reader; record device/browser and any failure. QR artwork/content approval, ingress/retention decisions and print tests remain separate launch gates.
+
+## Proposed Ocean opening policy — awaiting owner review
+
+Review on 2026-11-14 confirmed that no custom Vercel firewall rules are configured. The broad firewall overview fails because it also queries a Pro-only IP bypass feature; the rules-only query succeeds on Hobby. No rule or billing setting was changed.
+
+| Setting | Proposed policy |
+|---|---|
+| Application limits | Retain 60 attempts/minute globally and 5 attempts/minute per browser token |
+| Trusted ingress | Vercel WAF, POST requests whose path equals `/api/ocean/contribute`; fixed 60-second window, 120 requests per source IP, then return 429 |
+| Shared networks | The edge threshold is deliberately above the global application threshold to reduce accidental blocking of shared concert Wi-Fi; distributed traffic still reaches the global database guard |
+| Rate buckets | Retain current one-day cleanup eligibility; deletion runs during attempts that pass the global limit, so inactive-site rows may remain longer. Perform a reviewed cleanup when retiring or before reopening an inactive site |
+| Contributions | Retain commemorative contribution records until site retirement; review export/deletion at retirement |
+| Cost boundary | Use Hobby included capability only; do not upgrade or accept paid provisioning without separate approval |
+| Write switch | Keep disabled while configuring/verifying the edge rule and reviewing privacy copy; request a controlled live write check separately |
+
+These choices remain proposed under the decision log. Vercel documents one rate-limiting rule and one million included allowed requests for Hobby; verify the account-specific pricing acknowledgement before applying anything: https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting. IP counting happens at the hosting edge; the application will not receive or store a new raw-IP field. This does not prevent all distributed abuse or guarantee uninterrupted concert traffic.
