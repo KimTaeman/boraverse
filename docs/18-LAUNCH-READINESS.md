@@ -1,12 +1,12 @@
 # Launch readiness — not ready
 
-Status reviewed 2026-11-13. This is a pre-launch checklist, not an approval to deploy or print.
+Status reviewed 2026-11-14. This is a pre-launch checklist, not an approval to deploy or print.
 
 ## Blocking items
 
 - **Ocean:** The private schema migration and restricted group role have been applied to the configured project; a dedicated restricted login has been created and verified. The local API successfully read the real aggregate with writes disabled. The restricted login and HTTP handler passed rollback-only write, retry, duplicate, conflict and rate-limit checks; no test contribution remained. Keep `OCEAN_WRITE_ENABLED=false`. Follow `supabase/README.md`, verify private schema and role permissions, then test real aggregate reads, a controlled contribution, idempotent retry, rate limits, database outage, and the write kill switch before enabling writes. Review the proposed global limit with the owner and configure a trusted ingress limit appropriate to the host.
 - **QR:** No family variants are approved. The `01` records are placeholders and currently show the fallback. Approve original artwork, copy and stable IDs, choose the real HTTPS domain, verify every resulting route, and freeze it before printing. Do not print sample or placeholder URLs as production codes.
-- **Hosting:** The owner-approved placeholder build is deployed on Vercel Hobby at https://little-boraverse.vercel.app. HTTPS pages and the real aggregate read passed, including the server-only inline CA configuration. Monitoring access and host rollback remain unverified. GitHub auto-linking failed; deployments currently use the CLI. The URL is not yet approved for printed QR codes.
+- **Hosting:** The owner-approved placeholder build is deployed on Vercel Hobby at https://little-boraverse.vercel.app. HTTPS pages and the real aggregate read passed, including the server-only inline CA configuration. Production log-query access is verified; actual host rollback remains untested. The committed project is now published to GitHub, but Vercel Git integration still requires an owner-side app-access check; deployments currently use the CLI. The URL is not yet approved for printed QR codes.
 - **Real devices and print:** Test Android and iPhone browsers, keyboard and reduced motion, poor connectivity, image saving, and actual QR print samples on each material. Check glare, quiet zones, cutting margins and sleeve fit before a print run.
 - **Content and rights:** The gacha and Magic Shop use provisional original text and placeholder art. The song picker has only two official video links; review final selections, wording, attribution and licenses. Review and finalize the privacy statement and retention policy for the actual hosting setup.
 
@@ -64,3 +64,9 @@ Next: choose the host and stable HTTPS destination, then approve deployment with
 On 2026-11-13, the approved placeholder build deployed successfully to https://little-boraverse.vercel.app. Live home, Ocean and aggregate requests returned 200 over HTTPS with the baseline nosniff header. The aggregate reported `writesEnabled:false`; a controlled POST returned 503 with `Cache-Control:no-store`, and the aggregate count stayed unchanged. Mobile Chromium and WebKit checks passed for navigation, Ocean view-only mode, unapproved QR fallback, saving a gacha result locally and creating an image with download/open links. An initial smoke command used the wrong button name; the corrected check passed in both browsers.
 
 No successful production contribution was attempted. Physical phones, screen readers, live write enablement/ingress limits, monitoring, rollback and production QR/print approval remain outstanding. The initial interruption occurred before any deployment existed; deployment was retried after DNS connectivity recovered.
+
+## Hosting handoff — 2026-11-14
+
+The committed `main` branch is published at https://github.com/KimTaeman/boraverse. An exact-value scan of all 91 tracked files found neither the configured database URL nor HMAC secret. This scan covers those two current values only. Publishing used the existing authenticated GitHub CLI because the configured `credential-wincred` helper is unavailable in WSL; global Git configuration was not changed.
+
+A production log query succeeded and returned zero records in the sampled 24-hour window. This verifies query access, not alerting or that no historical errors occurred. The Vercel repository-connect retry failed even after publishing. The likely cause is GitHub App access; owner must inspect Vercel under https://github.com/settings/installations and grant access to `KimTaeman/boraverse`, then retry connecting. The existing GitHub CLI token cannot list app installations (403). The current live CLI deployment is unaffected.
