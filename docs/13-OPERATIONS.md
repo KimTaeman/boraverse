@@ -78,3 +78,9 @@ On 2026-11-14, production was rolled back to the immediately previous verified b
 Use `vercel rollback <previous-ready-production-url> --yes --scope kimtaemans-projects` for recovery, then verify the public site and Ocean. Restore the current known-good release with `vercel promote <current-ready-production-url> --yes --scope kimtaemans-projects`. Select URLs from the actual project deployment list, not a guessed hostname.
 
 Vercel rollback retains the target deployment configuration and temporarily disables automatic production-domain assignment; promoting a different deployment restores normal automatic assignment. Verify the write switch on the target build before choosing it: an old deployment may retain an older environment setting. Do not use application rollback as a database reset or assume it applies the latest secrets. Hobby supports the immediately previous deployment. Source: https://vercel.com/docs/instant-rollback.
+
+## Approved Ocean ingress and retention
+
+D013 is approved. The enabled Vercel rule `Ocean contribution rate limit` matches only POST `/api/ocean/contribute`, counts by source IP in fixed 60-second windows and returns 429 above 120 requests. Application limits remain 60 attempts/minute globally and 5/token/minute. Inspect with `vercel firewall rules inspect "Ocean contribution rate limit" --scope kimtaemans-projects`; use rules-only commands because the broad overview queries a Pro-only bypass feature.
+
+Rate buckets become cleanup-eligible after one day and are deleted during attempts passing the global guard; this is not a daily scheduler or a guaranteed maximum retention. Review manual cleanup before reopening/retiring an inactive site. Keep contribution records until retirement, then review export/deletion. Provider logs have separate retention. Writes remain disabled pending a separately approved controlled live-write check. No paid provisioning was enabled.

@@ -28,7 +28,8 @@ Revise to match actual deployed telemetry, cookies, platform logging and retenti
 
 ## Retention
 - Ocean contribution count/record retained for commemorative purpose unless project is retired; no identity tied to a person, browser hash treated as pseudonymous data.
-- Throttle bucket data must be short lived; choose retention (e.g. <= 7 days) and implement cleanup. Document actual schedule.
+- Approved D013: rate buckets become eligible for deletion after one day. Existing cleanup runs during contribution attempts that pass the global limit; idle-site rows may remain longer. Review manual cleanup before reopening or retiring an inactive site. Contributions are retained until retirement, when export/deletion is reviewed. Provider metadata/log retention is separate.
+- Approved ingress: Vercel counts source IP at the hosting edge for POST `/api/ocean/contribute`, allowing 120 requests per fixed 60-second window and returning 429 above that. The app stores no new raw-IP field. Application limits remain 60 attempts/minute globally and 5/token/minute.
 - Frontend localStorage can be cleared by user; add a simple privacy/data explanation.
 
 ## Safety copy

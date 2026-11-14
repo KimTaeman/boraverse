@@ -17,6 +17,7 @@
 | D010 | Homepage and Purple Ocean designed/implemented first |
 | D011 | QR entry should be friendly, cute, not scary technical warnings |
 | D012 | 2026-11-13: Owner approved initial Vercel deployment with placeholder art and Ocean writes disabled. Deployed to https://little-boraverse.vercel.app; printed QR destination remains unfrozen. |
+| D013 | 2026-11-14: Owner approved Ocean limits of 60 attempts/minute globally, 5/token/minute, and a Vercel edge rule of 120 POSTs/IP/minute for `/api/ocean/contribute` returning 429. Keep writes disabled pending a separate controlled live-write check. Rate buckets become cleanup-eligible after one day and are removed opportunistically; review cleanup before reopening/retiring an inactive site. Retain contributions until retirement, then review export/deletion. Stay within Hobby included capability; paid changes require separate approval. |
 
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
@@ -37,7 +38,7 @@
 - Final illustration, fonts, member-inspired mascot artwork and approved source rights.
 - Specific variants and per-variant print run counts.
 - Final English/Thai content and official song links.
-- Exact throttle thresholds and data retention after legal/platform/privacy review.
+- Verify approved D013 limits and retention in operation before enabling writes; review provider metadata/log retention separately.
 - Whether Memory Garden launches as P1 or remains a polished coming-soon portal on launch day.
 
 ## Change control
