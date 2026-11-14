@@ -1,8 +1,12 @@
+export const confirmedKey = "boraverse-ocean-confirmed-v1";
 const visitorKey = "boraverse-ocean-visitor";
 const pendingKey = "boraverse-ocean-pending";
 const retryKey = "boraverse-ocean-retry-after";
 
-export class OceanRateLimit extends Error { constructor(public retryAt: number) { super("rate limited"); } }
+export class OceanRateLimit extends Error {
+  retryAt: number;
+  constructor(retryAt: number) { super("rate limited"); this.retryAt = retryAt; }
+}
 
 export class OceanUnavailable extends Error {}
 
@@ -10,12 +14,15 @@ export type OceanReply = { status: "accepted" | "already_contributed"; totalLigh
 
 export async function oceanFetch(input: RequestInfo | URL, init: RequestInit = {}) {
   const controller = new AbortController();
-  const timer = window.setTimeout(() => controller.abort(), 15000);
+  const abort = () => controller.abort();
+  if (init.signal?.aborted) abort();
+  else init.signal?.addEventListener("abort", abort, { once: true });
+  const timer = window.setTimeout(abort, 15000);
   try { return await fetch(input, { ...init, signal: controller.signal }); }
-  finally { window.clearTimeout(timer); }
+  finally { window.clearTimeout(timer); init.signal?.removeEventListener("abort", abort); }
 }
 
-export async function submitLight(): Promise<OceanReply> {
+export async function submitLight(signal?: AbortSignal): Promise<OceanReply> {
   const retryAt = Number(localStorage.getItem(retryKey));
   if (Number.isFinite(retryAt) && retryAt > Date.now()) throw new OceanRateLimit(retryAt);
   let visitor = localStorage.getItem(visitorKey);
@@ -29,7 +36,7 @@ export async function submitLight(): Promise<OceanReply> {
     localStorage.setItem(pendingKey, key);
   }
   const response = await oceanFetch("/api/ocean/contribute", {
-    method: "POST",
+    method: "POST", signal,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ visitorToken: visitor, idempotencyKey: key, concertDay: "unspecified" }),
   });
@@ -45,6 +52,6 @@ export async function submitLight(): Promise<OceanReply> {
   if (!response.ok) throw new Error("unavailable");
   const result = await response.json();
   if ((result.status !== "accepted" && result.status !== "already_contributed") || !Number.isSafeInteger(result.totalLights) || result.totalLights < 0) throw new Error("invalid response");
-  localStorage.removeItem(pendingKey);
+  try { localStorage.removeItem(pendingKey); localStorage.setItem(confirmedKey, "1"); } catch { /* A confirmed response remains valid when browser storage is unavailable. */ }
   return result;
 }

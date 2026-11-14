@@ -12,13 +12,13 @@ export default function Ocean() {
       <div className="ocean-topbar"><Link className="back-link" href="/">← Back to the village</Link><span>The Little Boraverse</span></div>
       <div className="ocean-intro"><p className="eyebrow">BANGKOK 2026 · A SHARED SKY</p>
         <h1>Our Little <em>Purple Ocean</em></h1>
-        <p>One little light. One beautiful memory.</p>
+        <p>Every little light carries a story.</p>
       </div>
       <div className="requires-js"><OceanExperience /></div>
       <noscript><style>{".ocean-observatory > .requires-js{display:none}.no-js{display:block}"}</style></noscript><p className="no-js">Adding a light needs JavaScript. You can still explore the village.</p>
       <aside className="ocean-credits" aria-label="About this fan project">
         <p>Unofficial ARMY-made fan project. Not affiliated with BTS, BIGHIT MUSIC, HYBE, or the venue.</p>
-        <p>AI-generated illustration draft · <Link href="/about">About</Link> · <Link href="/privacy">Privacy</Link></p>
+        <p>Illustration placeholders · <Link href="/about">About</Link> · <Link href="/privacy">Privacy</Link></p>
       </aside>
     </div>
   </section>;

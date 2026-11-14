@@ -30,7 +30,7 @@ Mobile: persistent bottom navigation `Home, Ocean, Arcade, Magic, Saved`; Garden
 3. Initial state depends on local participation token and server status.
 4. Tap. Button disables while request pending. Visual feedback says `Sending your little light…` but does not increase confirmed count.
 5. Server returns `accepted` with authoritative count OR `already_contributed` OR explicit error.
-6. On `accepted`, animate a light rising (can skip/reduce); display saved acknowledgement and exportable memory card.
+6. On `accepted`, finish the charge, send the light along a curved glitter-emitting ascent, then burst/shimmer the constellation and ease the environment to the confirmed total. Show success/keepsake after arrival; skip/reduced motion gives immediate verified acknowledgement.
 7. On `already_contributed`, show previous light without increment.
 8. On network/server error, show retry; preserve idempotency key for safe retries.
 

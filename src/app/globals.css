@@ -90,9 +90,9 @@ main:has(.ocean-page) { max-width: none; padding: 0; margin: 0; }
 .ocean-layer { position: absolute; height: auto; max-width: none; }
 .ocean-stage, .ocean-crowd { mask-image: linear-gradient(#000 70%,transparent); }
 .ocean-moon { width: clamp(4rem,13vw,8rem); top: 23%; right: 7%; }
-.ocean-cloud-left { width: min(95vw,950px); left: -32%; bottom: 31%; opacity: .6; }
-.ocean-cloud-right { width: min(95vw,950px); right: -32%; bottom: 30%; opacity: .6; }
-.ocean-whale { position: absolute; width: min(112vw,76svh,1000px); height: auto; left: 50%; top: 29%; transform: translateX(-50%); filter: drop-shadow(0 0 18px #c194f566); }
+.ocean-cloud-left { animation: ocean-cloud-drift 18s ease-in-out infinite alternate; width: min(95vw,950px); left: -32%; bottom: 31%; opacity: var(--cloud-light); transition: opacity 1.2s ease; }
+.ocean-cloud-right { animation: ocean-cloud-drift 22s ease-in-out -8s infinite alternate-reverse; width: min(95vw,950px); right: -32%; bottom: 30%; opacity: var(--cloud-light); transition: opacity 1.2s ease; }
+.ocean-whale { position: absolute; width: min(96vw,76svh,1000px); height: auto; left: 50%; top: 29%; transform: translateX(-50%); filter: drop-shadow(0 0 14px #c194f566); transition: opacity 1.2s ease; }
 .ocean-stage { width: 160%; left: -30%; bottom: 36%; }
 .ocean-crowd { width: min(112vw,65svh,850px); left: 50%; bottom: 25%; transform: translateX(-50%); }
 .ocean-cloud-foreground { width: 170%; left: -35%; bottom: 10%; opacity: .5; }
@@ -114,19 +114,43 @@ main:has(.ocean-page) { max-width: none; padding: 0; margin: 0; }
 .ocean-credits p { margin: .25rem auto; }
 .ocean-credits a { display: inline-flex; align-items: center; min-height: 44px; }
 .ocean-observatory .no-js { position: relative; z-index: 1; padding: 2rem; margin: auto; text-align: center; background: #0d0923b3; }
-.waiting-light .your-light-trail, .pending-light .your-light-trail { display: none; }
-.your-light-orb { filter: drop-shadow(0 0 9px #e7b0ff); }
-.waiting-light { opacity: .5; }.pending-light { animation: ocean-wait 1.2s ease-in-out infinite alternate; }
-.new-light { animation: ocean-ascent 1.8s ease-out both; transform-box: view-box; }
-@keyframes ocean-ascent { from { transform: translate(-22px,120px); opacity: 0; } 20% { opacity: 1; } to { transform: translate(0,0); opacity: 1; } }
-@keyframes ocean-wait { from { opacity: .35; } to { opacity: 1; } }
 @media (min-width: 700px) {
   .ocean-observatory { background-image: var(--ocean-sky-desktop); }
   .ocean-topbar { padding-inline: max(2rem,env(safe-area-inset-left)) max(2rem,env(safe-area-inset-right)); }
   .ocean-intro { padding-top: 0; }
   .ocean-whale { top: 26%; }
   .ocean-crowd { bottom: 20%; }
+  .ocean-stage { bottom: 7%; }
   .ocean-cloud-left { left: -15%; }.ocean-cloud-right { right: -15%; }
 }
 @media (max-width: 360px) { .ocean-topbar > span { display: none; } }
-@media (prefers-reduced-motion: reduce) { .new-light, .pending-light { animation: none; } }
+
+
+/* Count-driven atmosphere and confirmed contribution choreography. */
+.ocean-nebula { position: absolute; inset: 0; background: radial-gradient(ellipse at 55% 48%,#b284ec55,transparent 65%),radial-gradient(ellipse at 15% 65%,#8b61b844,transparent 60%); opacity: var(--ocean-glow); transition: opacity 1.2s ease; }
+.ocean-horizon-glow { position: absolute; inset: 40% -20% 14%; background: radial-gradient(ellipse at 50% 85%,#b286e969,transparent 70%); opacity: var(--horizon-glow); transition: opacity 1.2s ease; }
+.ocean-whale > img { width: 100%; height: auto; }
+.ocean-whale-shimmer { position: absolute; inset: 0; mask: var(--whale-mask) center / contain no-repeat; background: linear-gradient(105deg,transparent 30%,#fff1dbb3 48%,transparent 64%); background-size: 300% 100%; background-position: 100% 0; opacity: 0; }
+.ocean-preview[data-reacting="true"] .ocean-whale-shimmer { animation: ocean-shimmer 1.2s ease-out both; }
+.ocean-preview[data-reacting="true"]::after { animation: ocean-arrival-bloom 1.3s ease-out; }
+.ocean-contribution-light { animation: ocean-twinkle 7s ease-in-out infinite alternate; }
+.ocean-effects { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.ocean-count-loading { opacity: .8; }
+.ocean-counter strong { animation: ocean-count-enter .45s ease-out; }
+.ocean-action[data-phase="preparing"] > .button { animation: ocean-button-touch .3s ease-out; }
+.ocean-action > .button { position: relative; }
+.ocean-action[data-phase="preparing"] > .button::after { content: ""; position: absolute; inset: 0; border: 1px solid #e7c9ff; border-radius: inherit; animation: ocean-button-ripple .6s ease-out both; }
+.ocean-skip { display: inline-flex; align-items: center; min-height: 44px; margin: 0 .75rem 0 0; padding: .25rem .5rem; border: 0; background: transparent; color: #ead5f7; cursor: pointer; text-decoration: underline; }
+.ocean-preview[data-paused="true"] *, .ocean-preview[data-paused="true"]::after { animation-play-state: paused; }
+@keyframes ocean-cloud-drift { from { translate: 0 0; } to { translate: 1.5% -1%; } }
+@keyframes ocean-twinkle { from { stroke-opacity: .45; } to { stroke-opacity: 1; } }
+@keyframes ocean-shimmer { 0% { opacity: 0; background-position: 100% 0; } 30% { opacity: .7; } 100% { opacity: 0; background-position: 0 0; } }
+@keyframes ocean-arrival-bloom { 0%,100% { opacity: var(--ocean-glow); } 40% { opacity: .6; } }
+@keyframes ocean-button-touch { 50% { transform: scale(.97); } }
+@keyframes ocean-button-ripple { from { transform: scale(1); opacity: .65; } to { transform: scale(1.13,1.4); opacity: 0; } }
+@keyframes ocean-count-enter { from { opacity: .5; translate: 0 3px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 699px) { .ocean-contribution-light:nth-child(n+151) { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+ .ocean-preview *, .ocean-preview::after, .ocean-counter strong, .ocean-action > .button, .ocean-action > .button::after { animation: none !important; transition: none !important; }
+}
+@media (prefers-contrast: more) { .ocean-status, .ocean-fine-print, .ocean-credits { color: #fff5e9; }.ocean-action { background: linear-gradient(transparent,#0d0923 20%); } }

@@ -9,4 +9,4 @@ Ten separate PNG masters generated with the built-in image_gen tool in the owner
 - stage-horizon: distant stage and low hills.
 - moon / contribution-light: standalone accent layers.
 
-Keep these as source masters. Optimize web derivatives separately before integrating through the artwork manifest; keep UI text and confirmed contribution lights in code. Preserve alpha on transparent layers. Optimized derivatives are integrated from `public/art/ocean/v1/`; source masters stay excluded from deployment. The art remains a review draft.
+Keep these as source masters. Optimize web derivatives separately before integrating through the artwork manifest; keep UI text and confirmed contribution lights in code. Preserve alpha on transparent layers. The earlier WebP derivatives in `public/art/ocean/v1/` are retained as review history. The active manifest now uses the Celestial Storybook SVG placeholders in `public/assets/ocean/`. Source masters stay excluded from deployment. This generated pack remains a review draft.

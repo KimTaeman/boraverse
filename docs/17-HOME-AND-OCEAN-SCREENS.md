@@ -67,7 +67,7 @@
 **Idempotency behavior:** persist unresolved request's UUID across retries; no new key until it is definitively resolved. Do not optimistically add confirmed count. GET count may be stale within bounded cache; POST returned count is definitive for that action.
 
 ### Canvas behavior
-- Render **bounded** particles for density (implemented maximum 120 contribution lights); don't render a DOM element per database record.
+- Render **bounded** particles for density (implemented maximum 150 visible mobile / 220 desktop contribution lights); don't render a DOM element per database record.
 - Density/brightness increases as total grows, not necessarily exact per-light mapping once total exceeds particle budget. Provide textual true count separately.
 - Resize and device pixel ratio handling; cap internal pixel ratio on low-end devices.
 - Pause animation when document hidden; honor reduced motion; avoid significant battery drain.
@@ -122,8 +122,16 @@ OceanPage (server shell)
 ## Copy and naming caveats
 Use approved original textual content. The title and page names are working product identifiers. Avoid exact BTS lyrics and implying an official concert interaction. All final imagery and any 7-member mascots are future original assets; the current placeholder visual is not final.
 
-## Dreamy whale galaxy refinement — 2026-11-14
+## Celestial Storybook refinement — 2026-11-14
 
-Owner-selected direction: Image 3, B from the supplied concept boards. The Ocean is a continuous sky with crescent, distant stage and generic crowd silhouettes. A translucent original whale and shared-light density emerge from confirmed totals (one star per contribution until the 120-star cap); zero/unavailable totals render no contribution stars. The quiet backdrop has separate decorative stars, not fake contributions. SVG layers are named `distant-sky`, `moon`, `collective-lights`, `whale`, `contribution-stars`, `horizon-glow`, `distant-stage`, `crowd` and `your-light`; sky artwork comes from the existing manifest.
+The owner's implementation brief supersedes the previous realistic whale treatment. Fix 1A's full-bleed wrapper, safe areas, semantic overlays and route-specific shell are preserved. Nine named SVG illustration slots supply a soft constellation whale, watercolor-like sky/mist, crescent, distant horizon and seven symbolic back-view figures. Canvas transient effects remain independent of art.
 
-Pending gives the horizon orb a gentle pulse, without a launch or count increment. Server acceptance triggers one 1.8-second ascent and exposes “Save my moment”; duplicates show no new ascent. Reduced motion makes feedback immediate and static. View-only, failure, offline and retry behavior remain available. Export is a 1080×1920 original whale-and-stars keepsake with download/open-image fallback. The whale and background remain replaceable placeholders. Generated WebP draft layers now supply the sky, whale, clouds, crowd, stage, moon and accepted-light accent; all text and confirmed contribution stars stay in code. Keepsake export loads the same layers on demand with an explicit failure/retry state.
+Confirmed total → logarithmic progress (reference 5000) → bounded shared-star density, atmospheric bloom, cloud light, horizon light and constellation visibility. Zero renders no shared stars but retains faint decorative stars/whale; high totals saturate without flooding the DOM. Existing star positions remain stable. Shared lights are a representation, not a one-to-one visitor map.
+
+`use-contribution.ts` owns request lifetime and phases: booting / ready / preparing / travelling / joining / success, plus duplicate, view-only, error/offline and rate-limit states. Only POST acceptance can start travelling. A fast response finishes a 450ms minimum charge; a slow response keeps charging and adds an explanatory message after 3.5s. The 1500ms normalized cubic flight emits 42 independently drifting particles; landing adds 20 fragments and two rings, updates the literal authoritative count, shimmers the whale and blooms the horizon. After the 900ms join, success and Save My Moment appear. Skip animation and reduced motion expose the verified result immediately; neither can fabricate acceptance.
+
+GET remains aggregate-only. Existing visitor/pending/cooldown keys are preserved. A new versioned local success reminder is written only after validated POST success; it is never treated as current server participation status and does not cause automatic POST. Check My Light explicitly revalidates with the existing idempotent endpoint. Reads still refresh every 30s while visible, suppress stale aggregate updates during/just after a confirmed contribution, abort on exit and preserve unresolved keys after ambiguous failures.
+
+Canvas DPR is capped at 2; transient particles at 64. RAF pauses while hidden/offscreen; observers, listeners and requests are cleaned up on route exit. CSS ambient motion pauses with scene visibility and respects reduced motion. Missing canvas falls back to immediate verified acknowledgement. Keepsake export uses the same constellation/illustration slots with download/open-image fallback.
+
+See `public/assets/ocean/README.md` for final-art slots and `e2e/capture-ocean.mjs` for reproducible local-only fixture screenshots/recordings; no product demo query or fake production count exists.

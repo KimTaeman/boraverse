@@ -48,18 +48,14 @@ const art: Record<string, ArtAsset> = {
 4. Test contrast and overlays, loading fallback, reduced motion.
 5. Confirm file sizes and re-run build/performance checks.
 
-## Ocean reference implementation
+## Current Ocean placeholders — Celestial Storybook
 
-The owner selected Dreamy whale galaxy on 2026-11-14. `ocean.sky` and `ocean.skyDesktop` point to optimized generated draft skies; text and controls remain semantic DOM. Named SVG layers live in `src/components/ocean/scene.tsx`; transparent illustrations are placed independently while contribution stars and feedback remain procedural. These are placeholders for later original illustration, not crops of the supplied reference boards. No embedded logo, font, recording or reference image is distributed.
+The owner supplied `PURPLE-OCEAN-IMPLEMENTATION-BRIEF.md` after Fix 1A. The full-bleed wrapper is preserved. Current manifest slots point to original SVG placeholders in `public/assets/ocean/`; sky variants, feathered clouds, crescent, soft whale constellation, distant horizon and seven generic back-view figures share a restrained indigo/lavender palette. No raster whale or reference-board imagery is used by the scene or keepsake. See `public/assets/ocean/README.md` for artboards, safe zones, landing anchor and replacement workflow.
 
-## Generated raster review set — v1
+Far stars and aggregate shared lights are distinct. Logarithmic progression controls atmosphere, cloud rim, horizon and constellation opacity. Shared lights are deterministic and bounded (150 visible on mobile, 220 desktop); they are density, not individually mapped contributors. The count text stays literal and server-authoritative. Transient charge/flight/glitter/burst are procedural Canvas, with a CSS constellation shimmer; neither count nor movement is baked into art.
 
-Ten AI-generated PNG masters are saved in `assets/ocean/generated-v1/`: mobile and desktop skies, main whale, left/right/foreground clouds, seven-person crowd, distant stage/horizon, crescent moon and contribution light. They were generated with the built-in image_gen tool in the selected Dreamy whale galaxy direction. Full prompts, actual pixel dimensions, byte sizes and alpha ranges are recorded in that folder’s `manifest.json`. All PNGs decoded successfully; the eight overlays have verified transparency.
+The 1080×1920 PNG keepsake loads the same SVG slots on demand. Broken artwork leaves semantic controls, a CSS atmosphere and SVG star field usable; export has an explicit error/retry path. All artwork remains placeholder pending the owner's final illustrations and rights approval.
 
-These remain review drafts, not final approved artwork. Source masters and downloadable ZIP output are excluded from deployment uploads.
+## Previous generated raster review set — v1 (archived)
 
-### Integrated web derivatives — 2026-11-14
-
-`public/art/ocean/v1/` contains ten WebP derivatives totaling **189,876 bytes** (all variants combined). Generated with installed Sharp: resize widths mobile sky 720, desktop sky 1440, whale/crowd/foreground 900, side clouds 600, stage 1000, moon 180, contribution light 96; WebP quality 72, alphaQuality 75, effort 6. Original PNG masters remain unchanged. CSS selects the mobile or desktop sky at 700px; named manifest entries supply the eight transparent layers. No image optimization service or new dependency is required.
-
-The scene and 1080×1920 keepsake share these assets. The sky’s faint decorative stars and illustration details are atmosphere, separate from confirmed contribution stars. A missing illustration leaves the CSS background, semantic controls, status and bounded SVG lights usable; export reports image-loading failure and supports retry. The page and keepsake identify the artwork as an AI-generated draft. Automated checks cover file existence/400KB total budget, export dimensions, image failure/retry, count honesty and mobile layout; actual-device download checks and final art approval remain pending.
+PNG masters in `assets/ocean/generated-v1/`, their prompts/metadata and earlier WebP derivatives in `public/art/ocean/v1/` are retained for review history. The active manifest no longer references them. Source masters and downloadable ZIP output stay excluded from deployment uploads. No further image-generation dependency or service was added.

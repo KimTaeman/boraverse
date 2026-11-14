@@ -25,6 +25,10 @@ Owner selected **Dreamy whale galaxy** from the supplied reference boards (Image
 
 Owner refinement: `/ocean` is a full-bleed, minimum-full-viewport environment. Sky, clouds, particles and glow reach the viewport edges; title, count, status and actions overlay the scene. Replace the shared header/footer/bottom bar on this route with an overlaid village link and compact project/privacy credits. Allow scrolling on short screens and enlarged text rather than clipping controls.
 
+## Celestial Storybook refinement — 2026-11-14
+
+Owner supplied `PURPLE-OCEAN-IMPLEMENTATION-BRIEF.md` and locked the next refinement: preserve Fix 1A unchanged; replace the realistic raster whale and scene illustrations with replaceable SVG/CSS celestial storybook placeholders. Whale opacity, horizon/cloud lighting and deterministic shared-star density follow a saturating logarithmic curve from real confirmed totals (reference 5000), rather than one rendered star per row. Maximum visible shared stars: 150 mobile / 220 desktop; zero shared stars at total zero, with faint decorative constellation and far stars. A 450ms minimum charge precedes a confirmed-only 1500ms Bézier ascent with emitted glitter, 900ms burst/shimmer/world response and success. Reduced motion skips the flight. Existing API, private schema, idempotency, limits and write kill-switch remain in place; no migration or new dependency.
+
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
 |---|---|

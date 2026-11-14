@@ -28,6 +28,9 @@
 10. No server secret or raw browser token in client bundle, API response, error output or logs.
 
 ## Purple Ocean UI
+- Test confirmed tiers 0/3/50/500/5000: logarithmic progression, deterministic positions, bounded shared lights and no hydration warnings.
+- Hold POST beyond 3.5s: charge/slow-network copy only, no count/flight/success; rapid keyboard/click activation still sends one request. After acceptance, assert travelling → joining → success and the literal returned total (which may jump by more than one).
+- Changing reduced motion mid-flight skips to verified success; missing canvas falls back safely. Route exit cancels requests/RAF and preserves unresolved idempotency. Local remembered success is explicitly distinguished from server verification.
 - Scene reaches every viewport edge at phone/desktop/landscape sizes; overlaid controls remain accessible with enlarged text and scrolling on short screens. Leaving Ocean restores the shared site shell.
 - Pending state disables multiple taps, never increments **confirmed** total before response.
 - Accepted animates new star once; duplicate shows `already added` without new star.
@@ -51,3 +54,12 @@
 
 ## Launch gates
 P0 sections pass, deployment HTTPS valid, DB active, no critical leaks, write kill-switch tested, server logs/metrics viewable, physical QR route freeze recorded, simple recovery guidance documented. More in operations document.
+
+## Celestial Storybook refinement verification — 2026-11-14
+
+- `npm run lint`, `npm run typecheck`, `npm test` (15 unit tests) and `npm run build`: passed.
+- `npm run test:e2e -- --workers=1`: 46/46 passed across the application.
+- `npm run test:e2e -- --config=playwright.webkit.config.ts`: 46/46 passed with iPhone WebKit.
+- After the dropped-frame timing adjustment, `npm run test:e2e -- e2e/ocean-refinement.spec.ts --workers=1` and the same spec with `--config=playwright.webkit.config.ts`: 11/11 passed in each engine. Includes settled browser-back recovery, preserved retry identity, stable charge/launch position, hidden-tab pause and route-exit cleanup.
+- `OCEAN_CAPTURE_URL=http://127.0.0.1:3467 node e2e/capture-ocean.mjs` against the local production build: fixture totals 0/3/50/500/5000 on mobile/desktop, two animation recordings, actual 1080×1920 keepsake, eight responsive sizes, no console warnings/errors. Artifacts and `checks.json` are in ignored `out/ocean-refinement/`; all mocked responses are local and no database contributions are created.
+- Actual iOS/Android hardware, low-end battery/frame rate and native image save/share still need owner QA. Live writes remain disabled; no production write smoke or database migration was performed for this visual refinement.

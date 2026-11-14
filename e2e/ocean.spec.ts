@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { sharedLightCount } from "../src/lib/ocean/visual";
 
 test("a failed request retries with the same key and only confirms after the server", async ({ page }) => {
   let calls = 0;
@@ -39,7 +40,7 @@ test("duplicate does not animate a new light", async ({ page }) => {
   await page.goto("/ocean");
   await page.getByRole("button", { name: "Add my little light" }).click();
   await expect(page.getByRole("status")).toContainText("already");
-  await expect(page.locator(".new-light")).toHaveCount(0);
+  await expect(page.locator('.ocean-scene[data-phase="travelling"], .ocean-scene[data-phase="joining"]')).toHaveCount(0);
 });
 
 test("pending and offline states never invent a confirmed light", async ({ page, context }) => {
@@ -64,7 +65,7 @@ test("a large confirmed total keeps the scene bounded", async ({ page }) => {
   await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 1000000, writesEnabled: true } }));
   await page.goto("/ocean");
   await expect(page.getByText("1,000,000 confirmed little lights")).toBeVisible();
-  await expect(page.locator(".ocean-contribution-light")).toHaveCount(120);
+  await expect(page.locator(".ocean-contribution-light")).toHaveCount(220);
 });
 
 test("rate limits pause retries and remain effective after reload", async ({ page }) => {
@@ -107,7 +108,7 @@ test("unavailable Ocean keeps the count and pending request for retry", async ({
   await page.getByRole("button", { name: "Add my little light" }).click();
   await expect(page.getByRole("status")).toContainText("taking a little rest");
   await expect(page.getByText("5 confirmed little lights")).toBeVisible();
-  await expect(page.locator(".new-light")).toHaveCount(0);
+  await expect(page.locator('.ocean-scene[data-phase="travelling"], .ocean-scene[data-phase="joining"]')).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Save my moment" })).toHaveCount(0);
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByRole("status")).toContainText("taking a little rest");
@@ -154,25 +155,25 @@ for (const width of [320, 390, 430]) {
     await page.goto("/ocean");
     await expect(page.getByText("0 confirmed little lights")).toBeVisible();
     await expect(page.locator(".ocean-contribution-light")).toHaveCount(0);
-    await expect(page.locator(".ocean-whale")).toHaveAttribute("opacity", "0");
+    await expect(page.locator(".ocean-whale")).toHaveCSS("opacity", "0.04");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const button = page.getByRole("button", { name: "Add my little light" });
     await expect(button).toBeInViewport();
     await button.click();
-    await expect(page.locator(".new-light")).toHaveCount(0);
+    await expect(page.locator('.ocean-scene[data-phase="travelling"], .ocean-scene[data-phase="joining"]')).toHaveCount(0);
     await expect(page.getByText("0 confirmed little lights")).toBeVisible();
     release();
     await expect(page.getByRole("status")).toContainText("joined");
-    await expect(page.locator(".new-light")).toHaveCount(1);
+    await expect(page.locator('.ocean-scene[data-phase="success"]')).toHaveCount(1);
     await expect(page.getByText("1 confirmed little lights")).toBeVisible();
-    await expect(page.locator(".ocean-contribution-light")).toHaveCount(1);
+    await expect(page.locator(".ocean-contribution-light")).toHaveCount(sharedLightCount(1));
     await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
   });
 }
 
 
 test("missing artwork leaves controls usable and a failed keepsake can retry", async ({ page }) => {
-  await page.route("**/art/ocean/**/*.webp", route => route.abort());
+  await page.route("**/assets/ocean/*.svg", route => route.abort());
   await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: 5, writesEnabled: true } }));
   await page.route("**/api/ocean/contribute", route => route.fulfill({ status: 201, json: { status: "accepted", totalLights: 6 } }));
   await page.goto("/ocean");
@@ -183,7 +184,7 @@ test("missing artwork leaves controls usable and a failed keepsake can retry", a
   await expect(page.locator(".ocean-souvenir").getByRole("alert")).toContainText("image couldn’t be created");
   await expect(page.getByRole("link", { name: "Download keepsake" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Save my moment" })).toBeEnabled();
-  await page.unroute("**/art/ocean/**/*.webp");
+  await page.unroute("**/assets/ocean/*.svg");
   await page.getByRole("button", { name: "Save my moment" }).click();
   await expect(page.getByRole("link", { name: "Download keepsake" })).toBeVisible();
   await expect(page.locator(".ocean-souvenir").getByRole("alert")).toHaveCount(0);
