@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { oceanProgress, sharedLightCount, sharedStars, flightPath, bezierPoint, emitGlitter, sampleGlitter, MAX_PARTICLES } from "../src/lib/ocean/visual.ts";
+import { oceanProgress, oceanAppearance, sharedLightCount, sharedStars, flightPath, bezierPoint, emitGlitter, sampleGlitter, MAX_PARTICLES } from "../src/lib/ocean/visual.ts";
 
 test("confirmed totals create monotonic, bounded progression without invented lights at zero", () => {
   for (const value of [-1, NaN, Infinity, 0]) assert.equal(oceanProgress(value), 0);
@@ -46,5 +46,31 @@ test("independent glitter disperses, fades and expires within a fixed particle b
     assert.notDeepEqual({ x: later.x, y: later.y }, { x: initial.x, y: initial.y });
     assert.equal(sampleGlitter(particle, 1500), null);
     assert.equal(sampleGlitter(particle, -1), null);
+  }
+});
+
+
+test("milestones control distinct layers and keep early lights sparse", () => {
+  const tiers = [0, 3, 50, 500, 5000].map(oceanAppearance);
+  assert.deepEqual(tiers.map(tier => tier.stars), [0, 5, 32, 110, 220]);
+  assert.deepEqual(tiers.map(tier => tier.ambient), [0, 0, 5, 20, 48]);
+  for (const key of ["whaleLine", "whaleFill", "clouds", "horizon", "haze", "rim"]) {
+    for (let i = 1; i < tiers.length; i++) assert.ok(tiers[i][key] > tiers[i - 1][key] && tiers[i][key] <= 1);
+  }
+  assert.notEqual(tiers[3].whaleLine / tiers[2].whaleLine, tiers[3].whaleFill / tiers[2].whaleFill);
+  for (const invalid of [-3, NaN, Infinity]) assert.deepEqual(oceanAppearance(invalid), tiers[0]);
+  assert.deepEqual(oceanAppearance(Number.MAX_SAFE_INTEGER), tiers.at(-1));
+});
+
+test("milestone interpolation is continuous, monotonic and does not move existing stars", () => {
+  let previous = oceanAppearance(0);
+  for (let total = 1; total <= 5100; total++) {
+    const current = oceanAppearance(total);
+    for (const key of Object.keys(current)) assert.ok(current[key] >= previous[key]);
+    previous = current;
+  }
+  for (const boundary of [3, 50, 500, 5000]) {
+    const before = oceanAppearance(boundary - .0001), after = oceanAppearance(boundary + .0001);
+    for (const key of Object.keys(before)) assert.ok(Math.abs(after[key] - before[key]) < .001);
   }
 });

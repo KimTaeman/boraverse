@@ -13,7 +13,7 @@ for (const width of [320, 390, 430]) {
     await page.keyboard.press("Tab");
     await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
     await ocean.click();
-    await expect(page.getByRole("heading", { name: "Our Little Purple Ocean" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Our Purple Ocean" })).toBeVisible();
     await page.getByRole("link", { name: "← Back to the village" }).click();
     await expect(page.getByRole("heading", { name: "A little magic found you." })).toBeVisible();
   });
@@ -36,7 +36,7 @@ test("navigation destinations and missing pages have a way home", async ({ page 
 
 test("page titles describe each destination", async ({ page }) => {
   for (const [path, title] of [
-    ["/", "The Little Boraverse"], ["/ocean", "Our Little Purple Ocean"], ["/arcade", "Bangtan Arcade"],
+    ["/", "The Little Boraverse"], ["/ocean", "Our Purple Ocean"], ["/arcade", "Bangtan Arcade"],
     ["/arcade/gacha", "Little Surprise Gacha"], ["/arcade/music", "Let a song find you"], ["/magic-shop", "Magic Shop"],
     ["/keepsakes", "My Keepsakes"], ["/garden", "Memory Garden"], ["/about", "About"], ["/privacy", "Privacy"],
     ["/c/example/unknown", "A little surprise"],
@@ -46,5 +46,5 @@ test("page titles describe each destination", async ({ page }) => {
   }
   await page.goto("/");
   await page.getByRole("link", { name: "Light up our ocean" }).click();
-  await expect(page).toHaveTitle("Our Little Purple Ocean | The Little Boraverse");
+  await expect(page).toHaveTitle("Our Purple Ocean | The Little Boraverse");
 });

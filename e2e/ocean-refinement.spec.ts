@@ -8,7 +8,7 @@ for (const total of [0, 3, 50, 500, 5000]) {
     page.on("console", message => { if (message.type() === "error" || message.type() === "warning") errors.push(message.text()); });
     await page.route("**/api/ocean", route => route.fulfill({ json: { status: "ok", totalLights: total, writesEnabled: true } }));
     await page.goto("/ocean");
-    await expect(page.getByText(`${total.toLocaleString()} confirmed little lights`)).toBeVisible();
+    await expect(page.getByText(`${total.toLocaleString()} lights`)).toBeVisible();
     await expect(page.locator(".ocean-contribution-light")).toHaveCount(sharedLightCount(total));
     const progress = await page.locator(".ocean-scene").evaluate(el => Number((el as HTMLElement).style.getPropertyValue("--ocean-progress")));
     expect(progress).toBeCloseTo(oceanProgress(total));
@@ -34,7 +34,7 @@ test("slow confirmation holds the charge and rapid keyboard/click activation mak
   await page.locator(".ocean-action > .button").evaluate(button => { (button as HTMLButtonElement).click(); (button as HTMLButtonElement).click(); });
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-phase", "preparing");
   await expect(page.getByRole("status")).toContainText("slow connection", { timeout: 6000 });
-  await expect(page.getByText("3 confirmed little lights")).toBeVisible();
+  await expect(page.getByText("3 lights")).toBeVisible();
   await expect(page.getByRole("button", { name: "Save my moment" })).toHaveCount(0);
   expect(posts).toBe(1);
   const chargedButton = await page.locator(".ocean-action > .button").boundingBox();
@@ -42,10 +42,10 @@ test("slow confirmation holds the charge and rapid keyboard/click activation mak
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-phase", "travelling");
   const flyingButton = await page.locator(".ocean-action > .button").boundingBox();
   expect(flyingButton!.y).toBeCloseTo(chargedButton!.y, 0);
-  await expect(page.getByText("3 confirmed little lights")).toBeVisible();
+  await expect(page.getByText("3 lights")).toBeVisible();
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-phase", "joining");
-  await expect(page.getByText("50 confirmed little lights")).toBeVisible();
-  await expect(page.getByRole("status")).toContainText("joined");
+  await expect(page.getByText("50 lights")).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("shining");
   await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
 });
 
@@ -56,8 +56,8 @@ test("changing reduced motion during flight skips to verified success", async ({
   await page.getByRole("button", { name: "Add my little light" }).click();
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-phase", "travelling");
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.getByRole("status")).toContainText("joined");
-  await expect(page.getByText("4 confirmed little lights")).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("shining");
+  await expect(page.getByText("4 lights")).toBeVisible();
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-reduced-motion", "true");
   await expect(page.getByRole("button", { name: "Save my moment" })).toBeVisible();
 });
@@ -106,7 +106,7 @@ test("leaving during a request preserves the unresolved key and cleans up animat
   expect(await page.evaluate(() => localStorage.getItem("boraverse-ocean-pending"))).toBe(key);
   expect(errors).toEqual([]);
   await page.goBack();
-  await expect(page.getByRole("heading", { name: "Our Little Purple Ocean" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Our Purple Ocean" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Add my little light" })).toBeEnabled();
   expect(await page.evaluate(() => localStorage.getItem("boraverse-ocean-pending"))).toBe(key);
 });
@@ -118,13 +118,13 @@ test("loading never substitutes a made-up total and a missing canvas still confi
   await page.route("**/api/ocean", async route => { await held; await route.fulfill({ json: { status: "ok", totalLights: 3, writesEnabled: true } }); });
   await page.route("**/api/ocean/contribute", route => route.fulfill({ status: 201, json: { status: "accepted", totalLights: 4 } }));
   await page.goto("/ocean");
-  await expect(page.getByText("Gathering the little lights…")).toBeVisible();
+  await expect(page.getByText("Gathering lights…")).toBeVisible();
   await expect(page.getByRole("button", { name: "Add my little light" })).toBeDisabled();
   release();
-  await expect(page.getByText("3 confirmed little lights")).toBeVisible();
+  await expect(page.getByText("3 lights")).toBeVisible();
   await page.getByRole("button", { name: "Add my little light" }).click();
-  await expect(page.getByRole("status")).toContainText("joined");
-  await expect(page.getByText("4 confirmed little lights")).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("shining");
+  await expect(page.getByText("4 lights")).toBeVisible();
 });
 
 test("a hidden scene pauses its flight and navigation cleans up a confirmed sequence", async ({ page }) => {
@@ -137,7 +137,7 @@ test("a hidden scene pauses its flight and navigation cleans up a confirmed sequ
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-paused", "true");
   await page.waitForTimeout(2500);
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-phase", "travelling");
-  await expect(page.getByText("3 confirmed little lights")).toBeVisible();
+  await expect(page.getByText("3 lights")).toBeVisible();
   await page.evaluate(() => { Object.defineProperty(document, "hidden", { configurable: true, value: false }); document.dispatchEvent(new Event("visibilitychange")); });
   await expect(page.locator(".ocean-scene")).toHaveAttribute("data-paused", "false");
   await page.getByRole("link", { name: "← Back to the village" }).click();

@@ -8,8 +8,37 @@ export function oceanProgress(total: number): number {
   return Number.isFinite(total) && total > 0 ? Math.min(1, Math.log1p(total) / Math.log1p(5000)) : 0;
 }
 
+export type OceanAppearance = {
+  stars: number; whaleLine: number; whaleFill: number; clouds: number;
+  horizon: number; haze: number; ambient: number; rim: number;
+};
+
+const milestones: { total: number; look: OceanAppearance }[] = [
+  { total: 0, look: { stars: 0, whaleLine: .035, whaleFill: 0, clouds: .08, horizon: .035, haze: .02, ambient: 0, rim: 0 } },
+  { total: 3, look: { stars: 5, whaleLine: .085, whaleFill: .015, clouds: .12, horizon: .07, haze: .04, ambient: 0, rim: .025 } },
+  { total: 50, look: { stars: 32, whaleLine: .27, whaleFill: .12, clouds: .28, horizon: .22, haze: .16, ambient: 5, rim: .08 } },
+  { total: 500, look: { stars: 110, whaleLine: .72, whaleFill: .52, clouds: .66, horizon: .65, haze: .6, ambient: 20, rim: .4 } },
+  { total: 5000, look: { stars: 220, whaleLine: 1, whaleFill: 1, clouds: .95, horizon: 1, haze: 1, ambient: 48, rim: .85 } },
+];
+
+export function oceanAppearance(total: number): OceanAppearance {
+  const safeTotal = Number.isFinite(total) ? Math.max(0, total) : 0;
+  const index = milestones.findIndex(step => safeTotal <= step.total);
+  if (index <= 0) return milestones[index < 0 ? milestones.length - 1 : 0].look;
+  const from = milestones[index - 1], to = milestones[index];
+  const ratio = (Math.log1p(safeTotal) - Math.log1p(from.total)) / (Math.log1p(to.total) - Math.log1p(from.total));
+  const eased = ratio * ratio * (3 - 2 * ratio);
+  const mix = (a: number, b: number) => a + (b - a) * eased;
+  return {
+    stars: mix(from.look.stars, to.look.stars), whaleLine: mix(from.look.whaleLine, to.look.whaleLine),
+    whaleFill: mix(from.look.whaleFill, to.look.whaleFill), clouds: mix(from.look.clouds, to.look.clouds),
+    horizon: mix(from.look.horizon, to.look.horizon), haze: mix(from.look.haze, to.look.haze),
+    ambient: mix(from.look.ambient, to.look.ambient), rim: mix(from.look.rim, to.look.rim),
+  };
+}
+
 export function sharedLightCount(total: number): number {
-  return total > 0 ? Math.ceil(oceanProgress(total) * MAX_SHARED_LIGHTS) : 0;
+  return Math.ceil(oceanAppearance(total).stars);
 }
 
 export function seeded(index: number): number {

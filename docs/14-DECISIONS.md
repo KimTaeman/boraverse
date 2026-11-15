@@ -29,6 +29,12 @@ Owner refinement: `/ocean` is a full-bleed, minimum-full-viewport environment. S
 
 Owner supplied `PURPLE-OCEAN-IMPLEMENTATION-BRIEF.md` and locked the next refinement: preserve Fix 1A unchanged; replace the realistic raster whale and scene illustrations with replaceable SVG/CSS celestial storybook placeholders. Whale opacity, horizon/cloud lighting and deterministic shared-star density follow a saturating logarithmic curve from real confirmed totals (reference 5000), rather than one rendered star per row. Maximum visible shared stars: 150 mobile / 220 desktop; zero shared stars at total zero, with faint decorative constellation and far stars. A 450ms minimum charge precedes a confirmed-only 1500ms Bézier ascent with emitted glitter, 900ms burst/shimmer/world response and success. Reduced motion skips the flight. Existing API, private schema, idempotency, limits and write kill-switch remain in place; no migration or new dependency.
 
+## Cinematic hierarchy and progression — 2026-11-15
+
+Owner requested six linked UI refinement steps. Preserve full bleed; organize a small title area, dominant sky/whale/figure zone, and compact controls beneath it. Display `Our Purple Ocean`, the story line, literal `N lights`, primary action, subtle brand and Back. Remove invitations, explanation paragraphs, placeholder labels and legal footer from the scene; preserve that information in a keyboard-accessible count-information dialog and About/Privacy pages. Keep the primary button visible but disabled when the existing kill-switch blocks writes.
+
+Independent visual parameters interpolate smoothly between milestones 0/3/50/500/5000: shared density, whale lines, whale stardust fill, cloud light, horizon, haze, ambient dust and character rim lighting. Rendered shared-light targets are 0/5/32/110/220 (mobile still caps visible density at 150); these are artistic representation, not a fake numeric total or individual-person map. Retain existing flight/state infrastructure; strengthen nearby-star/horizon response only. After verified success use `Your light is shining ♡`, `You made our sky a little brighter.`, and prominent Save My Moment. No backend, limits, write availability or paid-service decision changes.
+
 ## Architecture recommendations adopted for pack (implementation proposals, not provisioned)
 | ID | Proposal |
 |---|---|

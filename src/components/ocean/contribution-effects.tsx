@@ -103,7 +103,9 @@ export default function ContributionEffects({ phase, reducedMotion, onLanding, o
       ctx!.setTransform(ratio, 0, 0, ratio, 0, 0);
       const button = scene.parentElement?.querySelector(".ocean-action > .button")?.getBoundingClientRect();
       const whale = scene.querySelector(".ocean-whale")?.getBoundingClientRect();
-      origin = { x: .5, y: button ? Math.max(.48, Math.min(.8, (button.top - box.top - 30) / height)) : .66 };
+      const figures = scene.querySelector(".ocean-crowd")?.getBoundingClientRect();
+      const launchY = figures ? figures.top + figures.height * .32 : button ? button.top - 30 : box.top + height * .66;
+      origin = { x: .5, y: Math.max(.4, Math.min(.82, (launchY - box.top) / height)) };
       if (whale) destination = { x: Math.max(.2, Math.min(.85, (whale.left - box.left + whale.width * 740 / 900) / width)), y: Math.max(.25, Math.min(.5, (whale.top - box.top + whale.height * 184 / 450) / height)) };
       path = flightPath(origin, destination);
       draw(elapsed);

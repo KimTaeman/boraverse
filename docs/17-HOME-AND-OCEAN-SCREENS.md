@@ -42,14 +42,14 @@
 ## Screen B — Purple Ocean `/ocean`
 
 ### Main page composition
-1. **Back link + heading:** `Our Little Purple Ocean`; little introductory subtitle `One little light. One beautiful memory.`
+1. **Back link + heading:** `Our Purple Ocean`; little introductory subtitle `One little light. One beautiful memory.`
 2. **Full-viewport environment:** an edge-to-edge indigo-purple sky with independent clouds, whale, crowd, particles and glow behind the content. No rounded scene card or outer gutters. Use minimum 100dvh (100svh fallback), allow vertical scrolling for short screens/enlarged text, and preserve static CSS/SVG fallbacks.
 3. **Community context:** server-authoritative count displayed with label `accepted lights` or `little lights`, never `people` unless proven.
 4. **Primary action:** `Add my little light` (>=44px tall), overlaid on the scene with safe contrast.
 5. **Optional concert-day selection:** `December 3`, `December 5`, `December 6`, `Not attending / Prefer not to say`; default `unspecified`, no geolocation. Changing selected day **after** accepted contribution does not rewrite historical record.
 6. **Feedback area:** pending, accepted, previously-contributed, retry; consistent height to limit layout shift.
 7. **Keepsake panel:** appears after accepted or if previously contributed; option `Save my Bangkok star` as 1080×1920 export, alternative text share/copy.
-8. **More experiences:** return Village / visit Gacha / Magic Shop. Overlaid in-page links replace the shared header, footer and persistent bottom nav on Ocean. Compact unofficial/artwork credits and About/Privacy remain available.
+8. **More experiences:** return Village / visit Gacha / Magic Shop. Overlaid in-page links replace the shared header, footer and persistent bottom nav on Ocean. Unofficial/artwork disclosure and About/Privacy remain available through the count-information dialog and dedicated pages.
 9. **Fine print:** contribution is anonymous per browser, may be repeated from different browsers, no unique-person claim.
 
 ### State machine: events and UI
@@ -135,3 +135,19 @@ GET remains aggregate-only. Existing visitor/pending/cooldown keys are preserved
 Canvas DPR is capped at 2; transient particles at 64. RAF pauses while hidden/offscreen; observers, listeners and requests are cleaned up on route exit. CSS ambient motion pauses with scene visibility and respects reduced motion. Missing canvas falls back to immediate verified acknowledgement. Keepsake export uses the same constellation/illustration slots with download/open-image fallback.
 
 See `public/assets/ocean/README.md` for final-art slots and `e2e/capture-ocean.mjs` for reproducible local-only fixture screenshots/recordings; no product demo query or fake production count exists.
+
+## Current cinematic layout — 2026-11-15
+
+The root full-viewport sky and existing contribution lifecycle remain intact. A small title zone precedes a flexible artwork zone; compact controls flow below the figures, with safe-area padding. Sky/haze/stars/effects still span the full viewport. Faded art edges and a localized control scrim avoid a panel seam. Count format is literal `N lights`; an adjacent 44px native-dialog trigger explains accepted contributions, non-unique-person counts and intended per-browser participation. Escape/Close restores trigger focus. About/Privacy preserve full legal/privacy details and placeholder disclosure.
+
+Ready has no invitation, footer, or repeating explanatory copy. State messages remain short and truthful; success is `Your light is shining ♡` and `You made our sky a little brighter.` with Save My Moment as the primary action. Already-contributed, offline, retry and view-only retain their real semantics. A blocked-write primary button stays disabled. Existing curved flight/burst/shimmer is reused, with a nearby-star glint and localized horizon response added. The launch origin follows the figures, keeping it away from control text.
+
+| Confirmed total milestone | Shared-light target (bounded visual density) | Scene |
+|---|---|---|
+| 0 | 0 | Deep indigo, 12 dim decorative far stars, almost unseen whale, quiet horizon |
+| 3 | 5 | Recognizable first sparks and a very faint whale response |
+| 50 | 32 | Partial constellation/stardust and slightly illuminated cloud edges |
+| 500 | 110 | Glowing whale, purple haze, richer light field and horizon |
+| 5000 | 220 desktop / 150 visible mobile | Luminous whale stardust, nebula, 48 ambient dust points and figure rim lighting |
+
+Each layer has its own curve, with smoothstep interpolation over logarithmic intervals. No permanent total is inferred from this artistic map: the displayed number comes only from the existing API. The paired whale-body mask and constellation image are replaceable manifest slots. `e2e/capture-ocean.mjs` saves before/after, all five tiers, information, submitting/failure/offline/duplicate states, success recordings and responsive checks in `out/ocean-cinematic/` using local fixtures only.

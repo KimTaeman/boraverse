@@ -13,7 +13,7 @@ Village ↔ /ocean ↔ share souvenir
        ↔ /garden [P1]
 ```
 
-Mobile: persistent bottom navigation `Home, Ocean, Arcade, Magic, Saved`; Garden linked from hub. Desktop: accessible top navigation. `Back` returns to previous meaningful page; deep links don't dead-end. Header includes logo, sound toggle if any audio, menu. Ocean is an immersive exception: full-viewport artwork with overlaid Back to Village, Keep Exploring and About/Privacy links replaces the shared bars. Scene art is never only navigation control.
+Mobile: persistent bottom navigation `Home, Ocean, Arcade, Magic, Saved`; Garden linked from hub. Desktop: accessible top navigation. `Back` returns to previous meaningful page; deep links don't dead-end. Header includes logo, sound toggle if any audio, menu. Ocean is an immersive exception: full-viewport artwork with Back, a count-information button and compact contribution controls replaces the shared bars. About/Privacy links live in that information dialog; Keep Exploring is secondary after contribution. Scene art is never only navigation control.
 
 ## Journey 1 — 15-second QR visitor
 1. Scan printed QR on Pokémon card.

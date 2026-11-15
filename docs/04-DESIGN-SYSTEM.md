@@ -71,6 +71,8 @@ Ocean fills the viewport without card borders, rounded frame, outer gutters or t
 5. Verified total, optional day tabs, explanation `Lights represent accepted contributions, not verified unique people`.
 6. Error / duplicate / view-only states, all usable and friendly.
 
+Current refinement: `Our Purple Ocean` and one story line form the small upper zone. Illustration occupies its own flexible zone; `N lights`, a 44px information button, a short state line and primary action sit below the figures. Legal/privacy and placeholder disclosure are available through the count dialog and dedicated pages. Ready state has no invitation paragraph or footer. Desktop and mobile artwork anchors are tuned independently. Shared density, whale line/glitter, cloud/horizon light, haze and figure rims interpolate independently across the 0/3/50/500/5000 milestones.
+
 ## Art placeholders and replacement
 - Default fallback visual uses simple original gradient/SVG components in `/public/placeholders`.
 - Scenes load art from a manifest using stable semantic IDs: `home.sky`, `home.shop`, `home.foreground`, `ocean.sky`, `ocean.waves`, `ocean.glow`, `ocean.lightParticle`.

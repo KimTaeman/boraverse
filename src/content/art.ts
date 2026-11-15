@@ -9,4 +9,5 @@ export const art = {
   "ocean.crowd": { src: "/assets/ocean/seven-figures.svg", width: 900, height: 450, role: "decorative", status: "placeholder" },
   "ocean.stage": { src: "/assets/ocean/horizon.svg", width: 1200, height: 400, role: "decorative", status: "placeholder" },
   "ocean.moon": { src: "/assets/ocean/moon.svg", width: 180, height: 180, role: "decorative", status: "placeholder" },
+  "ocean.whaleBody": { src: "/assets/ocean/whale-body.svg", width: 900, height: 450, role: "decorative", status: "placeholder" },
 } as const;

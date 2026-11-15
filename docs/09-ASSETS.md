@@ -52,10 +52,14 @@ const art: Record<string, ArtAsset> = {
 
 The owner supplied `PURPLE-OCEAN-IMPLEMENTATION-BRIEF.md` after Fix 1A. The full-bleed wrapper is preserved. Current manifest slots point to original SVG placeholders in `public/assets/ocean/`; sky variants, feathered clouds, crescent, soft whale constellation, distant horizon and seven generic back-view figures share a restrained indigo/lavender palette. No raster whale or reference-board imagery is used by the scene or keepsake. See `public/assets/ocean/README.md` for artboards, safe zones, landing anchor and replacement workflow.
 
-Far stars and aggregate shared lights are distinct. Logarithmic progression controls atmosphere, cloud rim, horizon and constellation opacity. Shared lights are deterministic and bounded (150 visible on mobile, 220 desktop); they are density, not individually mapped contributors. The count text stays literal and server-authoritative. Transient charge/flight/glitter/burst are procedural Canvas, with a CSS constellation shimmer; neither count nor movement is baked into art.
+Far stars and aggregate shared lights are distinct. Smooth interpolation between the owner’s 0/3/50/500/5000 milestones independently controls shared-star density, whale line glow, masked interior stardust, cloud illumination, horizon, haze, ambient dust and figure rim light. Shared lights are deterministic and bounded (150 visible on mobile, 220 desktop); they are density, not individually mapped contributors. The count text stays literal and server-authoritative. Transient charge/flight/glitter/burst are procedural Canvas, with a CSS constellation shimmer; neither count nor movement is baked into art.
 
 The 1080×1920 PNG keepsake loads the same SVG slots on demand. Broken artwork leaves semantic controls, a CSS atmosphere and SVG star field usable; export has an explicit error/retry path. All artwork remains placeholder pending the owner's final illustrations and rights approval.
 
 ## Previous generated raster review set — v1 (archived)
 
 PNG masters in `assets/ocean/generated-v1/`, their prompts/metadata and earlier WebP derivatives in `public/art/ocean/v1/` are retained for review history. The active manifest no longer references them. Source masters and downloadable ZIP output stay excluded from deployment uploads. No further image-generation dependency or service was added.
+
+## Cinematic refinement replacement notes
+
+`ocean.whaleBody` adds a white alpha silhouette matching the constellation’s 900×450 artboard. It masks the independently controlled stardust/fill and must be replaced alongside the whale if the final silhouette changes. It contains no counts. The distant horizon now uses soft beams instead of a rectangular stage symbol. An artwork-only flow zone clips/fades scenery before the count/control row; no scene object or figure can obscure the number. Final artist illustrations remain pending; the visible placeholder label has moved to About as requested by the owner.
