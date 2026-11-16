@@ -41,3 +41,7 @@ Avoid terms `infection`, `virus`, `system compromised`, false payment/credential
 - Don't expose admin pages, RLS bypass credentials or DB dumps.
 - Consider a basic security header policy (CSP, Referrer-Policy), with testing so art/CDN remains functional.
 - If public growth exceeds free limits, degrade gracefully or turn off writes; don't allow unexpected charges.
+
+## Implemented browser-data disclosure — 2026-11-16
+
+The public Privacy page explains local-only games/letters, explicit browser-local keepsake saves, on-device image generation, and clearing site data. Clearing browser data removes local keepsakes/identifiers but does not delete server-held Ocean records or copies already downloaded/shared. The page also explains that a chosen listening link opens YouTube under that service's separate privacy practices. Existing Ocean hash, ingress, provider metadata and approved retention disclosures remain intact. This describes current implementation; final owner review of public wording/provider settings is still pending.
