@@ -55,3 +55,17 @@ test("owner review CLI rejects invalid configuration without exposing connection
   assert.ok(!result.stderr.includes(secret));
   assert.equal(result.stdout, "");
 });
+
+test("origin checks use the browser-facing Host when Next normalizes loopback URLs", async () => {
+  let calls = 0;
+  const perform = async () => { calls++; return { status: "submitted", submissionId: randomUUID(), kind: "bangtan", reviewStatus: "pending" }; };
+  const request = origin => new Request("http://localhost:3468/api/magic", { method: "POST", headers: { "Content-Type": "application/json", Host: "127.0.0.1:3468", Origin: origin }, body: JSON.stringify(submit()) });
+  assert.equal((await handleMagic(request("http://127.0.0.1:3468"), true, perform)).status, 200);
+  assert.equal((await handleMagic(request("http://localhost:3468"), true, perform)).status, 403);
+  assert.equal((await handleMagic(request("https://127.0.0.1:3468"), true, perform)).status, 403);
+  const foreign = request("https://untrusted.example"); foreign.headers.set("x-forwarded-host", "untrusted.example");
+  assert.equal((await handleMagic(foreign, true, perform)).status, 403);
+  const crossSite = request("http://127.0.0.1:3468"); crossSite.headers.set("Sec-Fetch-Site", "cross-site");
+  assert.equal((await handleMagic(crossSite, true, perform)).status, 403);
+  assert.equal(calls, 1);
+});

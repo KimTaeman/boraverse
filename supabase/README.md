@@ -14,11 +14,11 @@ The restricted login can be checked without leaving data by running `node --env-
 
 `node --env-file=.env.local tests/ocean-http-rollback.integration.mjs` also exercises the actual contribution handler against the restricted login within a rolled-back transaction. It checks responses and confirmed counts without committing a contribution; it does not replace a controlled deployed HTTP test.
 
-## Magic Shop — source prepared, migration not applied
+## Magic Shop — migrated, public activation pending
 
 `migrations/20261116133329_magic_shop.sql` extends the existing private schema and restricted `ocean_app` role; keep that schema outside the Data API. Do not recreate the Ocean role/schema or change its existing login. The Magic integration test applies the migration and a temporary owner role grant within BEGIN, then rolls everything back. It creates no persistent messages or tables and is not a deployment check.
 
-Keep `MAGIC_WRITE_ENABLED=false` until the owner applies the versioned migration through the existing owner-only migration workflow, records it in migration history, verifies restricted-role reads/writes, and confirms review/privacy/usage readiness. The migration itself is not idempotent: check history first. No real schema was changed by this implementation. Ocean's separate gate stays false.
+Migration `20261116133329` was applied on 2026-11-16 after the owner continued the source handoff, with its SQL recorded atomically in `supabase_migrations.schema_migrations`. All five new tables have RLS; the existing restricted website login can read them without superuser or RLS-bypass privileges. Ocean contributions were preserved. The migration is not idempotent: it is now recorded and must not be reapplied. Keep `MAGIC_WRITE_ENABLED=false` pending public deployment/activation and review/privacy/usage readiness; Ocean's separate gate stays false.
 
 Owner review uses ignored `.env.admin.local` overriding the restricted connection. For example:
 
@@ -33,10 +33,28 @@ node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs 
 
 Review the complete text privately before publishing: original supportive writing only, no contact details, links, harassment, copyrighted lyrics or implication of direct delivery to BTS. Publish/reject acts only on pending entries; hide withdraws a published entry. The web application never receives the owner credentials. Reports do not automatically delete text; review them promptly. Disable Magic writes first if review capacity or usage becomes unsafe; hiding/owner review still works independently. Do not drop shared records without owner approval and a retention/export review.
 
-Rollback-only verification command (both gates off):
+Pre-migration rollback-only verification (both gates off; intentionally refuses once Magic tables already exist):
 
 ```sh
 MAGIC_WRITE_ENABLED=false OCEAN_WRITE_ENABLED=false node --env-file=.env.local --env-file=.env.admin.local tests/magic-database.integration.mjs
 ```
 
 This checks serial idempotency/RLS/withdrawal semantics, not simultaneous multi-connection races or a committed deployed write.
+
+### Controlled check after migration
+
+Use an isolated production build bound to loopback; do not enable public/hosted writes. In one terminal:
+
+```sh
+MAGIC_WRITE_ENABLED=true OCEAN_WRITE_ENABLED=false npm run start -- --hostname 127.0.0.1 --port 3468
+```
+
+In another terminal:
+
+```sh
+MAGIC_WRITE_ENABLED=false OCEAN_WRITE_ENABLED=false node --env-file=.env.local tests/magic-live.integration.mjs
+```
+
+The test reads the restricted connection from `.env.local` and owner configuration from ignored `.env.admin.local`. It accepts only HTTP loopback port 3468. It commits synthetic pending records, retries the same request, inspects/rejects with the real owner command, checks the reviewed status and withdrawal, and submits two simultaneous transactions through separate restricted connections. It verifies one row and publication denial, then removes only its generated request/message IDs and visitor rate buckets. Global rate accounting is preserved; no synthetic text is ever published. Stop the temporary write-enabled server afterward. A failed cleanup needs private owner inspection before rerunning; never wipe real messages or reset all rate buckets.
+
+This verifies the local production HTTP path and hosted database, not the deployed public HTTP endpoint or operational moderation availability. Final artwork and phone/print QA remain separate.

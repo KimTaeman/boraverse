@@ -105,7 +105,7 @@ Concurrent identical requests → one accepted row. Two idempotency keys for sam
 
 ## Magic Shop — implemented source, D017/D018
 
-Migration `20261116133329_magic_shop.sql` adds private messages, request receipts, reactions, reports and rate buckets. It has been tested inside a rolled-back owner transaction, not permanently applied. Submissions start `pending`; only owner credentials can publish/reject them. The website role can withdraw its visitor's records but cannot publish or edit message text. RLS and revoked public/anon/authenticated grants supplement explicit published-only API queries.
+Migration `20261116133329_magic_shop.sql` adds private messages, request receipts, reactions, reports and rate buckets. It passed a rolled-back owner-transaction check and was then permanently applied with migration history on 2026-11-16. Submissions start `pending`; only owner credentials can publish/reject them. The website role can withdraw its visitor's records but cannot publish or edit message text. RLS and revoked public/anon/authenticated grants supplement explicit published-only API queries.
 
 `GET /api/magic[?cursor=<uuid>]` returns `{status:"ok",items,nextCursor,writesEnabled}` with at most 12 published Bangtan letters in stable UUID order. Items contain only `{id,title,text,reactions}`; no author hashes, tokens, pending text or moderation metadata. It does not claim chronological ordering.
 

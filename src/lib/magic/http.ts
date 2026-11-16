@@ -5,7 +5,10 @@ export function magicError(code: string, status: number, message: string) {
 }
 export async function handleMagic(request: Request, enabled: boolean, perform: (input: MagicInput) => Promise<MagicReply | MagicFailure>) {
   const origin = request.headers.get("origin");
-  if ((origin && origin !== new URL(request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") return magicError("INVALID", 403, "Please share from the Magic Shop page.");
+  const url = new URL(request.url);
+  // NextURL normalizes loopback names; Host preserves the browser-facing authority.
+  const expectedOrigin = `${url.protocol}//${request.headers.get("host") || url.host}`;
+  if ((origin && origin !== expectedOrigin) || request.headers.get("sec-fetch-site") === "cross-site") return magicError("INVALID", 403, "Please share from the Magic Shop page.");
   if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get("content-type") || "")) return magicError("INVALID", 400, "Please check your words and try again.");
   const declared = request.headers.get("content-length");
   if (declared && (!/^\d+$/.test(declared) || Number(declared) > 8192)) return magicError("TOO_LARGE", 413, "Please keep your message a little shorter.");

@@ -46,4 +46,4 @@
 
 ## Owner-directed Magic Shop refinement — D018
 
-The reviewed journey and review-before-publication source implementation extend the core warm-experience work. Final colours/art remain replaceable. Deployment, permanent migration, controlled shared-write verification and activation are separate remaining steps; Ocean UI and physical-phone/print checks stay deferred as requested.
+The reviewed journey and review-before-publication source implementation extend the core warm-experience work. Final colours/art remain replaceable. The migration and controlled local committed-write verification are complete. Public deployment, deployed-boundary verification and activation remain separate steps; Ocean UI and physical-phone/print checks stay deferred as requested.

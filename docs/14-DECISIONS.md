@@ -64,3 +64,7 @@ Independent visual parameters interpolate smoothly between milestones 0/3/50/500
 
 ## Change control
 Document any changed locked item with date and reason; update relevant QR/print, API, design and test docs in same pull request.
+
+## Magic Shop database rollout — 2026-11-16
+
+After the owner continued from the source handoff, migration `20261116133329_magic_shop.sql` was applied to the existing database and recorded atomically in migration history. No new service, role, paid capability or public write setting was introduced. Controlled verification uses synthetic pending-only records and exact-record cleanup; no sample content is published. D018's owner-review policy and replaceable appearance remain unchanged. Public deployment/activation, provider/retention readiness and physical-device/print checks are still pending.

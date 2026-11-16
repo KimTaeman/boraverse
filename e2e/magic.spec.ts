@@ -159,7 +159,7 @@ test("confirmed withdrawal updates the browser's receipt list", async ({ page })
 });
 
 test("the deployed write-off boundary rejects shared posting without inventing success", async ({ request }) => {
-  const response = await request.post("/api/magic", { data: { action: "submit", visitorToken: id, requestId: other, kind: "bangtan", title: "Boundary test", text: "A test that must not be submitted.", consent: true } });
+  const response = await request.post("/api/magic", { headers: { Origin: "http://127.0.0.1:3456" }, data: { action: "submit", visitorToken: id, requestId: other, kind: "bangtan", title: "Boundary test", text: "A test that must not be submitted.", consent: true } });
   expect(response.status()).toBe(503);
   expect((await response.json()).status).toBe("error");
   expect(response.headers()["cache-control"]).toBe("no-store");
