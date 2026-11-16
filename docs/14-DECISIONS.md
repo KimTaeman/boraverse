@@ -18,6 +18,7 @@
 | D011 | QR entry should be friendly, cute, not scary technical warnings |
 | D012 | 2026-11-13: Owner approved initial Vercel deployment with placeholder art and Ocean writes disabled. Deployed to https://little-boraverse.vercel.app; printed QR destination remains unfrozen. |
 | D013 | 2026-11-14: Owner approved Ocean limits of 60 attempts/minute globally, 5/token/minute, and a Vercel edge rule of 120 POSTs/IP/minute for `/api/ocean/contribute` returning 429. Keep writes disabled pending a separate controlled live-write check. Rate buckets become cleanup-eligible after one day and are removed opportunistically; review cleanup before reopening/retiring an inactive site. Retain contributions until retirement, then review export/deletion. Stay within Hobby included capability; paid changes require separate approval. |
+| D014 | 2026-11-16: Owner approved the eight English QR message bodies presented for Pokémon-inspired, tarot, license, meme, quote, invitation, banknote and receipt families. Exact wording is recorded in `08-CONTENT-AND-LORE.md` and the existing `01` registry rows. This approves message wording only; separate titles, route/destination freeze, final artwork/source rights, per-variant quantities, public reveal, printed domain and printing remain pending. Keep every registry `approved` flag false until its remaining review gates pass. |
 
 ## Ocean UI direction — 2026-11-14
 
@@ -53,7 +54,7 @@ Independent visual parameters interpolate smoothly between milestones 0/3/50/500
 - Sleeve fit: 63×88 Pokémon inside nominal 65×90mm sleeve; fallback 59×86 if too tight.
 - Final illustration, fonts, member-inspired mascot artwork and approved source rights.
 - Specific variants and per-variant print run counts.
-- Final English/Thai content and official song links.
+- Remaining English titles/content, Thai translations and official song selections; the eight QR message bodies are approved in D014.
 - Verify approved D013 limits and retention in operation before enabling writes; review provider metadata/log retention separately.
 - Whether Memory Garden launches as P1 or remains a polished coming-soon portal on launch day.
 
