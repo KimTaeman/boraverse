@@ -7,10 +7,10 @@ const site = "https://little-boraverse.vercel.app";
 const item = { id: "01", title: "Original title", message: "Original message", approved: true };
 const fixture = (variants = [item], destination = "/arcade") => ({ pokemon: { destination, variants } });
 
-test("current QR registry has no releasable content and names all eight blocked families", () => {
+test("current QR registry includes all eight approved website previews", () => {
   const manifest = createQrManifest(site);
-  assert.deepEqual(manifest.routes, []);
-  assert.equal(manifest.missingFamilies.length, 8);
+  assert.equal(manifest.routes.length, 8);
+  assert.deepEqual(manifest.missingFamilies, []);
 });
 test("manifest contains only approved stable routes, without changing registry data", () => {
   const registry = fixture([item, { ...item, id: "02", approved: false }]);
@@ -31,11 +31,14 @@ test("duplicate IDs, unsafe paths, empty approved copy and external destinations
   }
 });
 
-test("CLI exits nonzero and reports blockers instead of passing an empty release", () => {
-  const result = spawnSync(process.execPath, ["scripts/check-qr.mjs", site], { encoding: "utf8", timeout: 10000 });
+test("unapproved content remains absent from the manifest", () => {
+  const manifest = createQrManifest(site, fixture([{ ...item, approved: false }]));
+  assert.deepEqual(manifest.routes, []);
+  assert.deepEqual(manifest.missingFamilies, ["pokemon"]);
+});
+test("CLI rejects a placeholder origin before launching a browser", () => {
+  const result = spawnSync(process.execPath, ["scripts/check-qr.mjs", "https://example.com"], { encoding: "utf8", timeout: 10000 });
   assert.equal(result.status, 1);
-  const report = JSON.parse(result.stdout);
-  assert.deepEqual(report.checked, []);
-  assert.equal(report.missingFamilies.length, 8);
-  assert.ok(report.errors.includes("No approved QR routes to verify."));
+  assert.match(result.stderr, /No release was approved/);
+  assert.equal(result.stdout, "");
 });

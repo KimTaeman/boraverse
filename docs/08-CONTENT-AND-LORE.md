@@ -63,11 +63,11 @@ Metadata for each song: `id`, `title`, `artist`, `releaseYear`, `albumOrEra`, `m
 ## Translation notes
 English first; architecture supports Thai. Translations should be culturally natural rather than word-for-word. BTS proper names and official song titles stay consistent. Do not show machine translations as approved without a human proofreading pass.
 
-## First QR copy review — message wording approved, 2026-11-16
+## First QR set — website preview approved, 2026-11-16
 
-The owner approved the eight English message bodies below on 2026-11-16 (D014), as presented in the chat review. They occupy the existing `01` records in `src/content/freebies.ts`. Titles remain proposed; these are original messages, not lyrics, artist quotations or factual lore claims. Every record remains `approved: false` while titles, final artwork/source rights and release details await review, so public routes still show the generic fallback. Existing IDs/destinations are preserved but not frozen for printing.
+The owner approved the eight English message bodies below in D014, followed by these titles and module destinations for public website previews with placeholders in D015. The existing `01` records in `src/content/freebies.ts` now use `approved: true`, enabling their reveal pages. These are original messages, not lyrics, artist quotations or factual lore claims. Website-preview approval does not finalize illustration/source rights, printed domain, physical production or print quantities.
 
-| Family / existing record | Title (proposed) | Message (approved D014) | Existing destination |
+| Family / existing record | Title (approved D015) | Message (approved D014) | Destination (website preview) |
 |---|---|---|---|
 | `pokemon/01` | A tiny companion for a big night | Every great adventure needs a little sidekick. Meet a pocket-sized surprise in the arcade. | `/arcade` |
 | `tarot/01` | The Little Lantern | A small brave step can light the way. Visit the Magic Shop for a playful fortune, just for fun. | `/magic-shop` |
@@ -78,6 +78,6 @@ The owner approved the eight English message bodies below on 2026-11-16 (D014), 
 | `banknote/01` | One pocketful of possibility | This pretend note has no cash value. The little surprises in our arcade are free, and your curiosity is all you need. | `/arcade` |
 | `receipt/01` | A receipt for a little togetherness | One shared sky. A memory to carry home. Visit our Purple Ocean and see the lights we are making together. | `/ocean` |
 
-Remaining review gates: owner approves the separate title, intended destination/stable ID and final original artwork/source rights. Message-body approval alone does not unlock the public reveal; only mark a variant approved once its remaining gates pass. The license is explicitly a playful keepsake, not a credential; the banknote is not money; the fortune is for fun. No real certificate, paid reward, mini-game, saved Ocean contribution or artist message is promised. The receipt invites visiting the shared sky and does not imply a light was already saved.
+Remaining print gates: final original artwork/source rights, canonical printed domain, physical scan/sleeve checks and production details. These are separate from the approved public website previews. The license is explicitly a playful keepsake, not a credential; the banknote is not money; the fortune is for fun. No real certificate, paid reward, mini-game, saved Ocean contribution or artist message is promised. The receipt invites visiting the shared sky and does not imply a light was already saved.
 
-This set deliberately uses original writing instead of unverified fandom quotations. Title review, Thai translation/proofreading, additional variants, art selection and per-variant quantities remain pending. Do not print or distribute these route examples as production QR codes until the existing release checks pass.
+This set deliberately uses original writing instead of unverified fandom quotations. Thai translation/proofreading, additional variants, final art selection and per-variant quantities remain pending. Do not print or distribute these route examples as production QR codes until the existing release checks pass.

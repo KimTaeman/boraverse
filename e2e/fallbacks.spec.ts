@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { freebies } from "../src/content/freebies";
 
-test("all unapproved QR examples have a friendly fallback", async ({ page }) => {
+test("unreviewed variant IDs keep the friendly fallback and hide approved copy", async ({ page }) => {
   for (const [family, entry] of Object.entries(freebies)) {
-    await page.goto(`/c/${family}/01`);
+    await page.goto(`/c/${family}/not-reviewed`);
     await expect(page.getByRole("heading", { name: "A little surprise" })).toBeVisible();
     await expect(page.getByText("This surprise is not ready", { exact: false })).toBeVisible();
     await expect(page.getByRole("link", { name: "Back to the village" })).toBeVisible();
