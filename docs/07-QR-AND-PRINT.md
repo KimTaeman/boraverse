@@ -56,3 +56,17 @@
 5. Cut and fit one 63×88 card to open-end 65×90 sleeve. Test easy insertion/removal.
 6. Re-test ALL approved variant URLs from a machine-readable manifest; archive final registry/QR assets.
 7. Freeze IDs, batch export print sheets, spot-check each family and date before 2,000 run.
+
+## Automated route audit (does not approve printing)
+
+After approving actual registry variants and choosing the canonical HTTPS host, run:
+
+```sh
+npm run qr:check -- https://little-boraverse.vercel.app
+```
+
+The existing deployment URL above is a candidate, not an approved printed destination. Substitute the actual owner-approved origin if it changes. The checker rejects example/local origins, IP literals, URL credentials/paths/queries and other Vercel deployment hosts. Custom-domain ownership and whether a custom domain points to staging still require owner verification.
+
+The command reads the real registry, includes only approved variants, validates stable IDs/duplicates/copy/internal destinations, and prints a JSON route report. For each approved variant it checks the canonical and trailing-slash URLs, exact reveal heading/message, exploration link, village link and destination response. A friendly HTTP-200 fallback cannot pass as an approved reveal. Missing approved content in any of the eight families, a browser failure or a failed route exits nonzero. With the present registry, **all eight families block release**; no routes are approved or probed.
+
+Use Node 22.18+ or 24 (native TypeScript stripping) and the installed Playwright Chromium. For an archiveable JSON report, use `npm run --silent qr:check -- <approved-https-origin>` and save stdout to a local file; check the command's exit status. No environment secrets, contribution writes, QR images, print sheets, domain freeze or approval flags are created. A passing audit verifies web routes only; original-art/copy approval, physical-device scans, glare and sleeve-fit checks still apply. Repeat after deploying the approved registry so the deployed copy matches the local manifest.
