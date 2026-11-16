@@ -20,3 +20,15 @@ test("only an explicitly approved variant resolves to its family destination", (
     assert.equal(approvedFreebie("pokemon", "test")?.destination, "/arcade");
   } finally { variants.pop(); }
 });
+
+test("every review draft stays behind the approval gate", () => {
+  for (const [family, entry] of Object.entries(freebies)) {
+    assert.equal(entry.variants.length, 1);
+    const item = entry.variants[0];
+    assert.equal(item.id, "01");
+    assert.equal(item.approved, false);
+    assert.ok(item.title.trim().length > 0 && item.message.trim().length > 0);
+    assert.notEqual(item.title, "A little surprise");
+    assert.equal(approvedFreebie(family, item.id), null);
+  }
+});

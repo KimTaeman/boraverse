@@ -122,3 +122,9 @@ The contribution-only rule was staged, inspected and published within the existi
 The owner selected the dreamy whale-galaxy reference direction. The redesigned screen uses original replaceable sky/whale/crowd layers, one contribution star per confirmed light up to a 120-star visual cap, a confirmation-gated 1.8-second ascent, reduced-motion fallback and a matching whale keepsake. The save action stays in the primary action area after confirmation. Empty/unavailable counts do not populate contribution stars.
 
 Lint, TypeScript, six unit tests and production build passed. The full Chromium and WebKit suites each passed 30 tests; after the final density refinement, the three mobile confirmation/star-count checks passed again in each browser. Mobile and desktop screenshots were visually reviewed with mocked totals, not production contributions. Previous Lighthouse figures predate this UI revision; re-audit after final artwork and verify actual phones. Ocean writes remain disabled.
+
+## QR content review preparation — 2026-11-16
+
+The existing eight `01` records now contain original proposed copy for owner review; see `08-CONTENT-AND-LORE.md`. All remain unapproved and publicly return the generic fallback. No route ID, destination, domain, quantity, artwork or QR-print decision was approved or frozen by preparing these drafts. Ocean UI refinement is deferred at the owner's request; its current implementation and write-off gate remain unchanged.
+
+Validation: lint, TypeScript, all 18 unit tests and production build passed. The targeted QR/no-JavaScript suite passed 2/2 in Chromium and 2/2 in mobile WebKit, including checks that draft titles/messages do not appear on unapproved routes. Physical QR samples, final artwork and owner content approval remain pending.

@@ -62,3 +62,22 @@ Metadata for each song: `id`, `title`, `artist`, `releaseYear`, `albumOrEra`, `m
 
 ## Translation notes
 English first; architecture supports Thai. Translations should be culturally natural rather than word-for-word. BTS proper names and official song titles stay consistent. Do not show machine translations as approved without a human proofreading pass.
+
+## First QR copy review — proposed, 2026-11-16
+
+One original English draft now occupies each existing `01` record in `src/content/freebies.ts`. These are proposals, not approved lyrics, artist quotations, factual lore claims or final print copy. Every record remains `approved: false`, so its public route still shows the generic fallback. Existing IDs/destinations are preserved; this is not a QR-domain or print freeze.
+
+| Family / proposed record | Title | Message | Existing destination |
+|---|---|---|---|
+| `pokemon/01` | A tiny companion for a big night | Every great adventure needs a little sidekick. Meet a pocket-sized surprise in the arcade. | `/arcade` |
+| `tarot/01` | The Little Lantern | A small brave step can light the way. Visit the Magic Shop for a playful fortune, just for fun. | `/magic-shop` |
+| `license/01` | Licensed to make little memories | Permission to laugh too loudly, treasure small moments, and enjoy the arcade. A playful keepsake, not an official credential. | `/arcade` |
+| `meme/01` | My serious plans have left the chat | Today's agenda: find a little joy, collect a silly surprise, and call it a productive day. | `/arcade` |
+| `quote/01` | A little kindness, folded for you | You do not have to shine at full brightness every day. There is a quiet corner waiting for you in the Magic Shop. | `/magic-shop` |
+| `invitation/01` | You found our little universe | Come in, take a breath, and wander at your own pace. There is a little magic here for you. | `/` |
+| `banknote/01` | One pocketful of possibility | This pretend note has no cash value. The little surprises in our arcade are free, and your curiosity is all you need. | `/arcade` |
+| `receipt/01` | A receipt for a little togetherness | One shared sky. A memory to carry home. Visit our Purple Ocean and see the lights we are making together. | `/ocean` |
+
+Review gates: owner approves the wording and intended destination, then final original artwork/source rights. Only then mark a reviewed variant approved. The license is explicitly a playful keepsake, not a credential; the banknote is not money; the fortune is for fun. No real certificate, paid reward, mini-game, saved Ocean contribution or artist message is promised. The receipt invites visiting the shared sky and does not imply a light was already saved.
+
+This set deliberately uses original writing instead of unverified fandom quotations. English/Thai proofreading, additional variants, art selection and per-variant quantities remain pending. Do not print or distribute these route examples as production QR codes until the existing release checks pass.
