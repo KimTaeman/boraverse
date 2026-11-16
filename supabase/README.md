@@ -13,3 +13,30 @@ The rollback-only database setup tests require the administrator credentials, no
 The restricted login can be checked without leaving data by running `node --env-file=.env.local tests/ocean-live-rollback.integration.mjs` while `OCEAN_WRITE_ENABLED=false`. This exercises the database operations inside a transaction and verifies rollback; it does not test a committed contribution or the live HTTP write endpoint.
 
 `node --env-file=.env.local tests/ocean-http-rollback.integration.mjs` also exercises the actual contribution handler against the restricted login within a rolled-back transaction. It checks responses and confirmed counts without committing a contribution; it does not replace a controlled deployed HTTP test.
+
+## Magic Shop — source prepared, migration not applied
+
+`migrations/20261116133329_magic_shop.sql` extends the existing private schema and restricted `ocean_app` role; keep that schema outside the Data API. Do not recreate the Ocean role/schema or change its existing login. The Magic integration test applies the migration and a temporary owner role grant within BEGIN, then rolls everything back. It creates no persistent messages or tables and is not a deployment check.
+
+Keep `MAGIC_WRITE_ENABLED=false` until the owner applies the versioned migration through the existing owner-only migration workflow, records it in migration history, verifies restricted-role reads/writes, and confirms review/privacy/usage readiness. The migration itself is not idempotent: check history first. No real schema was changed by this implementation. Ocean's separate gate stays false.
+
+Owner review uses ignored `.env.admin.local` overriding the restricted connection. For example:
+
+```sh
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs list
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs show <message-uuid>
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs publish <message-uuid>
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs reject <message-uuid>
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs reports
+node --env-file=.env.local --env-file=.env.admin.local scripts/review-magic.mjs hide <message-uuid>
+```
+
+Review the complete text privately before publishing: original supportive writing only, no contact details, links, harassment, copyrighted lyrics or implication of direct delivery to BTS. Publish/reject acts only on pending entries; hide withdraws a published entry. The web application never receives the owner credentials. Reports do not automatically delete text; review them promptly. Disable Magic writes first if review capacity or usage becomes unsafe; hiding/owner review still works independently. Do not drop shared records without owner approval and a retention/export review.
+
+Rollback-only verification command (both gates off):
+
+```sh
+MAGIC_WRITE_ENABLED=false OCEAN_WRITE_ENABLED=false node --env-file=.env.local --env-file=.env.admin.local tests/magic-database.integration.mjs
+```
+
+This checks serial idempotency/RLS/withdrawal semantics, not simultaneous multi-connection races or a committed deployed write.

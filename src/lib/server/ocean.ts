@@ -1,19 +1,9 @@
 import "server-only";
 import { createHmac } from "node:crypto";
-import { readFileSync } from "node:fs";
-import { Pool } from "pg";
+import { database } from "./database";
 import { writeOcean } from "@/lib/ocean/store";
 import type { Contribution } from "@/lib/ocean/validation";
 
-let connection: Pool | undefined;
-function database() {
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("database unavailable");
-  const parsed = new URL(url);
-  for (const key of ["sslmode", "sslcert", "sslkey", "sslrootcert"]) parsed.searchParams.delete(key);
-  const ca = process.env.DATABASE_CA_CERT || (process.env.DATABASE_CA_CERT_PATH ? readFileSync(process.env.DATABASE_CA_CERT_PATH, "utf8") : undefined);
-  return connection ??= new Pool({ connectionString: parsed.toString(), max: 1, connectionTimeoutMillis: 10000, idleTimeoutMillis: 20000, ssl: { rejectUnauthorized: true, ca } });
-}
 
 export async function getOcean() {
   const { rows } = await database().query<{ concert_day: string; count: number }>("select concert_day, count(*)::int as count from app_private.ocean_contributions group by concert_day");

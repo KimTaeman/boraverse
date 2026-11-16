@@ -75,7 +75,7 @@ for (const failure of ["no-context", "throws", "empty-blob"] as const) {
       Object.assign(window, { restoreKeepsakeExport: () => { canvas.getContext = originalContext; canvas.toBlob = originalBlob; } });
     }, failure);
     await create.click();
-    await expect(page.getByRole("main").getByRole("alert")).toContainText("Your keepsake is still saved");
+    await expect(page.getByRole("main").getByRole("alert")).toContainText("Your words are still on this page");
     await expect(page.getByRole("link", { name: "Download image" })).toHaveCount(0);
     await expect(create).toBeEnabled();
     expect(await page.evaluate(() => JSON.parse(localStorage.getItem("boraverse-keepsakes-v1")!))).toEqual([savedItem]);

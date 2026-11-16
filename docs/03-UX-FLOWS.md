@@ -97,3 +97,13 @@ Entrance refinement: owner requested a single welcoming CTA and an animated open
 Single-CTA refinement validation: all eight responsive browser journeys and animated/reduced-motion entrance checks passed in Chromium/WebKit, with zero page errors or network requests; lint and diff checks passed. Full Next.js build/typecheck/unit suites were not repeated because application code is unchanged.
 
 Shared-flow refinement validation: all eight responsive journeys and both engines' entrance checks passed after adding collection/read/agree/unreact, separate audience drafts, random-message non-repeat, plain-text rendering, explicit public-sharing consent and a clearly simulated submission. No app/backend/database files changed, no content was published, and the production private-to-public transition remains pending the publishing-policy answer. Lint and diff checks passed; no production build was repeated for this design-only change.
+
+## Implemented journey — D018, 2026-11-16
+
+This supersedes the study's implementation-pending notes above. `/magic-shop` now implements the reviewed entrance, four-object interior, seven original letters, playful fortunes, separate private audience drafts, folding/editing, local keepsakes and inline PNG export. The interior uses four columns at desktop width and two on phones; reading surfaces intentionally keep a narrow measure. Colours, CSS objects and two SVG atmosphere slots remain provisional.
+
+`?experience=room|letters|mirror|collection|jar` opens a named view directly. Back follows the journey and retains in-memory drafts; a same-tab return skips the door. Existing approved Magic QR links keep `/magic-shop` as their destination and skip the entrance on activation. Reduced motion enters immediately, including a preference change during entry.
+
+Dear Bangtan browses published server records in bounded pages; agreement is an explicit desired state confirmed by the server, never a local pretend counter. Dear ARMY randomly draws a published message excluding the visitor's own and the immediately previous message; an empty pool is stated honestly. No sample messages enter the production feed.
+
+Writing is private until the visitor consents and chooses Submit for review. Confirmation says pending review only after acknowledgement. An unresolved shared request retains its exact key and body for explicit retry, including after reload; it is never automatically reposted. My shared words provides withdrawal, and received public content provides reporting. Loading, empty, unavailable, offline, storage failure, encoding failure and retry retain usable navigation and private keepsakes. Public mutations are disabled until the separate Magic gate is enabled.

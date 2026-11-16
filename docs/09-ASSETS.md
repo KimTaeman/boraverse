@@ -63,3 +63,7 @@ PNG masters in `assets/ocean/generated-v1/`, their prompts/metadata and earlier 
 ## Cinematic refinement replacement notes
 
 `ocean.whaleBody` adds a white alpha silhouette matching the constellation’s 900×450 artboard. It masks the independently controlled stardust/fill and must be replaced alongside the whale if the final silhouette changes. It contains no counts. The distant horizon now uses soft beams instead of a rectangular stage symbol. An artwork-only flow zone clips/fades scenery before the count/control row; no scene object or figure can obscure the number. Final artist illustrations remain pending; the visible placeholder label has moved to About as requested by the owner.
+
+## Magic Shop replaceable slots — D018
+
+`art.magic.sky` and `art.magic.interior` point to original lightweight SVGs in `public/placeholders/magic/`. The Server Component passes named CSS properties to the scene. Door, envelope, mirror, stationery, flowers and jar are CSS stand-ins independent of copy and semantic buttons. Replace backgrounds through `src/content/art.ts`; replace each object illustration in its existing named component/style without changing navigation coordinates. Essential labels and shared text never live inside artwork. Final exterior/interior illustrations, individual object art, stationery embellishments, palette and typography remain open for later owner review. No reference-board artwork or song lyrics were copied into production assets.

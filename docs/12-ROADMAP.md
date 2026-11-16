@@ -25,7 +25,7 @@
 
 ## Phase 4: Nov 26–29 — Polish and practical checks
 - Keepsakes, downloadable PNGs, English content QA, mobile accessibility, performance audit.
-- Optional certificate only if there's time. No open message wall.
+- Optional certificate only if there's time. No unmoderated message wall; D017/D018 separately approve the reviewed Magic Shop collection and message jar.
 - PASS: real phones, weak networks, reduced motion, copy review.
 
 ## Phase 5: Nov 29–Dec 2 — Launch freeze
@@ -43,3 +43,7 @@
 3. Reduce gacha outcomes and letter variants (retain minimum satisfying set).
 4. Keep home, reliable Ocean, approved QR route reveals, minimal music/letter entry, privacy and trust features.
 5. Never sacrifice database safety or truthful contribution behavior for extra animation.
+
+## Owner-directed Magic Shop refinement — D018
+
+The reviewed journey and review-before-publication source implementation extend the core warm-experience work. Final colours/art remain replaceable. Deployment, permanent migration, controlled shared-write verification and activation are separate remaining steps; Ocean UI and physical-phone/print checks stay deferred as requested.

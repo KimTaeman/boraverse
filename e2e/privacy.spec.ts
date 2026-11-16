@@ -28,8 +28,8 @@ test("games, local saves and image export make no write or external requests", a
   await page.getByRole("button", { name: "Draw a surprise" }).click();
   await page.getByRole("button", { name: "Save to keepsakes" }).click();
   await expect(page.getByRole("status")).toHaveText("Saved on this device.");
-  await page.goto("/magic-shop");
-  await page.getByRole("button", { name: "Envelope 1", exact: false }).click();
+  await page.goto("/magic-shop?experience=letters");
+  await page.getByRole("button", { name: "A little breathing room", exact: true }).click();
   await page.getByRole("button", { name: "Save to keepsakes" }).click();
   await expect(page.getByRole("status")).toHaveText("Saved on this device.");
   await page.goto("/keepsakes");

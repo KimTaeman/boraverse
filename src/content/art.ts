@@ -1,4 +1,6 @@
 export const art = {
+  "magic.sky": { src: "/placeholders/magic/sky.svg", width: 1440, height: 1000, role: "decorative", status: "placeholder" },
+  "magic.interior": { src: "/placeholders/magic/interior.svg", width: 1440, height: 1000, role: "decorative", status: "placeholder" },
   "home.sky": { src: "/placeholders/home-scene.svg", width: 1200, height: 900, role: "decorative", status: "placeholder" },
   "ocean.sky": { src: "/assets/ocean/sky-mobile.svg", width: 720, height: 1280, role: "decorative", status: "placeholder" },
   "ocean.skyDesktop": { src: "/assets/ocean/sky-desktop.svg", width: 1440, height: 900, role: "decorative", status: "placeholder" },

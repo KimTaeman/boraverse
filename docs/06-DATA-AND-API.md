@@ -102,3 +102,21 @@ Status codes: validation 400; too large 413; rate limited 429; DB unavailable 50
 
 ## Testing expectations
 Concurrent identical requests → one accepted row. Two idempotency keys for same browser → one row. Same idempotency key with different visitor → safe conflict. Timeout/retry → same result. Two distinct visitors → two rows. Invalid body/oversize/rate-limited/DB down → no false confirmed star. GET returns only aggregate. See testing doc.
+
+## Magic Shop — implemented source, D017/D018
+
+Migration `20261116133329_magic_shop.sql` adds private messages, request receipts, reactions, reports and rate buckets. It has been tested inside a rolled-back owner transaction, not permanently applied. Submissions start `pending`; only owner credentials can publish/reject them. The website role can withdraw its visitor's records but cannot publish or edit message text. RLS and revoked public/anon/authenticated grants supplement explicit published-only API queries.
+
+`GET /api/magic[?cursor=<uuid>]` returns `{status:"ok",items,nextCursor,writesEnabled}` with at most 12 published Bangtan letters in stable UUID order. Items contain only `{id,title,text,reactions}`; no author hashes, tokens, pending text or moderation metadata. It does not claim chronological ordering.
+
+`POST /api/magic` accepts JSON up to 8192 bytes with a UUID `visitorToken`. Mutations additionally require a UUID `requestId`:
+
+- `submit`: `kind` bangtan/army, title (1–80), text (1–1200/500 respectively), `consent:true`. Returns `submitted`, `submissionId`, `kind`, and the current `reviewStatus`. Initial status is pending, never public success.
+- `react`: published Bangtan `messageId`, desired `active` boolean. Returns `reacted`, `messageId`, authoritative `active` and `reactions`.
+- `remove`: own `messageId`. Returns `withdrawn`, `messageId`.
+- `report`: published `messageId`, reason harmful/private_information/other. Returns `reported`, `messageId`.
+- `draw`: optional `previousId`, no request ID. Returns `drawn`, `message` (published ARMY item or null), excluding own/previous records.
+
+All responses are no-store. Unknown fields, malformed IDs, unconsented submissions, links/contact-like text and oversized text are rejected. Writes require same-origin browser context and `MAGIC_WRITE_ENABLED=true`; draw remains read-only. Errors use 400/403/404/409/413/429/503 and generic visitor-friendly copy without database details. Rate limits return Retry-After.
+
+Request fingerprints bind idempotency keys to visitor, action and payload. Replaying an old agreement request returns the current state rather than overwriting a newer removal. Atomic request claims and a transaction advisory lock serialize bounded write capacity/count updates. No browser-supplied count is accepted. The separate visitor token is HMAC-hashed using the existing server secret with a Magic-specific domain prefix.

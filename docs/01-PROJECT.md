@@ -48,4 +48,4 @@ One mobile-first web app with: **Magical Village (home)**, **Purple Ocean (signa
 
 ## Shared Magic Shop scope update — D017, 2026-11-16
 
-The owner requested public Dear Bangtan letters with agreement reactions and visitor-written Dear ARMY messages received at random. These are a scoped addition to the planned Magic Shop, not live launch functionality yet. Other public UGC, direct artist messaging, accounts and general chat remain outside scope. Publishing/moderation policy is pending; the pre-existing live site and private drafts are unchanged.
+The owner requested public Dear Bangtan letters with agreement reactions and visitor-written Dear ARMY messages received at random. These are a scoped addition to the planned Magic Shop, not live launch functionality yet. Other public UGC, direct artist messaging, accounts and general chat remain outside scope. D018 approves review before publication and implementation of the reviewed journey. Source implementation is now present; public activation and final artwork remain pending. Drafts remain private unless explicitly submitted for review.

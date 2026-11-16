@@ -12,7 +12,7 @@
 ## Browser → server boundaries
 **Browser:** visual scene, games, curated local content, route navigation, local ID stored in browser, downloadable keepsakes, non-sensitive preferences.
 **Server:** ocean GET summary, POST contribution, input validation, throttling, idempotency, DB writes, server secrets, response caching headers.
-**Database:** accepted contributions, unique keys/hashes, timestamp and optional day, short-lived abuse throttle entries. No letters/nicknames/user messages in DB.
+**Database:** accepted contributions, unique keys/hashes, timestamp and optional day, short-lived abuse throttle entries. Only explicitly submitted D017/D018 Magic Shop text is stored, initially pending owner review; private drafts and keepsakes stay in the browser.
 
 ## App layout (design target, not files created)
 ```text
@@ -49,13 +49,14 @@ supabase/migrations/
 ## Data access decision
 Use node-postgres in a server-only module with the transaction pooler. Use a pool size of one, unnamed queries, verified TLS, and one checked-out client for each transaction. Pipelining stays disabled. The previous Postgres.js proposal is superseded because Supabase documents an incompatibility with shared transaction pooling.
 
-Supabase's database region and pooler endpoint come from real project dashboard—never guess them. Use versioned SQL migrations and private schema with minimal grants. Avoid Drizzle/Prisma until there is a demonstrated reason; direct SQL is enough for one small table.
+Supabase's database region and pooler endpoint come from real project dashboard—never guess them. Use versioned SQL migrations and private schema with minimal grants. Avoid Drizzle/Prisma until there is a demonstrated reason; direct SQL serves the bounded Ocean and reviewed Magic Shop tables.
 
 ## Environment variables (names proposed)
 - `DATABASE_URL` — Supabase transaction pooler URL, server-only.
 - `OCEAN_HMAC_SECRET` — long random server secret for hashing anonymous browser tokens (and optional temporary abuse fingerprints).
 - `NEXT_PUBLIC_SITE_URL` — canonical public HTTPS site URL (safe client exposure).
 - `OCEAN_WRITE_ENABLED` — operational kill-switch, default false in non-configured environments.
+- `MAGIC_WRITE_ENABLED` — independent default-off sharing/reaction/report/withdraw gate; published reading/random draws remain available.
 - Optional future: `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY` only if abuse mitigation is added.
 
 ## Libraries / dependencies
@@ -68,3 +69,7 @@ Essential only: next, react, react-dom, TypeScript, eslint, tailwindcss, node-po
 
 ## Explicitly excluded at launch
 WebSockets, polling every second, Supabase Realtime, auth, multiuser saved collectibles, messaging server, music uploads, admin dashboard, headless CMS, monetization, distributed queues, user analytics trackers.
+
+## Magic Shop implementation — D018
+
+`/magic-shop` remains a Server Component shell with one interactive Shop island. Named manifest backgrounds and CSS objects are replaceable independently of controls. Native browser history tracks views, not private text. The existing shared server-only `pg` pool serves Ocean and Magic transactions; no new backend, authentication product or dependency is added. `/api/magic` validates bounded requests, hashes a separate browser token with a domain-separated server HMAC, and uses the existing restricted role. Owner publication happens only through the private review CLI, never a public admin route.
