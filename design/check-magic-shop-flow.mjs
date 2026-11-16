@@ -19,7 +19,7 @@ for (const [name, engine] of [["chromium", chromium], ["webkit", webkit]]) {
       await page.setContent(html);
       await expect(page.getByRole("heading", { name: "Our Magic Shop", exact: true })).toBeVisible();
       await page.screenshot({ path: new URL(`${name}-${width}-entrance.png`, output).pathname, fullPage: true });
-      await page.getByRole("button", { name: "Open the door", exact: true }).click();
+      await page.getByRole("button", { name: "Come on in ♡", exact: true }).click();
       await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
       await page.screenshot({ path: new URL(`${name}-${width}-room.png`, output).pathname, fullPage: true });
       const letters = page.getByRole("button", { name: "Little Letters", exact: false });
@@ -65,13 +65,21 @@ for (const [name, engine] of [["chromium", chromium], ["webkit", webkit]]) {
     }
     const page = await browser.newPage();
     await page.setContent(html);
-    await page.getByRole("button", { name: "Step straight inside", exact: true }).click();
+    await expect(page.getByRole("button", { name: "Open the door", exact: true })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Step straight inside", exact: true })).toHaveCount(0);
+    await page.getByRole("button", { name: "Come on in ♡", exact: true }).click();
+    await expect(page.locator("#ms-screen")).toHaveAttribute("aria-busy", "true");
+    await expect(page.locator(".ms-door-scene")).toHaveClass(/ms-opening/);
     await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
+    await expect(page.locator("#ms-screen")).not.toHaveAttribute("aria-busy", "true");
+    await expect(page.getByRole("button", { name: "Little Letters", exact: false })).toBeFocused();
     await page.getByRole("button", { name: "Return to the doorway", exact: true }).click();
-    await page.getByRole("button", { name: "Open the door", exact: true }).click();
+    await page.getByRole("button", { name: "Come on in ♡", exact: true }).click();
+    await page.emulateMedia({ reducedMotion: "reduce" });
     await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
+    await expect(page.locator(".ms-entering")).toHaveCount(0);
     await page.close();
   } finally { await browser.close(); }
 }
 await writeFile(new URL("checks.json", output), JSON.stringify(results, null, 2));
-console.log(JSON.stringify({ responsiveJourneysPassed: results.length, entranceAndSkipEngines: 2, pageErrors: 0, networkRequests: 0 }));
+console.log(JSON.stringify({ responsiveJourneysPassed: results.length, animatedAndReducedMotionEntrances: 2, pageErrors: 0, networkRequests: 0 }));

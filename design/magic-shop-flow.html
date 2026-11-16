@@ -29,10 +29,20 @@
 #magic-shop-flow .ms-door-scene { height:255px; position:relative; display:grid; place-items:center; margin:16px 0 20px; background:radial-gradient(ellipse at 50% 90%,#9f76b755,transparent 67%); }
 #magic-shop-flow .ms-door-scene::before { content:""; position:absolute; inset:12% 10%; background:radial-gradient(circle at 12% 20%,#eed09b 0 1px,transparent 2px),radial-gradient(circle at 88% 35%,#e9d0f5 0 2px,transparent 3px),radial-gradient(circle at 28% 7%,#eed09b 0 1px,transparent 2px),radial-gradient(circle at 83% 88%,#eed09b 0 1px,transparent 2px); }
 #magic-shop-flow .ms-door-frame { position:relative; width:154px; height:225px; padding:10px; border:5px solid #a68aa9; border-radius:85px 85px 3px 3px; background:linear-gradient(110deg,#f5c993,#fff1d5); box-shadow:0 0 38px #e8b4a652,0 16px 40px #15102277; perspective:500px; }
-#magic-shop-flow .ms-door { height:100%; border:2px solid #d1acc5; border-radius:65px 65px 0 0; background:linear-gradient(120deg,#b598c3,#70547e); transform-origin:left; transform:rotateY(-28deg); transition:transform .4s ease; }
+#magic-shop-flow .ms-door { height:100%; border:2px solid #d1acc5; border-radius:65px 65px 0 0; background:linear-gradient(120deg,#b598c3,#70547e); transform-origin:left; transform:rotateY(0deg); transition:transform .55s ease; }
 #magic-shop-flow .ms-door::before { content:""; position:absolute; inset:32px 20px 34px; border:2px solid #e2bfd6; border-radius:35px 35px 0 0; }
 #magic-shop-flow .ms-door::after { content:""; position:absolute; width:7px; height:7px; border-radius:50%; background:var(--ms-gold); right:12px; top:62%; }
-#magic-shop-flow .ms-opening .ms-door { transform:rotateY(-100deg); }
+#magic-shop-flow .ms-opening .ms-door { transform:rotateY(-108deg); }
+#magic-shop-flow #ms-screen { position:relative; overflow:hidden; }
+#magic-shop-flow #ms-screen::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:0; background:radial-gradient(ellipse at 50% 57%,#fff1d5,#efd2b8); }
+#magic-shop-flow .ms-entering .ms-content { transform-origin:50% 58%; animation:ms-walk-in 1s cubic-bezier(.3,0,.2,1) both; }
+#magic-shop-flow #ms-screen.ms-entering::after { animation:ms-threshold-light 1s ease-in both; }
+#magic-shop-flow .ms-entering .ms-primary { opacity:0; transition:opacity .2s; }
+#magic-shop-flow .ms-arriving .ms-content { animation:ms-arrive .35s ease-out both; }
+@keyframes ms-walk-in { 0%,40% { transform:scale(1); } 100% { transform:scale(3.2); } }
+@keyframes ms-threshold-light { 0%,45% { opacity:0; } 100% { opacity:1; } }
+@keyframes ms-arrive { from { opacity:.4; transform:scale(1.08); } to { opacity:1; transform:scale(1); } }
+
 #magic-shop-flow .ms-room { padding:20px 0 0; background:radial-gradient(ellipse at 50% 10%,#f2bf8438,transparent 70%); }
 #magic-shop-flow .ms-room-top { display:flex; justify-content:center; align-items:end; gap:25px; height:82px; margin:0 0 10px; border-bottom:8px solid #80617c; }
 #magic-shop-flow .ms-lamp { position:relative; height:40px; width:3px; background:#d6b580; margin-bottom:6px; }
@@ -71,7 +81,7 @@
 #magic-shop-flow .ms-memory p { white-space:pre-wrap; overflow-wrap:anywhere; }
 #magic-shop-flow .ms-reveal { animation:ms-unfold .35s ease-out both; }
 @keyframes ms-unfold { from { transform:translateY(12px) rotate(-2deg); } to { transform:translateY(0) rotate(0); } }
-@media(prefers-reduced-motion:reduce) { #magic-shop-flow .ms-reveal { animation:none; } #magic-shop-flow .ms-door { transition:none; } }
+@media(prefers-reduced-motion:reduce) { #magic-shop-flow .ms-reveal { animation:none; } #magic-shop-flow .ms-door { transition:none; } #magic-shop-flow .ms-entering .ms-content, #magic-shop-flow .ms-arriving .ms-content, #magic-shop-flow #ms-screen.ms-entering::after { animation:none; } }
 @media(max-width:360px) { #magic-shop-flow .ms-content { padding-inline:16px; } #magic-shop-flow .ms-top { padding-inline:12px; } #magic-shop-flow .ms-object > strong { font-size:18px; } }
 </style>
 <script>
@@ -81,6 +91,7 @@
   const live = root.querySelector('#ms-live');
   const state = { view:'entrance', draft:'', moments:[], item:null, turn:0, origin:'letters' };
   let entranceTimer;
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const letters = [
     {id:'rest',title:'A little rest',body:'Even a little rest is a kind way to look after yourself.'},
     {id:'courage',title:'Your own pace',body:'Your own pace is a perfectly good pace for this journey.'},
@@ -99,12 +110,14 @@
   const back = '<button type="button" class="ms-back cursor-interaction" data-go="room">← Back to the shop</button>';
   function show(view) {
     clearTimeout(entranceTimer);
+    screen.classList.remove('ms-entering','ms-arriving');
+    screen.removeAttribute('aria-busy');
     const keyboardFocus = root.contains(document.activeElement);
     if(state.view==='room' && ['letters','mirror','write','jar'].includes(view)) state.origin=view;
     state.view = view;
     live.textContent = '';
     let body = '';
-    if(view==='entrance') body = `<p class="ms-eyebrow">A little place for you</p><h2>Our Magic Shop</h2><p class="ms-sub">Set the day down for a moment.</p><div class="ms-door-scene" aria-hidden="true"><div class="ms-door-frame"><div class="ms-door"></div></div></div>${action('Open the door','enter')}<button type="button" class="ms-secondary cursor-interaction" data-go="room">Step straight inside</button>`;
+    if(view==='entrance') body = `<p class="ms-eyebrow">A little place for you</p><h2>Our Magic Shop</h2><p class="ms-sub">Set the day down for a moment.</p><div class="ms-door-scene" aria-hidden="true"><div class="ms-door-frame"><div class="ms-door"></div></div></div>${action('Come on in ♡','enter')}`;
     if(view==='room') body = `<p class="ms-eyebrow">Come as you are</p><h2>Stay a little while.</h2><p class="ms-sub">What would feel good today?</p><div class="ms-room"><div class="ms-room-top" aria-hidden="true"><span class="ms-books"></span><span class="ms-lamp"></span><span class="ms-flower"></span></div><div class="ms-objects"><button type="button" class="ms-object cursor-interaction" data-go="letters"><span class="ms-envelope" aria-hidden="true"></span><strong>Little Letters</strong><span>Receive a little comfort</span></button><button type="button" class="ms-object cursor-interaction" data-go="mirror"><span class="ms-mirror" aria-hidden="true"></span><strong>Fortune Mirror</strong><span>A gentle discovery</span></button><button type="button" class="ms-object cursor-interaction" data-go="write"><span class="ms-paper-stack" aria-hidden="true"></span><strong>Dear Bangtan</strong><span>A private writing corner</span></button><button type="button" class="ms-object cursor-interaction" data-go="jar"><span class="ms-jar" aria-hidden="true"></span><strong>Dear ARMY</strong><span>A little shared kindness</span></button></div></div><button type="button" class="ms-secondary cursor-interaction" data-go="entrance">Return to the doorway</button>`;
     if(view==='letters') body = `${back}<p class="ms-eyebrow">Little Letters</p><h2>A note to meet you here.</h2><p class="ms-sub">Choose whichever envelope calls to you.</p><div class="ms-letter-choices">${letters.map((letter,index)=>`<button type="button" class="ms-letter-choice cursor-interaction" data-letter="${index}"><span class="ms-envelope" aria-hidden="true"></span>${['Rest','Courage','Kindness'][index]}</button>`).join('')}</div><p class="ms-small">Original words from an ARMY-made little world.</p>`;
     if(view==='mirror') body = `${back}<p class="ms-eyebrow">Fortune Mirror</p><h2>A little possibility.</h2><p class="ms-sub">A playful thought to carry into your day.</p><div class="ms-fortune" aria-hidden="true"><span class="ms-mirror"></span></div>${action('Turn my card','fortune')}<p class="ms-small">For reflection and fun.</p>`;
@@ -146,9 +159,14 @@
     if(button.dataset.letter!==undefined) { moment(letters[Number(button.dataset.letter)],'letter'); return; }
     switch(button.dataset.action) {
       case 'enter':
-        if(matchMedia('(prefers-reduced-motion: reduce)').matches) { show('room'); break; }
+        if(motion.matches) { show('room'); break; }
         screen.querySelector('.ms-door-scene').classList.add('ms-opening'); button.disabled=true;
-        entranceTimer=setTimeout(()=>{ if(state.view==='entrance') show('room'); },400); break;
+        screen.classList.add('ms-entering'); screen.setAttribute('aria-busy','true');
+        entranceTimer=setTimeout(()=>{
+          if(state.view!=='entrance') return;
+          show('room'); screen.classList.add('ms-arriving');
+          screen.querySelector('[data-go="letters"]').focus();
+        },1000); break;
       case 'fortune': moment(fortunes[state.turn++%fortunes.length],'fortune'); break;
       case 'kindness': moment(kindness[state.turn++%kindness.length],'kindness'); break;
       case 'edit': show('write'); break;
@@ -157,6 +175,9 @@
         if(!state.moments.some(item=>item.key===state.item.key)) state.moments.push({...state.item});
         show('moment'); live.removeAttribute('data-announcement'); live.textContent='Kept in this preview. Visit Moments to see it again.'; break;
     }
+  });
+  motion.addEventListener('change', () => {
+    if(motion.matches && screen.classList.contains('ms-entering')) show('room');
   });
   show('entrance');
 })();
