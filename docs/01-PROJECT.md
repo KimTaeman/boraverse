@@ -45,3 +45,7 @@ No purchase flow, personal accounts, leaderboards, realtime chat, open unmoderat
 
 ## Product shape
 One mobile-first web app with: **Magical Village (home)**, **Purple Ocean (signature shared art)**, **Bangtan Arcade** (gacha + music), **Magic Shop** (fortunes + letters), **My Keepsakes** (on-device downloads), **Memory Garden** (later). All physical QR variants deep-link to a matching reveal but never lock features permanently.
+
+## Shared Magic Shop scope update — D017, 2026-11-16
+
+The owner requested public Dear Bangtan letters with agreement reactions and visitor-written Dear ARMY messages received at random. These are a scoped addition to the planned Magic Shop, not live launch functionality yet. Other public UGC, direct artist messaging, accounts and general chat remain outside scope. Publishing/moderation policy is pending; the pre-existing live site and private drafts are unchanged.

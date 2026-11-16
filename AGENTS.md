@@ -12,7 +12,7 @@ Build a delightful, safe, lightweight, mobile-first **unofficial ARMY fan websit
 
 ## Non-negotiables
 1. Next.js **App Router**, TypeScript strict, accessible semantic UI, Tailwind and project design tokens. Server Components by default; Client Components only for required interactivity.
-2. **No auth, payment, marketing form, public user-generated message wall, tracking pixel, invasive analytics, or direct fan-to-BTS messaging** in launch scope.
+2. **No auth, payment, marketing form, tracking pixel, invasive analytics, or direct fan-to-BTS messaging** in launch scope. Public visitor writing is limited to the owner-requested Dear Bangtan/Dear ARMY flows in D017; publishing policy and release checks must be settled before they go live. All other public UGC remains outside scope.
 3. Supabase is **PostgreSQL hosting**, not a reason to add its Auth/Storage/Realtime products. Backend data operations happen only from server-only Next.js Route Handlers. Secret database URL never reaches the client.
 4. Never falsely report an Ocean contribution as saved. Use server-authoritative result, atomic insert and uniqueness, explicit retry/duplicate states, resource limits, and idempotency.
 5. All 2,000 physical freebies use a stable website QR. Don't finalize or print a production destination until the deployed HTTPS route is tested. Avoid unique-per-copy codes unless explicitly approved.

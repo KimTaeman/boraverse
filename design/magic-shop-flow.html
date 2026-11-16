@@ -4,7 +4,7 @@
     <header class="ms-top"><span>The Little Boraverse</span><button class="ms-quiet cursor-interaction" data-go="moments" type="button">Moments <span id="ms-count">0</span></button></header>
     <div id="ms-screen"></div>
     <p id="ms-live" class="ms-live" role="status" aria-live="polite"></p>
-    <p class="ms-preview-note">Design preview. Moments and private writing stay in this preview and clear when it closes.</p>
+    <p class="ms-preview-note">Examples only. Writing and reactions stay in this preview; nothing is published.</p>
   </section>
 </div>
 <style>
@@ -84,12 +84,22 @@
 @media(prefers-reduced-motion:reduce) { #magic-shop-flow .ms-reveal { animation:none; } #magic-shop-flow .ms-door { transition:none; } #magic-shop-flow .ms-entering .ms-content, #magic-shop-flow .ms-arriving .ms-content, #magic-shop-flow #ms-screen.ms-entering::after { animation:none; } }
 @media(max-width:360px) { #magic-shop-flow .ms-content { padding-inline:16px; } #magic-shop-flow .ms-top { padding-inline:12px; } #magic-shop-flow .ms-object > strong { font-size:18px; } }
 </style>
+<style>
+#magic-shop-flow .ms-collection { text-align:left; }
+#magic-shop-flow .ms-collection article { padding:22px 0; border-bottom:1px solid #e0c7e933; }
+#magic-shop-flow .ms-collection article p { color:#e4cfe9; font-size:15px; }
+#magic-shop-flow .ms-read { background:none; border:0; padding:0; text-align:left; font:400 23px/1.3 Georgia,serif; text-decoration:underline; text-underline-offset:5px; }
+#magic-shop-flow .ms-reaction { background:none; border:1px solid #b394be; border-radius:99px; padding:9px 14px; margin-top:12px; font-size:14px; }
+#magic-shop-flow .ms-reaction[aria-pressed="true"] { background:#e3c9e9; color:#35283e; }
+#magic-shop-flow .ms-consent { display:flex; align-items:flex-start; gap:12px; text-align:left; margin:20px 0; }
+#magic-shop-flow .ms-consent input { flex:none; width:20px; height:20px; margin:4px 0; }
+</style>
 <script>
 (() => {
   const root = document.getElementById('magic-shop-flow');
   const screen = root.querySelector('#ms-screen');
   const live = root.querySelector('#ms-live');
-  const state = { view:'entrance', draft:'', moments:[], item:null, turn:0, origin:'letters' };
+  const state = { view:'entrance', audience:'bangtan', drafts:{bangtan:'',army:''}, moments:[], item:null, turn:0, origin:'letters', reactions:{}, lastMessage:-1 };
   let entranceTimer;
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const letters = [
@@ -102,83 +112,104 @@
     {id:'door',title:'The Door',body:'A small brave step will be enough.'},
     {id:'melody',title:'The Melody',body:'Let a familiar song brighten your day.'}
   ];
-  const kindness = [
-    {id:'joy',title:'A little joy',body:'May you find a small moment of joy in the middle of a busy day.'},
-    {id:'breath',title:'A little breathing room',body:'Take a breath. You do not need to have everything figured out today.'}
+  const publicLetters = [
+    {id:'ordinary',title:'For the ordinary days',body:'Thank you for making long days feel a little less lonely. Your music has become a small place of comfort for me.'},
+    {id:'pace',title:'Learning at my own pace',body:'I am learning to move at my own pace. I wanted to leave a little gratitude here for the songs that have kept me company.'},
+    {id:'gratitude',title:'A little gratitude',body:'Some memories are loud; others are quiet. I hope we keep finding small reasons to smile, together.'}
+  ];
+  const messages = [
+    {id:'joy',title:'A little joy',body:'If today feels like a lot, I hope one small, ordinary thing makes you smile. An ARMY is cheering you on.'},
+    {id:'breath',title:'A little breathing room',body:'You can take a break here. There is no perfect way to get through a difficult day. I hope you find a gentler moment.'},
+    {id:'company',title:'A little company',body:'We might never stand next to each other in the crowd, but I am glad we found a little joy in the same music.'}
   ];
   const action = (label, value, primary=true) => `<button type="button" class="${primary?'ms-primary':'ms-secondary'} cursor-interaction" data-action="${value}" ${primary?'data-primary':''}>${label}</button>`;
   const back = '<button type="button" class="ms-back cursor-interaction" data-go="room">← Back to the shop</button>';
+  const reaction = id => `<button type="button" class="ms-reaction cursor-interaction" data-react="${id}" aria-pressed="${Boolean(state.reactions[id])}">I feel this too ♡ · ${state.reactions[id]?1:0}</button>`;
   function show(view) {
     clearTimeout(entranceTimer);
-    screen.classList.remove('ms-entering','ms-arriving');
-    screen.removeAttribute('aria-busy');
+    screen.classList.remove('ms-entering','ms-arriving'); screen.removeAttribute('aria-busy');
     const keyboardFocus = root.contains(document.activeElement);
-    if(state.view==='room' && ['letters','mirror','write','jar'].includes(view)) state.origin=view;
-    state.view = view;
-    live.textContent = '';
-    let body = '';
-    if(view==='entrance') body = `<p class="ms-eyebrow">A little place for you</p><h2>Our Magic Shop</h2><p class="ms-sub">Set the day down for a moment.</p><div class="ms-door-scene" aria-hidden="true"><div class="ms-door-frame"><div class="ms-door"></div></div></div>${action('Come on in ♡','enter')}`;
-    if(view==='room') body = `<p class="ms-eyebrow">Come as you are</p><h2>Stay a little while.</h2><p class="ms-sub">What would feel good today?</p><div class="ms-room"><div class="ms-room-top" aria-hidden="true"><span class="ms-books"></span><span class="ms-lamp"></span><span class="ms-flower"></span></div><div class="ms-objects"><button type="button" class="ms-object cursor-interaction" data-go="letters"><span class="ms-envelope" aria-hidden="true"></span><strong>Little Letters</strong><span>Receive a little comfort</span></button><button type="button" class="ms-object cursor-interaction" data-go="mirror"><span class="ms-mirror" aria-hidden="true"></span><strong>Fortune Mirror</strong><span>A gentle discovery</span></button><button type="button" class="ms-object cursor-interaction" data-go="write"><span class="ms-paper-stack" aria-hidden="true"></span><strong>Dear Bangtan</strong><span>A private writing corner</span></button><button type="button" class="ms-object cursor-interaction" data-go="jar"><span class="ms-jar" aria-hidden="true"></span><strong>Dear ARMY</strong><span>A little shared kindness</span></button></div></div><button type="button" class="ms-secondary cursor-interaction" data-go="entrance">Return to the doorway</button>`;
-    if(view==='letters') body = `${back}<p class="ms-eyebrow">Little Letters</p><h2>A note to meet you here.</h2><p class="ms-sub">Choose whichever envelope calls to you.</p><div class="ms-letter-choices">${letters.map((letter,index)=>`<button type="button" class="ms-letter-choice cursor-interaction" data-letter="${index}"><span class="ms-envelope" aria-hidden="true"></span>${['Rest','Courage','Kindness'][index]}</button>`).join('')}</div><p class="ms-small">Original words from an ARMY-made little world.</p>`;
-    if(view==='mirror') body = `${back}<p class="ms-eyebrow">Fortune Mirror</p><h2>A little possibility.</h2><p class="ms-sub">A playful thought to carry into your day.</p><div class="ms-fortune" aria-hidden="true"><span class="ms-mirror"></span></div>${action('Turn my card','fortune')}<p class="ms-small">For reflection and fun.</p>`;
-    if(view==='jar') body = `${back}<p class="ms-eyebrow">Dear ARMY</p><h2>Kindness, waiting here.</h2><p class="ms-sub">Reach for a little encouragement.</p><div class="ms-door-scene" aria-hidden="true"><span class="ms-jar" style="width:110px;height:135px"></span></div>${action('Pick a message','kindness')}<p class="ms-small">Curated original messages from this fan-made project.</p>`;
-    if(view==='write') body = `${back}<p class="ms-eyebrow">Dear Bangtan</p><h2>A place for your words.</h2><p class="ms-sub">Gratitude, a memory, or something on your mind.</p><form class="ms-compose"><label for="ms-draft">Your private letter</label><textarea id="ms-draft" maxlength="1200" placeholder="Dear Bangtan…" aria-describedby="ms-writing-note"></textarea><p id="ms-writing-note" class="ms-small">Private writing for you to keep. This is not delivered to BTS. Drafts stay here while you explore this preview.</p><p id="ms-error" role="alert"></p><button type="submit" class="ms-primary cursor-interaction" data-primary>Fold my letter</button></form>`;
-    if(view==='moment') body = `${back}<p class="ms-eyebrow">${state.item.kind==='writing'?'Your words, kept close':'A little encouragement'}</p><article class="ms-stationery ms-reveal"><h3></h3><p class="ms-message"></p><p class="ms-signature">${state.item.kind==='writing'?'A private letter, written by you.':'Original ARMY-made words, with a little warmth.'}</p></article>${action(state.moments.some(item=>item.key===state.item.key)?'Kept in this preview':'Keep this moment','keep')}${action(state.item.kind==='writing'?'Unfold and edit':'Discover another little moment',state.item.kind==='writing'?'edit':'another',false)}`;
-    if(view==='moments') body = `${back}<p class="ms-eyebrow">Your little collection</p><h2>Moments to carry.</h2><p class="ms-sub">${state.moments.length?'A little warmth from your visit.':'Your collection can grow at your own pace.'}</p><div id="ms-memories"></div><button type="button" class="ms-primary cursor-interaction" data-go="room" data-primary>Explore the shop</button>`;
-    screen.innerHTML = '<div class="ms-content">'+body+'</div>';
-    root.querySelector('#ms-count').textContent = state.moments.length;
-    if(view==='write') screen.querySelector('textarea').value = state.draft;
-    if(view==='moment') {
-      screen.querySelector('h3').textContent = state.item.title;
-      screen.querySelector('.ms-message').textContent = state.item.body;
-      screen.querySelector('[data-action="keep"]').disabled = state.moments.some(item=>item.key===state.item.key);
+    if(state.view==='room' && ['letters','mirror','collection','jar'].includes(view)) state.origin=view;
+    state.view=view; live.textContent='';
+    let body='';
+    if(view==='entrance') body=`<p class="ms-eyebrow">A little place for you</p><h2>Our Magic Shop</h2><p class="ms-sub">Set the day down for a moment.</p><div class="ms-door-scene" aria-hidden="true"><div class="ms-door-frame"><div class="ms-door"></div></div></div>${action('Come on in ♡','enter')}`;
+    if(view==='room') body=`<p class="ms-eyebrow">Come as you are</p><h2>Stay a little while.</h2><p class="ms-sub">What would feel good today?</p><div class="ms-room"><div class="ms-room-top" aria-hidden="true"><span class="ms-books"></span><span class="ms-lamp"></span><span class="ms-flower"></span></div><div class="ms-objects"><button type="button" class="ms-object cursor-interaction" data-go="letters"><span class="ms-envelope" aria-hidden="true"></span><strong>Little Letters</strong><span>Receive a little comfort</span></button><button type="button" class="ms-object cursor-interaction" data-go="mirror"><span class="ms-mirror" aria-hidden="true"></span><strong>Fortune Mirror</strong><span>A gentle discovery</span></button><button type="button" class="ms-object cursor-interaction" data-go="collection"><span class="ms-paper-stack" aria-hidden="true"></span><strong>Dear Bangtan</strong><span>Letters we feel together</span></button><button type="button" class="ms-object cursor-interaction" data-go="jar"><span class="ms-jar" aria-hidden="true"></span><strong>Dear ARMY</strong><span>Leave or receive kindness</span></button></div></div><button type="button" class="ms-secondary cursor-interaction" data-go="entrance">Return to the doorway</button>`;
+    if(view==='letters') body=`${back}<p class="ms-eyebrow">Little Letters</p><h2>A note to meet you here.</h2><p class="ms-sub">Choose whichever envelope calls to you.</p><div class="ms-letter-choices">${letters.map((letter,index)=>`<button type="button" class="ms-letter-choice cursor-interaction" data-letter="${index}"><span class="ms-envelope" aria-hidden="true"></span>${['Rest','Courage','Kindness'][index]}</button>`).join('')}</div><p class="ms-small">Original words from an ARMY-made little world.</p>`;
+    if(view==='mirror') body=`${back}<p class="ms-eyebrow">Fortune Mirror</p><h2>A little possibility.</h2><p class="ms-sub">A playful thought to carry into your day.</p><div class="ms-fortune" aria-hidden="true"><span class="ms-mirror"></span></div>${action('Turn my card','fortune')}<p class="ms-small">For reflection and fun.</p>`;
+    if(view==='collection') body=`${back}<p class="ms-eyebrow">Dear Bangtan</p><h2>Words we share.</h2><p class="ms-sub">Read a letter. Leave a little heart when it speaks for you.</p>${action('Write a letter','write-bangtan')}<p class="ms-small">Example letters · reaction counts are for this preview only. This fan space does not deliver letters to BTS.</p><div class="ms-collection">${publicLetters.map((letter,index)=>`<article><button type="button" class="ms-read cursor-interaction" data-public-letter="${index}">${letter.title}</button><p>${letter.body}</p>${reaction(letter.id)}</article>`).join('')}</div>`;
+    if(view==='jar') body=`${back}<p class="ms-eyebrow">Dear ARMY</p><h2>From one ARMY to another.</h2><p class="ms-sub">Receive a message, or leave a little kindness for someone.</p><div class="ms-door-scene" aria-hidden="true"><span class="ms-jar" style="width:110px;height:135px"></span></div>${action('Pick a message','kindness')}${action('Write a message','write-army',false)}<p class="ms-small">The finished jar will draw from published ARMY messages. This preview uses labeled examples.</p>`;
+    if(view==='write') body=`${back}<p class="ms-eyebrow">${state.audience==='bangtan'?'Dear Bangtan':'Dear ARMY'}</p><h2>A place for your words.</h2><p class="ms-sub">${state.audience==='bangtan'?'Gratitude, a memory, or something you want to express.':'A few kind words for an ARMY you may never meet.'}</p><form class="ms-compose"><label for="ms-draft">${state.audience==='bangtan'?'Your letter':'Your message'}</label><textarea id="ms-draft" maxlength="1200" placeholder="${state.audience==='bangtan'?'Dear Bangtan…':'Dear ARMY…'}" aria-describedby="ms-writing-note"></textarea><p id="ms-writing-note" class="ms-small">Your draft stays private until you explicitly choose to share it. Leave out contact details and private information. ${state.audience==='bangtan'?'This fan space does not deliver letters to BTS.':''}</p><p id="ms-error" role="alert"></p><button type="submit" class="ms-primary cursor-interaction" data-primary>Fold and preview</button></form>`;
+    if(view==='moment') body=`${back}<p class="ms-eyebrow">${state.item.kind==='writing'?'Your draft · not published':state.item.kind==='public-letter'?'An example letter from ARMY':state.item.kind==='army-message'?'An example message from ARMY':'A little encouragement'}</p><article class="ms-stationery ms-reveal"><h3></h3><p class="ms-message"></p><p class="ms-signature">${state.item.kind==='writing'?'Written by you. Sharing is your choice.':state.item.kind==='public-letter'||state.item.kind==='army-message'?'Example content for the flow study.':'Original ARMY-made words, with a little warmth.'}</p></article>${state.item.kind==='public-letter'?reaction(state.item.id):''}${action(state.moments.some(item=>item.key===state.item.key)?'Kept in this preview':'Keep this moment','keep')}${state.item.kind==='writing'?action('Preview sharing','share',false)+action('Unfold and edit','edit',false):state.item.kind==='public-letter'?'<button type="button" class="ms-secondary cursor-interaction" data-go="collection">All letters</button>':action('Discover another little moment','another',false)}`;
+    if(view==='share') body=`${back}<p class="ms-eyebrow">Sharing is a separate step</p><h2>Ready to share these words?</h2><article class="ms-stationery"><h3></h3><p class="ms-message"></p></article><label class="ms-consent"><input id="ms-public-consent" type="checkbox"><span>I want this text to be public in ${state.audience==='bangtan'?'Dear Bangtan':'Dear ARMY'}.</span></label><p id="ms-share-error" role="alert"></p>${action('Preview submission','submit')}<button type="button" class="ms-secondary cursor-interaction" data-go="write">Keep editing</button><p class="ms-small">Publishing/review policy is still being decided. This preview sends nothing.</p>`;
+    if(view==='submitted') body=`${back}<p class="ms-eyebrow">Submission preview</p><h2>Your words, ready to share.</h2><p class="ms-sub">No content was sent or published. This screen demonstrates the separate sharing step.</p><button type="button" class="ms-primary cursor-interaction" data-go="${state.audience==='bangtan'?'collection':'jar'}" data-primary>${state.audience==='bangtan'?'Back to all letters':'Back to the message jar'}</button>`;
+    if(view==='moments') body=`${back}<p class="ms-eyebrow">Your little collection</p><h2>Moments to carry.</h2><p class="ms-sub">${state.moments.length?'A little warmth from your visit.':'Your collection can grow at your own pace.'}</p><div id="ms-memories"></div><button type="button" class="ms-primary cursor-interaction" data-go="room" data-primary>Explore the shop</button>`;
+    screen.innerHTML='<div class="ms-content">'+body+'</div>';
+    root.querySelector('#ms-count').textContent=state.moments.length;
+    if(view==='write') screen.querySelector('textarea').value=state.drafts[state.audience];
+    if(view==='moment'||view==='share') {
+      screen.querySelector('h3').textContent=state.item.title;
+      screen.querySelector('.ms-message').textContent=state.item.body;
+      const keep=screen.querySelector('[data-action="keep"]');
+      if(keep) keep.disabled=state.moments.some(item=>item.key===state.item.key);
     }
     if(view==='moments') for(const item of state.moments) {
-      const article = document.createElement('article'); article.className='ms-memory';
-      const heading = document.createElement('h3'); heading.textContent=item.title;
-      const text = document.createElement('p'); text.textContent=item.body;
+      const article=document.createElement('article'); article.className='ms-memory';
+      const heading=document.createElement('h3'); heading.textContent=item.title;
+      const text=document.createElement('p'); text.textContent=item.body;
       article.append(heading,text); screen.querySelector('#ms-memories').append(article);
     }
     if(keyboardFocus) {
-      const target = view==='room' ? screen.querySelector('[data-go="'+state.origin+'"]') : screen.querySelector('textarea, [data-primary], [data-letter]');
-      (target || screen.querySelector('button'))?.focus();
+      const target=view==='room'?screen.querySelector('[data-go="'+state.origin+'"]'):screen.querySelector('textarea, [data-primary], [data-letter]');
+      (target||screen.querySelector('button'))?.focus();
     }
     live.setAttribute('data-announcement','');
-    live.textContent = screen.querySelector('h2, h3')?.textContent || '';
+    live.textContent=screen.querySelector('h2, h3')?.textContent||'';
   }
-  function moment(item,kind) { state.item = {...item,kind,key:kind+':'+item.id}; show('moment'); }
-  root.addEventListener('input', event => { if(event.target.id==='ms-draft') state.draft=event.target.value; });
-  root.addEventListener('submit', event => {
-    event.preventDefault();
-    if(!state.draft.trim()) { root.querySelector('#ms-error').textContent='A few words are enough. Write something first, or return to the shop.'; root.querySelector('textarea').focus(); return; }
-    moment({id:String(Date.now()),title:'My letter to Bangtan',body:state.draft},'writing');
+  function announce(text) { live.removeAttribute('data-announcement'); live.textContent=text; }
+  function moment(item,kind) { state.item={...item,kind,key:kind+':'+item.id}; show('moment'); }
+  root.addEventListener('input',event=>{ if(event.target.id==='ms-draft') state.drafts[state.audience]=event.target.value; });
+  root.addEventListener('submit',event=>{
+    event.preventDefault(); const draft=state.drafts[state.audience];
+    if(!draft.trim()) { root.querySelector('#ms-error').textContent='A few words are enough. Write something first, or return to the shop.'; root.querySelector('textarea').focus(); return; }
+    moment({id:String(Date.now()),title:state.audience==='bangtan'?'My letter to Bangtan':'My kindness for ARMY',body:draft},'writing');
   });
-  root.addEventListener('click', event => {
-    const button = event.target.closest('button'); if(!button || !root.contains(button)) return;
+  root.addEventListener('click',event=>{
+    const button=event.target.closest('button'); if(!button||!root.contains(button)) return;
     if(button.dataset.go) { show(button.dataset.go); return; }
     if(button.dataset.letter!==undefined) { moment(letters[Number(button.dataset.letter)],'letter'); return; }
+    if(button.dataset.publicLetter!==undefined) { moment(publicLetters[Number(button.dataset.publicLetter)],'public-letter'); return; }
+    if(button.dataset.react) {
+      const id=button.dataset.react; state.reactions[id]=!state.reactions[id];
+      root.querySelectorAll('[data-react]').forEach(control=>{ if(control.dataset.react===id) { control.setAttribute('aria-pressed',String(state.reactions[id])); control.textContent='I feel this too ♡ · '+(state.reactions[id]?1:0); } });
+      announce(state.reactions[id]?'Your preview reaction was added.':'Your preview reaction was removed.'); return;
+    }
     switch(button.dataset.action) {
       case 'enter':
         if(motion.matches) { show('room'); break; }
         screen.querySelector('.ms-door-scene').classList.add('ms-opening'); button.disabled=true;
         screen.classList.add('ms-entering'); screen.setAttribute('aria-busy','true');
-        entranceTimer=setTimeout(()=>{
-          if(state.view!=='entrance') return;
-          show('room'); screen.classList.add('ms-arriving');
-          screen.querySelector('[data-go="letters"]').focus();
-        },1000); break;
+        entranceTimer=setTimeout(()=>{ if(state.view!=='entrance') return; show('room'); screen.classList.add('ms-arriving'); screen.querySelector('[data-go="letters"]').focus(); },1000); break;
       case 'fortune': moment(fortunes[state.turn++%fortunes.length],'fortune'); break;
-      case 'kindness': moment(kindness[state.turn++%kindness.length],'kindness'); break;
+      case 'kindness': {
+        const available=messages.map((_,index)=>index).filter(index=>index!==state.lastMessage);
+        const random=new Uint32Array(1); crypto.getRandomValues(random);
+        state.lastMessage=available[random[0]%available.length];
+        moment(messages[state.lastMessage],'army-message'); break;
+      }
+      case 'write-bangtan': state.audience='bangtan'; show('write'); break;
+      case 'write-army': state.audience='army'; show('write'); break;
       case 'edit': show('write'); break;
+      case 'share': show('share'); break;
+      case 'submit':
+        if(!screen.querySelector('#ms-public-consent').checked) { screen.querySelector('#ms-share-error').textContent='Please choose whether you want these words to be public, or keep editing.'; break; }
+        show('submitted'); break;
       case 'another': show(state.item.kind==='letter'?'letters':state.item.kind==='fortune'?'mirror':'jar'); break;
       case 'keep':
         if(!state.moments.some(item=>item.key===state.item.key)) state.moments.push({...state.item});
-        show('moment'); live.removeAttribute('data-announcement'); live.textContent='Kept in this preview. Visit Moments to see it again.'; break;
+        show('moment'); announce('Kept in this preview. Visit Moments to see it again.'); break;
     }
   });
-  motion.addEventListener('change', () => {
-    if(motion.matches && screen.classList.contains('ms-entering')) show('room');
-  });
+  motion.addEventListener('change',()=>{ if(motion.matches&&screen.classList.contains('ms-entering')) show('room'); });
   show('entrance');
 })();
 </script>

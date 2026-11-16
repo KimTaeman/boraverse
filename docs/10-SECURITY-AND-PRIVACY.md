@@ -4,8 +4,8 @@
 Anonymous public QR website used at crowded concerts. Risks: bot/flooded contributions, duplicate requests, database exhaustion, secrets leaked to frontend, malicious external links, user confusion about official status, abuse from open UGC, accessibility/poor network issues.
 
 ## Security principles
-- No login for launch. No collection of name, email, phone, social accounts, precise location, or messages into a shared database.
-- No publicly posted visitor messages. The optional `Dear Bangtan` editor is **local-only** and exports images; it never purports to send direct messages to BTS.
+- No login for launch. No collection of name, email, phone, social accounts or precise location. Shared text is limited to the planned D017 Magic Shop flows and must use explicit publication consent and the settled publishing policy.
+- D017 authorizes designing a public Dear Bangtan letter collection/reactions and a visitor-written Dear ARMY message jar. Drafts remain private until explicit sharing, and neither feature sends direct messages to BTS. These shared features are not live yet; other public visitor-message features remain outside scope.
 - No session replay, invasive third-party advertising or marketing trackers.
 - Pages have visible official-status disclaimer.
 - Validate paths against a registry; no arbitrary external redirects, unescaped HTML, raw Markdown HTML from untrusted content.
@@ -45,3 +45,11 @@ Avoid terms `infection`, `virus`, `system compromised`, false payment/credential
 ## Implemented browser-data disclosure — 2026-11-16
 
 The public Privacy page explains local-only games/letters, explicit browser-local keepsake saves, on-device image generation, and clearing site data. Clearing browser data removes local keepsakes/identifiers but does not delete server-held Ocean records or copies already downloaded/shared. The page also explains that a chosen listening link opens YouTube under that service's separate privacy practices. Existing Ocean hash, ingress, provider metadata and approved retention disclosures remain intact. This describes current implementation; final owner review of public wording/provider settings is still pending.
+
+## Shared Magic Shop implementation requirements — proposed, D017
+
+The publishing policy (pre-publication review versus immediate publication with reporting/removal) is awaiting the owner. UI work must not silently pick a live policy. The current study uses clearly labeled sample content and local preview reactions, with no network requests or fabricated shared success/counts.
+
+Before implementation/release: obtain explicit sharing consent; render bounded plain text only; keep contact details, URLs, uploads and arbitrary HTML out of submitted content; provide reporting, removal and queue handling appropriate to the selected policy. Choose and disclose retention and anonymous removal/recovery behavior before collecting text. Reuse server-only route-handler access to private PostgreSQL, validation, idempotency, resource/rate limits and a separate write-off switch. Do not add Auth, Storage, Realtime or paid services just for this feature. Database work needs versioned migrations, least privilege and tests before use.
+
+Dear Bangtan agreement reactions need one active reaction per browser token per letter, atomic toggles/idempotent retries, returned server counts and clear offline/error feedback; they do not prove unique-person counts. Public feeds must be bounded/paginated and expose no author/token hashes or private/pending/rejected content. Dear ARMY random selection must use only eligible published messages, handle an empty pool truthfully, and avoid the author's own message and immediate repeats where feasible. Never migrate private drafts/keepsakes into public content, log submitted bodies, put them in URLs, or display an accepted/shared state before confirmation. Public privacy text must be revised before collecting shared messages; current local-only wording remains accurate for the unchanged deployed app.
