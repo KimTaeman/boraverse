@@ -1,0 +1,163 @@
+<div id="magic-shop-flow" aria-label="Magic Shop journey preview">
+  <p class="ms-caption">Flow study · illustration style open</p>
+  <section class="ms-product" aria-label="The Little Boraverse Magic Shop">
+    <header class="ms-top"><span>The Little Boraverse</span><button class="ms-quiet cursor-interaction" data-go="moments" type="button">Moments <span id="ms-count">0</span></button></header>
+    <div id="ms-screen"></div>
+    <p id="ms-live" class="ms-live" role="status" aria-live="polite"></p>
+    <p class="ms-preview-note">Design preview. Moments and private writing stay in this preview and clear when it closes.</p>
+  </section>
+</div>
+<style>
+#magic-shop-flow { width:100%; }
+#magic-shop-flow * { box-sizing:border-box; }
+#magic-shop-flow .ms-caption { text-align:center; margin:0 0 12px; color:var(--muted-foreground); font:400 13px/1.5 system-ui,sans-serif; }
+#magic-shop-flow .ms-product { --ms-night:#211b32; --ms-paper:#fff5e9; --ms-ink:#35283e; --ms-lilac:#ddc5f1; --ms-gold:#eed09b; width:min(100%,480px); margin:auto; overflow:hidden; border-radius:24px; color:var(--ms-paper); background:radial-gradient(ellipse at 60% 18%,#57405e,transparent 62%),var(--ms-night); font:400 16px/1.6 system-ui,sans-serif; }
+#magic-shop-flow .ms-top { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:16px 20px; border-bottom:1px solid #e2c8ec26; }
+#magic-shop-flow .ms-top > span { font:italic 15px/1.4 Georgia,serif; }
+#magic-shop-flow button { font:inherit; color:inherit; min-height:44px; }
+#magic-shop-flow button:disabled { opacity:.65; }
+#magic-shop-flow .ms-quiet { padding:8px; background:none; border:0; text-decoration:underline; text-underline-offset:4px; font-size:13px; }
+#magic-shop-flow .ms-content { padding:20px 24px 24px; text-align:center; }
+#magic-shop-flow h2 { font:400 clamp(28px,7vw,38px)/1.12 Georgia,serif; margin:8px 0 12px; letter-spacing:-.025em; }
+#magic-shop-flow h3 { font:400 23px/1.25 Georgia,serif; margin:0 0 12px; }
+#magic-shop-flow p { margin:8px 0; }
+#magic-shop-flow .ms-sub { color:#e4cfe9; font-size:15px; max-width:30ch; margin:0 auto 18px; }
+#magic-shop-flow .ms-eyebrow { color:var(--ms-gold); letter-spacing:.13em; font-size:11px; text-transform:uppercase; }
+#magic-shop-flow .ms-primary { display:block; width:100%; border:1px solid #f6e4cf; border-radius:99px; padding:12px 20px; background:var(--ms-paper); color:var(--ms-ink); font-weight:500; }
+#magic-shop-flow .ms-secondary { display:block; margin:10px auto 0; padding:8px 14px; border:0; background:none; color:var(--ms-lilac); text-decoration:underline; text-underline-offset:4px; }
+#magic-shop-flow .ms-back { display:block; text-align:left; margin:0 0 16px; padding:4px 0; border:0; background:none; color:var(--ms-lilac); font-size:14px; }
+#magic-shop-flow .ms-door-scene { height:255px; position:relative; display:grid; place-items:center; margin:16px 0 20px; background:radial-gradient(ellipse at 50% 90%,#9f76b755,transparent 67%); }
+#magic-shop-flow .ms-door-scene::before { content:""; position:absolute; inset:12% 10%; background:radial-gradient(circle at 12% 20%,#eed09b 0 1px,transparent 2px),radial-gradient(circle at 88% 35%,#e9d0f5 0 2px,transparent 3px),radial-gradient(circle at 28% 7%,#eed09b 0 1px,transparent 2px),radial-gradient(circle at 83% 88%,#eed09b 0 1px,transparent 2px); }
+#magic-shop-flow .ms-door-frame { position:relative; width:154px; height:225px; padding:10px; border:5px solid #a68aa9; border-radius:85px 85px 3px 3px; background:linear-gradient(110deg,#f5c993,#fff1d5); box-shadow:0 0 38px #e8b4a652,0 16px 40px #15102277; perspective:500px; }
+#magic-shop-flow .ms-door { height:100%; border:2px solid #d1acc5; border-radius:65px 65px 0 0; background:linear-gradient(120deg,#b598c3,#70547e); transform-origin:left; transform:rotateY(-28deg); transition:transform .4s ease; }
+#magic-shop-flow .ms-door::before { content:""; position:absolute; inset:32px 20px 34px; border:2px solid #e2bfd6; border-radius:35px 35px 0 0; }
+#magic-shop-flow .ms-door::after { content:""; position:absolute; width:7px; height:7px; border-radius:50%; background:var(--ms-gold); right:12px; top:62%; }
+#magic-shop-flow .ms-opening .ms-door { transform:rotateY(-100deg); }
+#magic-shop-flow .ms-room { padding:20px 0 0; background:radial-gradient(ellipse at 50% 10%,#f2bf8438,transparent 70%); }
+#magic-shop-flow .ms-room-top { display:flex; justify-content:center; align-items:end; gap:25px; height:82px; margin:0 0 10px; border-bottom:8px solid #80617c; }
+#magic-shop-flow .ms-lamp { position:relative; height:40px; width:3px; background:#d6b580; margin-bottom:6px; }
+#magic-shop-flow .ms-lamp::before { content:""; position:absolute; width:42px; height:30px; left:-20px; top:-15px; border-radius:16px 16px 3px 3px; background:linear-gradient(#f3d19c,#cfa777); box-shadow:0 0 35px #f9cc8655; }
+#magic-shop-flow .ms-flower { height:38px; width:25px; border-radius:4px 4px 12px 12px; background:#a28ba9; margin-bottom:6px; box-shadow:0 -13px 0 -3px #cfadcf; }
+#magic-shop-flow .ms-books { width:65px; height:14px; margin-bottom:7px; background:#b695ab; border-left:4px solid #ddbd98; box-shadow:3px -14px #776284,-2px -28px #987e8d; }
+#magic-shop-flow .ms-objects { display:grid; grid-template-columns:1fr 1fr; gap:14px 12px; }
+#magic-shop-flow .ms-object { display:flex; align-items:center; flex-direction:column; border:0; border-bottom:5px solid #88677f; background:linear-gradient(transparent 60%,#b191a320); border-radius:0 0 3px 3px; padding:12px 4px 16px; }
+#magic-shop-flow .ms-object > strong { font:400 20px/1.3 Georgia,serif; margin:12px 0 4px; }
+#magic-shop-flow .ms-object > span:last-child { color:#e2cce7; font-size:12px; }
+#magic-shop-flow .ms-envelope { position:relative; display:block; width:94px; height:65px; background:#f1deec; border:1px solid #d6b6d1; box-shadow:3px 5px 0 #211b3233; transform:rotate(-6deg); }
+#magic-shop-flow .ms-envelope::before { content:""; position:absolute; inset:0; background:#d6b9dc; clip-path:polygon(0 0,100% 0,50% 62%); }
+#magic-shop-flow .ms-envelope::after { content:""; position:absolute; width:21px; height:21px; top:26px; left:36px; border-radius:50%; background:#91709e; border:3px double #d8bdca; }
+#magic-shop-flow .ms-mirror { display:block; height:90px; width:63px; border:6px double #e6c28d; border-radius:50%; background:radial-gradient(circle at 35% 30%,#ffe1ec 0 2px,transparent 3px),radial-gradient(ellipse,#ac7bc1,#4c365f 70%); box-shadow:0 0 24px #a581b633; }
+#magic-shop-flow .ms-paper-stack { display:block; width:70px; height:80px; border:1px solid #dcbed2; background:repeating-linear-gradient(#f5e8eb 0 14px,#d6bfce 15px,#f5e8eb 16px); transform:rotate(8deg); box-shadow:-5px 4px #b8a2bf; }
+#magic-shop-flow .ms-jar { display:block; height:75px; width:64px; border:3px solid #c4a1cd; border-top:8px solid #d8b394; border-radius:10px 10px 24px 24px; background:radial-gradient(ellipse at 40% 40%,#f7dca7 0 5px,transparent 6px),radial-gradient(ellipse at 65% 70%,#eed4ae 0 6px,transparent 7px),#b58bc333; box-shadow:0 0 25px #e8c18622; }
+#magic-shop-flow .ms-letter-choice { display:flex; flex-direction:column; gap:18px; align-items:center; padding:16px 4px; margin:10px 0; border:0; background:none; }
+#magic-shop-flow .ms-letter-choice .ms-envelope { width:140px; height:94px; }
+#magic-shop-flow .ms-letter-choice .ms-envelope::after { top:40px; left:57px; }
+#magic-shop-flow .ms-letter-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; }
+#magic-shop-flow .ms-letter-choices .ms-envelope { width:70px; height:50px; }
+#magic-shop-flow .ms-letter-choices .ms-envelope::after { width:17px; height:17px; top:19px; left:25px; }
+#magic-shop-flow .ms-letter-choices button { font-size:13px; }
+#magic-shop-flow .ms-stationery { background:var(--ms-paper); color:var(--ms-ink); text-align:left; padding:30px 24px; margin:24px 0; border-radius:3px 16px 4px 4px; box-shadow:5px 6px 0 #c8afd2; }
+#magic-shop-flow .ms-stationery > p { white-space:pre-wrap; overflow-wrap:anywhere; font:400 19px/1.75 Georgia,serif; }
+#magic-shop-flow .ms-stationery .ms-signature { color:#725779; font:italic 14px/1.5 Georgia,serif; margin-top:25px; }
+#magic-shop-flow .ms-fortune { width:160px; min-height:225px; display:grid; place-items:center; margin:22px auto; border:3px double #e6c28d; border-radius:80px 80px 12px 12px; background:radial-gradient(ellipse,#81608f,#35283e); }
+#magic-shop-flow .ms-fortune .ms-mirror { width:65px; height:100px; }
+#magic-shop-flow .ms-compose label { display:block; text-align:left; margin:20px 0 8px; }
+#magic-shop-flow textarea { display:block; width:100%; min-height:220px; padding:18px; border:1px solid #d0b5d6; border-radius:4px; background:var(--ms-paper); color:var(--ms-ink); font:400 16px/1.8 Georgia,serif; resize:vertical; }
+#magic-shop-flow .ms-small { font-size:13px; color:#dec8e4; margin:12px 0 20px; }
+#magic-shop-flow .ms-live { margin:0; padding:0 24px; text-align:center; min-height:24px; color:var(--ms-gold); font-size:14px; }
+#magic-shop-flow .ms-live[data-announcement] { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); padding:0; }
+#magic-shop-flow .ms-preview-note { padding:8px 24px 20px; margin:0; text-align:center; color:#d1bddb; font-size:12px; }
+#magic-shop-flow .ms-memory { text-align:left; border-bottom:1px solid #dfc8e62e; padding:16px 0; }
+#magic-shop-flow .ms-memory p { white-space:pre-wrap; overflow-wrap:anywhere; }
+#magic-shop-flow .ms-reveal { animation:ms-unfold .35s ease-out both; }
+@keyframes ms-unfold { from { transform:translateY(12px) rotate(-2deg); } to { transform:translateY(0) rotate(0); } }
+@media(prefers-reduced-motion:reduce) { #magic-shop-flow .ms-reveal { animation:none; } #magic-shop-flow .ms-door { transition:none; } }
+@media(max-width:360px) { #magic-shop-flow .ms-content { padding-inline:16px; } #magic-shop-flow .ms-top { padding-inline:12px; } #magic-shop-flow .ms-object > strong { font-size:18px; } }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('magic-shop-flow');
+  const screen = root.querySelector('#ms-screen');
+  const live = root.querySelector('#ms-live');
+  const state = { view:'entrance', draft:'', moments:[], item:null, turn:0, origin:'letters' };
+  let entranceTimer;
+  const letters = [
+    {id:'rest',title:'A little rest',body:'Even a little rest is a kind way to look after yourself.'},
+    {id:'courage',title:'Your own pace',body:'Your own pace is a perfectly good pace for this journey.'},
+    {id:'kindness',title:'A little kindness',body:'You deserve kindness, including the kindness you give yourself.'}
+  ];
+  const fortunes = [
+    {id:'lantern',title:'The Lantern',body:'Your curiosity will lead somewhere lovely.'},
+    {id:'door',title:'The Door',body:'A small brave step will be enough.'},
+    {id:'melody',title:'The Melody',body:'Let a familiar song brighten your day.'}
+  ];
+  const kindness = [
+    {id:'joy',title:'A little joy',body:'May you find a small moment of joy in the middle of a busy day.'},
+    {id:'breath',title:'A little breathing room',body:'Take a breath. You do not need to have everything figured out today.'}
+  ];
+  const action = (label, value, primary=true) => `<button type="button" class="${primary?'ms-primary':'ms-secondary'} cursor-interaction" data-action="${value}" ${primary?'data-primary':''}>${label}</button>`;
+  const back = '<button type="button" class="ms-back cursor-interaction" data-go="room">← Back to the shop</button>';
+  function show(view) {
+    clearTimeout(entranceTimer);
+    const keyboardFocus = root.contains(document.activeElement);
+    if(state.view==='room' && ['letters','mirror','write','jar'].includes(view)) state.origin=view;
+    state.view = view;
+    live.textContent = '';
+    let body = '';
+    if(view==='entrance') body = `<p class="ms-eyebrow">A little place for you</p><h2>Our Magic Shop</h2><p class="ms-sub">Set the day down for a moment.</p><div class="ms-door-scene" aria-hidden="true"><div class="ms-door-frame"><div class="ms-door"></div></div></div>${action('Open the door','enter')}<button type="button" class="ms-secondary cursor-interaction" data-go="room">Step straight inside</button>`;
+    if(view==='room') body = `<p class="ms-eyebrow">Come as you are</p><h2>Stay a little while.</h2><p class="ms-sub">What would feel good today?</p><div class="ms-room"><div class="ms-room-top" aria-hidden="true"><span class="ms-books"></span><span class="ms-lamp"></span><span class="ms-flower"></span></div><div class="ms-objects"><button type="button" class="ms-object cursor-interaction" data-go="letters"><span class="ms-envelope" aria-hidden="true"></span><strong>Little Letters</strong><span>Receive a little comfort</span></button><button type="button" class="ms-object cursor-interaction" data-go="mirror"><span class="ms-mirror" aria-hidden="true"></span><strong>Fortune Mirror</strong><span>A gentle discovery</span></button><button type="button" class="ms-object cursor-interaction" data-go="write"><span class="ms-paper-stack" aria-hidden="true"></span><strong>Dear Bangtan</strong><span>A private writing corner</span></button><button type="button" class="ms-object cursor-interaction" data-go="jar"><span class="ms-jar" aria-hidden="true"></span><strong>Dear ARMY</strong><span>A little shared kindness</span></button></div></div><button type="button" class="ms-secondary cursor-interaction" data-go="entrance">Return to the doorway</button>`;
+    if(view==='letters') body = `${back}<p class="ms-eyebrow">Little Letters</p><h2>A note to meet you here.</h2><p class="ms-sub">Choose whichever envelope calls to you.</p><div class="ms-letter-choices">${letters.map((letter,index)=>`<button type="button" class="ms-letter-choice cursor-interaction" data-letter="${index}"><span class="ms-envelope" aria-hidden="true"></span>${['Rest','Courage','Kindness'][index]}</button>`).join('')}</div><p class="ms-small">Original words from an ARMY-made little world.</p>`;
+    if(view==='mirror') body = `${back}<p class="ms-eyebrow">Fortune Mirror</p><h2>A little possibility.</h2><p class="ms-sub">A playful thought to carry into your day.</p><div class="ms-fortune" aria-hidden="true"><span class="ms-mirror"></span></div>${action('Turn my card','fortune')}<p class="ms-small">For reflection and fun.</p>`;
+    if(view==='jar') body = `${back}<p class="ms-eyebrow">Dear ARMY</p><h2>Kindness, waiting here.</h2><p class="ms-sub">Reach for a little encouragement.</p><div class="ms-door-scene" aria-hidden="true"><span class="ms-jar" style="width:110px;height:135px"></span></div>${action('Pick a message','kindness')}<p class="ms-small">Curated original messages from this fan-made project.</p>`;
+    if(view==='write') body = `${back}<p class="ms-eyebrow">Dear Bangtan</p><h2>A place for your words.</h2><p class="ms-sub">Gratitude, a memory, or something on your mind.</p><form class="ms-compose"><label for="ms-draft">Your private letter</label><textarea id="ms-draft" maxlength="1200" placeholder="Dear Bangtan…" aria-describedby="ms-writing-note"></textarea><p id="ms-writing-note" class="ms-small">Private writing for you to keep. This is not delivered to BTS. Drafts stay here while you explore this preview.</p><p id="ms-error" role="alert"></p><button type="submit" class="ms-primary cursor-interaction" data-primary>Fold my letter</button></form>`;
+    if(view==='moment') body = `${back}<p class="ms-eyebrow">${state.item.kind==='writing'?'Your words, kept close':'A little encouragement'}</p><article class="ms-stationery ms-reveal"><h3></h3><p class="ms-message"></p><p class="ms-signature">${state.item.kind==='writing'?'A private letter, written by you.':'Original ARMY-made words, with a little warmth.'}</p></article>${action(state.moments.some(item=>item.key===state.item.key)?'Kept in this preview':'Keep this moment','keep')}${action(state.item.kind==='writing'?'Unfold and edit':'Discover another little moment',state.item.kind==='writing'?'edit':'another',false)}`;
+    if(view==='moments') body = `${back}<p class="ms-eyebrow">Your little collection</p><h2>Moments to carry.</h2><p class="ms-sub">${state.moments.length?'A little warmth from your visit.':'Your collection can grow at your own pace.'}</p><div id="ms-memories"></div><button type="button" class="ms-primary cursor-interaction" data-go="room" data-primary>Explore the shop</button>`;
+    screen.innerHTML = '<div class="ms-content">'+body+'</div>';
+    root.querySelector('#ms-count').textContent = state.moments.length;
+    if(view==='write') screen.querySelector('textarea').value = state.draft;
+    if(view==='moment') {
+      screen.querySelector('h3').textContent = state.item.title;
+      screen.querySelector('.ms-message').textContent = state.item.body;
+      screen.querySelector('[data-action="keep"]').disabled = state.moments.some(item=>item.key===state.item.key);
+    }
+    if(view==='moments') for(const item of state.moments) {
+      const article = document.createElement('article'); article.className='ms-memory';
+      const heading = document.createElement('h3'); heading.textContent=item.title;
+      const text = document.createElement('p'); text.textContent=item.body;
+      article.append(heading,text); screen.querySelector('#ms-memories').append(article);
+    }
+    if(keyboardFocus) {
+      const target = view==='room' ? screen.querySelector('[data-go="'+state.origin+'"]') : screen.querySelector('textarea, [data-primary], [data-letter]');
+      (target || screen.querySelector('button'))?.focus();
+    }
+    live.setAttribute('data-announcement','');
+    live.textContent = screen.querySelector('h2, h3')?.textContent || '';
+  }
+  function moment(item,kind) { state.item = {...item,kind,key:kind+':'+item.id}; show('moment'); }
+  root.addEventListener('input', event => { if(event.target.id==='ms-draft') state.draft=event.target.value; });
+  root.addEventListener('submit', event => {
+    event.preventDefault();
+    if(!state.draft.trim()) { root.querySelector('#ms-error').textContent='A few words are enough. Write something first, or return to the shop.'; root.querySelector('textarea').focus(); return; }
+    moment({id:String(Date.now()),title:'My letter to Bangtan',body:state.draft},'writing');
+  });
+  root.addEventListener('click', event => {
+    const button = event.target.closest('button'); if(!button || !root.contains(button)) return;
+    if(button.dataset.go) { show(button.dataset.go); return; }
+    if(button.dataset.letter!==undefined) { moment(letters[Number(button.dataset.letter)],'letter'); return; }
+    switch(button.dataset.action) {
+      case 'enter':
+        if(matchMedia('(prefers-reduced-motion: reduce)').matches) { show('room'); break; }
+        screen.querySelector('.ms-door-scene').classList.add('ms-opening'); button.disabled=true;
+        entranceTimer=setTimeout(()=>{ if(state.view==='entrance') show('room'); },400); break;
+      case 'fortune': moment(fortunes[state.turn++%fortunes.length],'fortune'); break;
+      case 'kindness': moment(kindness[state.turn++%kindness.length],'kindness'); break;
+      case 'edit': show('write'); break;
+      case 'another': show(state.item.kind==='letter'?'letters':state.item.kind==='fortune'?'mirror':'jar'); break;
+      case 'keep':
+        if(!state.moments.some(item=>item.key===state.item.key)) state.moments.push({...state.item});
+        show('moment'); live.removeAttribute('data-announcement'); live.textContent='Kept in this preview. Visit Moments to see it again.'; break;
+    }
+  });
+  show('entrance');
+})();
+</script>

@@ -63,3 +63,31 @@ Design **loading**, **empty**, **ready**, **pending**, **success**, **duplicate*
 
 ## Content tone
 Warm, fun, sincere, slightly whimsical. BTS jokes are gentle and affectionate; no invasive parasocial claims or deceptive `official` presentation. The pop-culture humor and the heartfelt letter should feel like they're made by the same caring fan.
+
+## Magic Shop flow design — 2026-11-16
+
+D016 locks the emotional intention, not a final illustration style. The clickable study is `design/magic-shop-flow.html`; it is a design-only, in-memory preview. The live Next.js page is unchanged. Existing letters/fortunes supply sample text, still provisional outside the separately approved QR copy. All screen copy, feature naming, exact motion and route proposals below are proposed.
+
+### Entrance → room → personal moment → keepsake → explore or leave
+
+1. **Arrive:** one welcoming sentence, a softly lit door and Open the door. Step straight inside skips the short transition. Returning from a feature always returns to the interior; visitors do not repeat the entrance. Direct feature/QR entry should bypass it. The existing `/c/*` URLs and approved destinations remain intact.
+2. **Enter the room:** a warm interior with a small number of clearly labeled objects. Letters are the emotional center; a mirror, writing desk and message jar offer other gentle discoveries. No forced mood questionnaire or required sequence. Object artwork and accessible controls remain separate. A plain, labeled choice list is the fallback if art fails.
+3. **Little Letters:** choose a descriptively named envelope → unfold → read original comforting words → keep/download or choose another → return to room. The study uses three samples; the existing seven letters can be retained in implementation. No suggestion that these are private messages written by BTS.
+4. **Fortune Mirror:** view a card back → deliberately turn it → receive a symbolic, playful reflection → keep/download or draw another → return. No rarity, score, prediction guarantee or time pressure. Longer reflection copy is future content review, not approved text.
+5. **Dear Bangtan (new, proposed):** private writing corner → type → fold and read → edit or explicitly keep/download → return. The prototype stores text in memory only and preserves the draft while exploring. No delivery to BTS, account, server upload or public posting. Plain text must remain plain text when displayed/exported; do not put it in URLs or analytics. Production draft storage/persistence needs a deliberate UX decision and truthful failure feedback before implementation.
+6. **Dear ARMY (new, proposed):** pick a slip from a kindness jar → read a short curated original encouragement → keep/download or pick another → return. This is curated content, not a public user message exchange. Little Letters can provide longer notes; jar messages should be brief/shareable so the two features earn distinct roles. If content stays identical, merge these experiences rather than duplicating them.
+7. **Carry a moment away:** keep on device and download within the feature, with access from My Keepsakes; show saved only after storage succeeds, image-ready only after encoding succeeds. Preserve existing no-login/local-storage behavior. Download/open-image fallback, storage-denied/full, failed export and retry remain first-class states. Keeping is optional; a visitor can return to the shop without saving.
+
+### Composition and behavior
+
+Mobile: compact Back/brand header, one focused object or reading surface, reachable action below it, safe-area-aware navigation. The room's objects can form a readable two-column arrangement; reading/writing gets one comfortable column. Desktop: use the extra width for the interior and its labeled objects; keep the paper reading measure narrow. A website should feel inhabitable even with simple replaceable drawings; a flattened poster must not own hit targets, copy or navigation.
+
+Proposed motion: door opens ~400 ms, envelope unfolds/card turns ~300–500 ms. Every sequence is skippable or immediate under reduced motion, with no autoplay audio or looping effects required. Keyboard focus must move to the new screen's heading/action and return to the originating room choice; browser Back must follow the journey rather than discard a draft. Keep text readable with larger fonts, a short viewport and artwork failure.
+
+### Study limits and implementation handoff
+
+The interactive study demonstrates entrance/skip, room choices, three sample letters, a cycling fortune/messaging sample, private writing/folding/editing, and an in-memory moments tray. It explicitly labels preview-only saving and clearing on close. It does not write real keepsakes, persist drafts, export an image, alter routes or contact a server. Its selected sample sequence is deterministic for review, not a production random/daily claim. Visual shapes and palette are compositional stand-ins, not final illustrations or a locked style.
+
+Implement incrementally: first entrance/interior + existing letter/fortune rituals; then matching keepsake export and navigation/failure states; then the proposed private-writing/curated-jar features if their roles are retained. Preserve the backend, approved QR reveals and paused Ocean UI. Test mobile 320/375/390/430 and desktop 1440, keyboard/back/focus, reduced motion, empty writing, HTML-like input as text, draft preservation, blocked/full storage and export retries.
+
+Flow-study validation: `node design/check-magic-shop-flow.mjs` passed eight complete journeys (Chromium/WebKit × 320/390/736/1440px), plus normal-motion entrance/skip in both engines. Checks cover all four room choices, keyboard choice/focus return, empty writing, draft preservation, folding/editing, markup rendered as plain text, preview-only keeping, and the moments tray, with zero page errors/network requests. Lint, TypeScript, all 24 unit tests and production build passed. Representative entrance/interior/letter screenshots and `checks.json` are in ignored `out/magic-shop-flow/`; reviewed at phone sizes. Production feature implementation, real persistent saves/exports, final illustration and physical-device QA remain outside this design study. The live app is unchanged.

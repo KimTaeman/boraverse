@@ -22,3 +22,6 @@ playwright*.config.ts
 
 # Local-only release audit tooling.
 /scripts/
+
+# Design studies are reviewed separately from the application.
+/design/

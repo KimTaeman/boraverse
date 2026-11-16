@@ -1,0 +1,77 @@
+import assert from "node:assert/strict";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { chromium, webkit, expect } from "@playwright/test";
+
+const html = await readFile(new URL("./magic-shop-flow.html", import.meta.url), "utf8");
+assert.ok(!html.includes("<!doctype") && !html.includes("<html"));
+assert.ok(!/\\"|\\n/.test(html), "Fragment should contain literal markup/newlines.");
+const output = new URL("../out/magic-shop-flow/", import.meta.url);
+await mkdir(output, { recursive: true });
+const results = [];
+for (const [name, engine] of [["chromium", chromium], ["webkit", webkit]]) {
+  const browser = await engine.launch();
+  try {
+    for (const width of [320, 390, 736, 1440]) {
+      const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
+      const errors = [], requests = [];
+      page.on("pageerror", error => errors.push(error.message));
+      page.on("request", request => requests.push(request.url()));
+      await page.setContent(html);
+      await expect(page.getByRole("heading", { name: "Our Magic Shop", exact: true })).toBeVisible();
+      await page.screenshot({ path: new URL(`${name}-${width}-entrance.png`, output).pathname, fullPage: true });
+      await page.getByRole("button", { name: "Open the door", exact: true }).click();
+      await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
+      await page.screenshot({ path: new URL(`${name}-${width}-room.png`, output).pathname, fullPage: true });
+      const letters = page.getByRole("button", { name: "Little Letters", exact: false });
+      await letters.focus();
+      await page.keyboard.press("Enter");
+      await expect(page.getByRole("button", { name: "Rest", exact: true })).toBeFocused();
+      await page.getByRole("button", { name: "Rest", exact: true }).click();
+      await expect(page.getByText("Even a little rest is a kind way to look after yourself.", { exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Keep this moment", exact: true }).click();
+      await expect(page.getByRole("button", { name: "Kept in this preview", exact: true })).toBeDisabled();
+      await page.screenshot({ path: new URL(`${name}-${width}-letter.png`, output).pathname, fullPage: true });
+      await page.getByRole("button", { name: "Back to the shop", exact: false }).focus();
+      await page.keyboard.press("Enter");
+      await expect(letters).toBeFocused();
+      await page.getByRole("button", { name: "Fortune Mirror", exact: false }).click();
+      await page.getByRole("button", { name: "Turn my card", exact: true }).click();
+      await expect(page.getByRole("heading", { name: "The Lantern", exact: true })).toBeVisible();
+      await page.getByRole("button", { name: "Back to the shop", exact: false }).click();
+      await page.getByRole("button", { name: "Dear Bangtan", exact: false }).click();
+      await page.getByRole("button", { name: "Fold my letter", exact: true }).click();
+      await expect(page.getByRole("alert")).toContainText("Write something first");
+      const privateText = '<img src="https://example.com/x" onerror="window.bad=true"> A private thought.';
+      await page.getByLabel("Your private letter").fill(privateText);
+      await page.getByRole("button", { name: "Back to the shop", exact: false }).click();
+      await page.getByRole("button", { name: "Dear Bangtan", exact: false }).click();
+      await expect(page.getByLabel("Your private letter")).toHaveValue(privateText);
+      await page.getByRole("button", { name: "Fold my letter", exact: true }).click();
+      await expect(page.locator(".ms-message")).toHaveText(privateText);
+      await expect(page.locator("img")).toHaveCount(0);
+      await page.getByRole("button", { name: "Unfold and edit", exact: true }).click();
+      await expect(page.getByLabel("Your private letter")).toHaveValue(privateText);
+      await page.getByRole("button", { name: "Back to the shop", exact: false }).click();
+      await page.getByRole("button", { name: "Dear ARMY", exact: false }).click();
+      await page.getByRole("button", { name: "Pick a message", exact: true }).click();
+      await page.getByRole("button", { name: "Keep this moment", exact: true }).click();
+      await page.getByRole("button", { name: "Moments", exact: false }).click();
+      await expect(page.locator(".ms-memory")).toHaveCount(2);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+      assert.deepEqual(errors, []);
+      assert.deepEqual(requests, []);
+      results.push({ engine: name, width, passed: true });
+      await page.close();
+    }
+    const page = await browser.newPage();
+    await page.setContent(html);
+    await page.getByRole("button", { name: "Step straight inside", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
+    await page.getByRole("button", { name: "Return to the doorway", exact: true }).click();
+    await page.getByRole("button", { name: "Open the door", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "Stay a little while." })).toBeVisible();
+    await page.close();
+  } finally { await browser.close(); }
+}
+await writeFile(new URL("checks.json", output), JSON.stringify(results, null, 2));
+console.log(JSON.stringify({ responsiveJourneysPassed: results.length, entranceAndSkipEngines: 2, pageErrors: 0, networkRequests: 0 }));
