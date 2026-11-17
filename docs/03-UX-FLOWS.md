@@ -110,6 +110,8 @@ Writing is private until the visitor consents and chooses Submit for review. Con
 
 ## Home and Arcade journey study — D020, 2026-11-17
 
+**Review status — D021:** The owner rejected the demonstrated Home/Arcade visual designs and the homepage destination row. This study is review history, not an approved implementation handoff. Home/Arcade redesign is paused until owner references arrive. The accepted emotional roles below remain valid.
+
 Approved emotional roles: Home begins with magical discovery and a warm welcome; Arcade offers playful nostalgia and small surprises. Ocean remains the shared, awe-filled sky; Magic Shop remains the comforting sanctuary. The broad Hybrid Universe choice stays intact. Final art style and exact interface/content choices are still open.
 
 The clickable study is `design/home-arcade-flow.html`. It is separate from the production Next.js pages. Proposed journey:
@@ -125,3 +127,13 @@ Desktop uses the available width: welcome beside the village, and two arcade att
 Motion is brief and user-triggered. Reduced motion skips the handle/record movement while preserving the deliberate capsule-open step. Switching the preference mid-animation settles into the real next preview stage. Leaving during a reveal preserves its selected result and cancels the pending animation. Keyboard focus follows newly available actions; duplicate keeps are prevented. Prototype navigation uses internal Back controls; it does not replace real routes, browser history, QR destinations or production keepsake behavior.
 
 Study copy, colours, object shapes, atmosphere controls and timing are proposed. Review the flow and the meaning of gacha rewards/song choices next, then implement the agreed behavior incrementally in the existing app. Final original illustrations remain a later step.
+
+## Home/Arcade review corrections — D021, 2026-11-17
+
+- **Home:** do not carry forward the three-destination row arrangement. A replacement composition is not selected yet; wait for the owner's images/links.
+- **Arcade:** retain the playful discovery concept as a starting point, while simplifying actions and transitions. Its current visual UI is not approved. No specific replacement gacha sequence has been selected.
+- **DJ Spin / Little Jukebox via a physical QR:** scan → enter Little Jukebox directly → show a randomly selected song. Do not require entering Home/Arcade, choosing the attraction, selecting a mood or pressing another spin/reveal button before the first result. A brief non-blocking reveal may accompany the result; exact motion remains open.
+- **Optional exploration:** visitors can choose a mood or another song when they want. Mood selection should not block QR delivery. A QR preset pool/filter is a proposed implementation choice, not a chosen mood/category or final content roster. Regular-entry presentation can be refined with the references.
+- **Listening:** automatically selecting/showing a song does not automatically play music or open an external listening page. Listening remains an explicit visitor choice.
+
+Only feedback is recorded now. The study, live UI, routes, approved QR registry, backend and write gates are unchanged. Resume visual design after the owner supplies references; no further design variants are requested in this pause.

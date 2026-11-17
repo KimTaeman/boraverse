@@ -155,3 +155,5 @@ Each layer has its own curve, with smoothstep interpolation over logarithmic int
 ## Home direction review — D020, 2026-11-17
 
 The owner agreed to discovery first, with a warm welcome underneath. This supersedes an entrance gate as the proposed Home starting point: arrive in the village immediately, keep Ocean directly accessible, and make the other places recognizable through named semantic controls. Consolidate the earlier hero/portal/featured-band ideas into one coherent environment; avoid repeated invitation sections and a mandatory introductory action. The study places welcome beside the village on desktop and before the village on mobile. Its exact copy, layout, motion and art are proposed, not a production replacement or final artwork approval. See the Home/Arcade journey in `03-UX-FLOWS.md`.
+
+D021 supersedes the study composition described above: the owner does not want Purple Ocean, Magic Shop and Arcade grouped into the demonstrated homepage row. No replacement Home composition is approved. Keep the emotional direction and immediate usable navigation goal, and pause layout redesign until owner references arrive.

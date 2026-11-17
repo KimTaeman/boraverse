@@ -87,3 +87,5 @@ Current refinement: `Our Purple Ocean` and one story line form the small upper z
 ## D020 design study boundaries
 
 `design/home-arcade-flow.html` explores composition and rituals using original CSS shapes and the existing candidate palette. These drawings and the serif/sans treatment do not approve the final illustration style, colours or fonts. Home, Arcade, Magic Shop and Ocean share a universe but retain different emotional roles. Named art layers stay separate from labels, controls, reward text and state. The current live Home/Arcade remain unchanged until this flow is reviewed and implemented.
+
+D021 review: the owner rejected the Home/Arcade study's current visual treatment and homepage destination row. D020 defines emotional intention only; do not treat the existing study palette, object shapes, typography or composition as approved. Visual redesign is paused pending the owner's reference images/links. Arcade retains its general playful premise, with fewer actions and a direct QR-to-song experience.
