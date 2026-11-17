@@ -57,6 +57,7 @@ Configure these variables separately for the intended Preview/Production environ
 | `DATABASE_CA_CERT` | Actual multiline PEM contents from the trusted database CA file, server-only |
 | `OCEAN_HMAC_SECRET` | Existing private HMAC secret, server-only |
 | `OCEAN_WRITE_ENABLED` | `false` |
+| `MAGIC_WRITE_ENABLED` | `false` |
 | `NEXT_PUBLIC_SITE_URL` | Real assigned HTTPS destination once known |
 
 Leave `DATABASE_CA_CERT_PATH` unset on the host; the local absolute path is not portable. Inline `DATABASE_CA_CERT` takes precedence when both are present. TLS verification remains enabled. Do not set `NEXT_E2E` on the host. Never put secret values in commands, source, screenshots or logs. Environment changes require a new deployment to take effect.
@@ -87,8 +88,14 @@ Rate buckets become cleanup-eligible after one day and are deleted during attemp
 
 ## Magic Shop moderation and activation — D018
 
-The reviewed flow is implemented locally. The private migration was applied and recorded on 2026-11-16; public deployment and activation of the default-off `MAGIC_WRITE_ENABLED` gate remain pending. No production publication was performed. Keep Ocean writes disabled independently. Follow `supabase/README.md` for owner-only review commands, migration precautions and rollback-only verification. Only publish after inspecting the full original text; check reports and hide unsuitable published text promptly. There is no public admin route or automatic moderation claim.
+The reviewed flow is implemented locally. The private migration was applied and recorded on 2026-11-16; D019 publishes the reviewed app preview on 2026-11-17 while activation of `MAGIC_WRITE_ENABLED` remains pending. No shared text was published by this rollout. Keep Ocean writes disabled independently. Follow `supabase/README.md` for owner-only review commands, migration precautions and rollback-only verification. Only publish after inspecting the full original text; check reports and hide unsuitable published text promptly. There is no public admin route or automatic moderation claim.
 
 Before public activation, verify schema/history and restricted-role grants, published-only feeds, one controlled pending submission/retry/withdrawal with cleanup, published random draws, authoritative reaction counts, review availability, privacy/retention wording and provider/edge usage limits. Public-empty and unavailable states are deliberate until real reviewed contributions exist. If disabling writes also pauses visitor withdrawal/reporting, the owner can still use the private review tool to hide content. Site retirement requires reviewing exports/deletion of text and security records; bucket cleanup remains opportunistic after one day of successful requests.
 
 Migration rollout verification uses the existing owner connection and the restricted website login, not new roles/services. Follow the post-migration loopback check in `supabase/README.md`; the earlier migration-building rollback test intentionally requires an absent Magic schema and is no longer appropriate on this migrated project. Stop the write-enabled loopback instance after checking; persistent/public gates remain false. The controlled test never publishes synthetic text or edits Ocean records. Public privacy/review availability, provider quotas/ingress controls and a deployed boundary check still precede activation.
+
+## Reviewed Magic Shop website preview — D019, 2026-11-17
+
+The tested Magic Shop source was pushed through the existing GitHub/Vercel production integration to the existing HTTPS address. Production now explicitly sets both `MAGIC_WRITE_ENABLED=false` and `OCEAN_WRITE_ENABLED=false`. The UI can be reviewed publicly: entrance, interior, original letters/fortunes, private writing, local keepsakes/image export, and genuinely empty shared collection/message states. Public submission/reaction/report/withdrawal requests remain refused. Read-only message draws remain available and may update short-lived rate-limit metadata; no shared messages or Ocean lights are created by them.
+
+Do not enable either switch as part of preview deployment or infer final artwork/print approval. Review availability, provider/retention/ingress readiness and the separate controlled deployed-write checks remain activation gates. The owner moderation CLI stays local and excluded from deployment; no public admin interface or extra paid service was introduced.

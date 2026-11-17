@@ -93,3 +93,17 @@ The pre-migration rollback suite passed again before applying version `202611161
 The real HTTP check found and fixed valid-origin rejection on numeric loopback hosts: installed NextURL normalizes the URL hostname to localhost, while the browser's Origin remains numeric. The guard now compares Origin against the incoming Host and request protocol, retaining cross-site rejection and ignoring untrusted forwarded-host claims. New unit cases cover valid numeric Host, wrong host/protocol, spoofed forwarded host and Sec-Fetch-Site cross-site. The real write-off browser boundary now supplies Origin explicitly. The test harness also passes owner configuration explicitly to the moderation subprocess, avoiding inherited restricted credentials.
 
 Validation: lint, TypeScript, all 36 unit tests and production build passed; targeted Magic Shop suites passed 14/14 in Chromium and 14/14 in iPhone WebKit. The whole-site regression was not repeated: the runtime change is limited to Magic's origin guard, with prior full-suite evidence above. The committed check is local HTTP plus real database verification, not a deployed public write test. Artwork and actual phone/print QA remain pending.
+
+## Public write-off preview verification — D019, 2026-11-17
+
+Published the already-tested runtime at source commit `88ba882` through the existing GitHub/Vercel production integration. The hosted Next.js build and TypeScript step passed. No runtime code changed in this release phase, so the source lint/typecheck/36-unit-test/build and 14-per-engine Magic browser evidence above was reused rather than rerunning unchanged local suites.
+
+Live canonical-site verification passed:
+
+- `GET /api/magic` returned real empty published items and `writesEnabled:false`; `GET /api/ocean` returned `writesEnabled:false` and the unchanged pre-deployment total of 5.
+- Valid same-origin Magic submit/react/report/remove requests returned 503 with no-store errors. Foreign Origin returned 403; malformed cursor returned 400. Ocean POST returned 503. No shared message or contribution was accepted.
+- Chromium at 390×844 and 1440×1000, plus mobile WebKit at 390×844: entrance/interior navigation, no horizontal overflow, original letter, private writing/folding, disabled public submission even with consent selected, device-local save, decoded 1080×1920 PNG, genuinely empty published collection/message draw, and approved QR entry all passed. No-JavaScript Magic fallback and Privacy access passed separately.
+- The first desktop probe hit `ERR_NETWORK_CHANGED` while fetching the collection and correctly showed the visitor retry state; direct verification and the final complete run passed without network recovery or page errors. No application change was needed for that environment failure.
+- `npm run --silent qr:check -- https://little-boraverse.vercel.app`: all eight approved routes passed exact copy, slash handling and destination checks, with no missing family or audit errors.
+
+Live reports and nine screenshots are stored only in ignored `out/magic-shop-release/`. Room screenshots wait for SVG decoding so they show settled artwork. Local browser contexts were discarded; test private text/images were not uploaded. The read-only ARMY draws use normal short-lived rate-limit accounting but publish no text. Physical phone saving/screen-reader/print checks, final artwork and public write activation remain pending. A passing website audit does not freeze the printed destination.
