@@ -151,3 +151,7 @@ Ready has no invitation, footer, or repeating explanatory copy. State messages r
 | 5000 | 220 desktop / 150 visible mobile | Luminous whale stardust, nebula, 48 ambient dust points and figure rim lighting |
 
 Each layer has its own curve, with smoothstep interpolation over logarithmic intervals. No permanent total is inferred from this artistic map: the displayed number comes only from the existing API. The paired whale-body mask and constellation image are replaceable manifest slots. `e2e/capture-ocean.mjs` saves before/after, all five tiers, information, submitting/failure/offline/duplicate states, success recordings and responsive checks in `out/ocean-cinematic/` using local fixtures only.
+
+## Home direction review — D020, 2026-11-17
+
+The owner agreed to discovery first, with a warm welcome underneath. This supersedes an entrance gate as the proposed Home starting point: arrive in the village immediately, keep Ocean directly accessible, and make the other places recognizable through named semantic controls. Consolidate the earlier hero/portal/featured-band ideas into one coherent environment; avoid repeated invitation sections and a mandatory introductory action. The study places welcome beside the village on desktop and before the village on mobile. Its exact copy, layout, motion and art are proposed, not a production replacement or final artwork approval. See the Home/Arcade journey in `03-UX-FLOWS.md`.

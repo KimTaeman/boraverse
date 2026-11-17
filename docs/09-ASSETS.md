@@ -67,3 +67,9 @@ PNG masters in `assets/ocean/generated-v1/`, their prompts/metadata and earlier 
 ## Magic Shop replaceable slots — D018
 
 `art.magic.sky` and `art.magic.interior` point to original lightweight SVGs in `public/placeholders/magic/`. The Server Component passes named CSS properties to the scene. Door, envelope, mirror, stationery, flowers and jar are CSS stand-ins independent of copy and semantic buttons. Replace backgrounds through `src/content/art.ts`; replace each object illustration in its existing named component/style without changing navigation coordinates. Essential labels and shared text never live inside artwork. Final exterior/interior illustrations, individual object art, stationery embellishments, palette and typography remain open for later owner review. No reference-board artwork or song lyrics were copied into production assets.
+
+## Home/Arcade flow-study slots — D020
+
+The study adds only original CSS stand-ins, no raster generation or borrowed reference artwork. Named layers cover `home-village`, `home-magic-shop`, `home-arcade`, `home-ocean-path`, `arcade-gacha`, `arcade-jukebox`, `arcade-capsule` and `arcade-reward`. They are review labels, not new production manifest entries. Final implementation should map the approved illustrations to named manifest slots and retain semantic controls separately.
+
+Artist work remains provisional: desktop and mobile village compositions, sky/hills/coastline/foreground layers, building exteriors, arcade interior atmosphere, gacha shell/handle/capsule stages, jukebox/record, and final reward/card illustrations. Generic keepsake samples do not authorize member portraits, mascots or official logos. No numbers or essential copy should be baked into these images.

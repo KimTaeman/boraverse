@@ -3,9 +3,9 @@
 **Status:** Functional design tokens and art direction are **proposed v1**, not final illustrations. The owner will supply original artwork later. Implement with swap-friendly placeholders.
 
 ## Visual architecture
-- Home: enchanted twilight village; miniature illuminated Magic Shop doorway, tiny flowers, stars, background coastline.
+- Home: D020 leads with magical discovery and a warm welcome; enchanted twilight village, illuminated Magic Shop doorway, playful arcade and a path toward the coastline.
 - Ocean: cinematic purple night, layered indigo sky, gentle waves and bounded glowing lights.
-- Arcade: pastel Y2K/pixel world, rounded gacha machines, playful UI.
+- Arcade: D020 selects playful nostalgia and small surprises, with recognizable gacha/jukebox objects. Pastel, Y2K and pixel treatments remain illustration options, not a locked final style.
 - Magic Shop: warm paper, illustrated envelopes, vintage scrapbook warmth.
 - Garden P1: snow-to-blossom illustrated seasons, slower calmer motion.
 - All rooms share typography, button semantics, navigation, responsive grid and brand tokens.
@@ -83,3 +83,7 @@ Current refinement: `Our Purple Ocean` and one story line form the small upper z
 - Instagram Story export 1080×1920, safe margins; no unsupported social claims.
 - Export may use Canvas or SVG-to-PNG client-side; support file download fallback and descriptive alt/copy text.
 - Footer on export: `Unofficial ARMY-made keepsake · Bangkok 2026`.
+
+## D020 design study boundaries
+
+`design/home-arcade-flow.html` explores composition and rituals using original CSS shapes and the existing candidate palette. These drawings and the serif/sans treatment do not approve the final illustration style, colours or fonts. Home, Arcade, Magic Shop and Ocean share a universe but retain different emotional roles. Named art layers stay separate from labels, controls, reward text and state. The current live Home/Arcade remain unchanged until this flow is reviewed and implemented.

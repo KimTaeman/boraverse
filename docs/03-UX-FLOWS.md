@@ -5,7 +5,7 @@
 ```text
 Physical freebie QR /c/:family/:variant → matching reveal → reward → Enter Boraverse
                                                      ↘ skip to village
-Root / → first-time optional door welcome → / (Village hub)
+Root / → Village hub immediately (D020; no entrance prerequisite)
 Village ↔ /ocean ↔ share souvenir
        ↔ /arcade → /arcade/gacha | /arcade/music
        ↔ /magic-shop → /magic-shop/fortune | /magic-shop/letters
@@ -107,3 +107,21 @@ This supersedes the study's implementation-pending notes above. `/magic-shop` no
 Dear Bangtan browses published server records in bounded pages; agreement is an explicit desired state confirmed by the server, never a local pretend counter. Dear ARMY randomly draws a published message excluding the visitor's own and the immediately previous message; an empty pool is stated honestly. No sample messages enter the production feed.
 
 Writing is private until the visitor consents and chooses Submit for review. Confirmation says pending review only after acknowledgement. An unresolved shared request retains its exact key and body for explicit retry, including after reload; it is never automatically reposted. My shared words provides withdrawal, and received public content provides reporting. Loading, empty, unavailable, offline, storage failure, encoding failure and retry retain usable navigation and private keepsakes. Public mutations are disabled until the separate Magic gate is enabled.
+
+## Home and Arcade journey study — D020, 2026-11-17
+
+Approved emotional roles: Home begins with magical discovery and a warm welcome; Arcade offers playful nostalgia and small surprises. Ocean remains the shared, awe-filled sky; Magic Shop remains the comforting sanctuary. The broad Hybrid Universe choice stays intact. Final art style and exact interface/content choices are still open.
+
+The clickable study is `design/home-arcade-flow.html`. It is separate from the production Next.js pages. Proposed journey:
+
+1. **Arrive in the village:** one short welcome, immediate Purple Ocean action, a warm Magic Shop doorway, playful arcade building and a shoreline path. The buildings and their readable controls are independent. No forced door opening, onboarding, quest or required reading before choosing a destination. Memory Garden is clearly still growing.
+2. **Choose a place:** Ocean and Magic Shop controls show explicit handoff views in this study, not simulated versions of their existing experiences. Arcade opens its own small room with two recognizable attractions and short descriptions.
+3. **Gacha ritual:** choose the machine → deliberately turn its handle → capsule arrives → choose Open my capsule → reveal one sample keepsake → optionally keep it in the preview, draw again or return. There are no coins, paid mechanics, rarity pressure, quotas or mandatory collection goals. Leaving and returning preserves the current result until another draw is deliberately requested.
+4. **Jukebox ritual:** choose a mood or surprise → activate the jukebox → a short record motion → reveal a song card → optionally follow its official listening link, keep the preview card or choose another. No embedded music/autoplay. The two existing curated songs and seven existing generic gacha outcomes are flow samples, not a final content roster or member-art decision.
+5. **Carry a discovery:** the preview tray demonstrates optional keeping and revisiting results, with explicit in-memory wording. No product storage, file export, API, contribution or shared-message write is performed. Closing/reloading clears kept items. Official listening links leave only on an explicit visitor click.
+
+Desktop uses the available width: welcome beside the village, and two arcade attractions side by side. Phones put the welcome before two smaller village portals and stack the arcade attractions. There is no fixed phone-sized preview frame. Controls wrap, art stays inside its columns, text remains readable, and there is one clear primary action per stage.
+
+Motion is brief and user-triggered. Reduced motion skips the handle/record movement while preserving the deliberate capsule-open step. Switching the preference mid-animation settles into the real next preview stage. Leaving during a reveal preserves its selected result and cancels the pending animation. Keyboard focus follows newly available actions; duplicate keeps are prevented. Prototype navigation uses internal Back controls; it does not replace real routes, browser history, QR destinations or production keepsake behavior.
+
+Study copy, colours, object shapes, atmosphere controls and timing are proposed. Review the flow and the meaning of gacha rewards/song choices next, then implement the agreed behavior incrementally in the existing app. Final original illustrations remain a later step.

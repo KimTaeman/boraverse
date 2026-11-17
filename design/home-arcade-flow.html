@@ -1,0 +1,184 @@
+<div id="home-arcade-flow" aria-label="Home and Arcade journey preview">
+  <p class="hf-caption">Flow study · sample rewards · illustration style open</p>
+  <section class="hf-product" aria-label="The Little Boraverse village and arcade">
+    <header class="hf-top"><button type="button" class="hf-brand cursor-interaction" data-go="home">The Little Boraverse</button><button type="button" class="hf-quiet cursor-interaction" data-go="keepsakes">Preview keepsakes <span id="hf-count">0</span></button></header>
+    <div id="hf-screen"></div>
+    <p id="hf-status" class="hf-status" role="status" aria-live="polite"></p>
+    <footer class="hf-footer">Unofficial ARMY-made flow study. Kept moments last only in this preview.</footer>
+  </section>
+</div>
+<style>
+#home-arcade-flow { width:100%; }
+#home-arcade-flow * { box-sizing:border-box; }
+#home-arcade-flow .hf-caption { margin:0 0 12px; font:400 14px/1.5 system-ui,sans-serif; text-align:center; color:light-dark(#62536c,#ddcde7); }
+#home-arcade-flow .hf-product { --hf-ink:#fff5e9; --hf-muted:#e1d1ea; --hf-paper:#fff5e9; --hf-night:#21182f; --hf-lilac:#c1a1e5; --hf-glow:#edcc91; --hf-bloom:.38; color:var(--hf-ink); background:radial-gradient(ellipse at 70% 12%,color-mix(in srgb,#68518a calc(var(--hf-bloom) * 100%),transparent),transparent 60%),var(--hf-night); font:400 16px/1.6 system-ui,sans-serif; overflow:clip; }
+#home-arcade-flow .hf-top { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding:16px 24px; }
+#home-arcade-flow button,#home-arcade-flow select,#home-arcade-flow a { font:inherit; }
+#home-arcade-flow button { min-height:44px; max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+#home-arcade-flow button:focus-visible,#home-arcade-flow a:focus-visible,#home-arcade-flow select:focus-visible { outline:3px solid var(--hf-glow); outline-offset:4px; }
+#home-arcade-flow button:disabled { opacity:.65; }
+#home-arcade-flow .hf-brand { color:var(--hf-paper); font:italic 19px/1.4 Georgia,serif; background:none; border:0; text-align:left; padding:4px 0; }
+#home-arcade-flow .hf-quiet { color:var(--hf-muted); background:none; border:0; padding:4px; font-size:14px; text-decoration:underline; text-underline-offset:4px; }
+#home-arcade-flow .hf-content { padding:24px; max-width:1200px; margin:auto; }
+#home-arcade-flow h1 { font:400 clamp(32px,5.3vw,64px)/1.12 Georgia,serif; letter-spacing:-.035em; margin:10px 0 16px; overflow-wrap:anywhere; }
+#home-arcade-flow h2 { font:400 28px/1.2 Georgia,serif; margin:12px 0; }
+#home-arcade-flow h3 { font:400 22px/1.3 Georgia,serif; margin:10px 0; }
+#home-arcade-flow p { margin:10px 0; }
+#home-arcade-flow .hf-eyebrow { color:var(--hf-glow); font-size:12px; letter-spacing:.12em; text-transform:uppercase; }
+#home-arcade-flow .hf-sub { color:var(--hf-muted); max-width:36ch; }
+#home-arcade-flow .hf-primary { border:1px solid var(--hf-paper); border-radius:99px; padding:12px 22px; color:#30213d; background:var(--hf-paper); }
+#home-arcade-flow .hf-secondary { border:1px solid #c5a8d1; border-radius:99px; padding:10px 18px; color:var(--hf-paper); background:none; }
+#home-arcade-flow .hf-actions { display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center; margin:20px 0; }
+#home-arcade-flow .hf-back { display:block; color:var(--hf-muted); background:none; border:0; padding:6px 0; margin-bottom:20px; text-align:left; }
+#home-arcade-flow .hf-home-layout { display:grid; gap:24px; align-items:center; }
+#home-arcade-flow .hf-intro { max-width:30rem; }
+#home-arcade-flow .hf-intro .hf-primary { margin:16px 0; }
+#home-arcade-flow .hf-village { position:relative; isolation:isolate; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 14px; padding:38px 4px 0; }
+#home-arcade-flow .hf-village::before { content:""; z-index:-1; position:absolute; inset:0; background:radial-gradient(circle at 12% 9%,#f2d49d 0 2px,transparent 3px),radial-gradient(circle at 82% 15%,#ddc2eb 0 2px,transparent 3px),radial-gradient(circle at 49% 2%,#ddc2eb 0 1px,transparent 2px),radial-gradient(ellipse at 50% 80%,#6e54875c,transparent 70%); }
+#home-arcade-flow .hf-place { text-align:center; min-width:0; }
+#home-arcade-flow .hf-place-art { display:grid; grid-template-columns:minmax(0,1fr); place-items:end center; height:200px; margin-bottom:18px; }
+#home-arcade-flow .hf-shop { position:relative; width:132px; max-width:100%; height:150px; background:#7e6286; border:4px solid #bda0b5; border-bottom:9px solid #a185a1; }
+#home-arcade-flow .hf-shop::before { content:""; position:absolute; width:116%; height:55px; left:-8%; top:-52px; background:#a2809f; clip-path:polygon(50% 0,100% 85%,100% 100%,0 100%,0 85%); }
+#home-arcade-flow .hf-shop::after { content:""; position:absolute; width:48px; height:88px; bottom:0; left:calc(50% - 24px); border:5px solid #d6b6c9; border-bottom:0; border-radius:25px 25px 0 0; background:linear-gradient(100deg,#f0cd95,#fff0d0); box-shadow:0 0 35px color-mix(in srgb,var(--hf-glow) 50%,transparent); }
+#home-arcade-flow .hf-arcade-building { position:relative; width:145px; max-width:100%; height:155px; border:4px solid #c3a7dd; border-bottom:9px solid #9276ab; background:#715681; border-radius:38px 38px 2px 2px; }
+#home-arcade-flow .hf-arcade-building::before { content:"✦ ✦ ✦"; display:block; color:var(--hf-glow); text-align:center; padding-top:15px; letter-spacing:4px; }
+#home-arcade-flow .hf-arcade-building::after { content:""; position:absolute; height:78px; width:56px; left:calc(50% - 28px); bottom:0; background:#a4b9ca; border:5px solid #d3bbdd; border-bottom:0; box-shadow:0 0 24px #d9a8ef55; }
+#home-arcade-flow .hf-shore { grid-column:1/-1; position:relative; min-height:94px; padding-top:36px; text-align:center; color:var(--hf-muted); background:repeating-radial-gradient(ellipse at 50% 180%,transparent 0 15px,#baa0e027 16px 18px,transparent 19px 30px); }
+#home-arcade-flow .hf-shore::before { content:""; position:absolute; left:38%; top:-25px; width:24%; height:55px; background:#dbb2d537; clip-path:polygon(42% 0,58% 0,100% 100%,0 100%); }
+#home-arcade-flow .hf-small { font-size:14px; color:var(--hf-muted); }
+#home-arcade-flow .hf-garden { margin:20px 0 0; color:var(--hf-muted); font-size:14px; }
+#home-arcade-flow .hf-centered { text-align:center; }
+#home-arcade-flow .hf-centered .hf-sub { margin-inline:auto; }
+#home-arcade-flow .hf-arcade-floor { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px; align-items:start; max-width:900px; margin:28px auto 0; }
+#home-arcade-flow .hf-attraction { display:flex; flex-direction:column; align-items:center; text-align:center; min-width:0; }
+#home-arcade-flow .hf-attraction p { max-width:26ch; color:var(--hf-muted); }
+#home-arcade-flow .hf-machine { position:relative; width:200px; max-width:100%; height:275px; margin:24px auto; }
+#home-arcade-flow .hf-machine.gacha { border-radius:90px 90px 25px 25px; border:7px solid #d0c0e9; background:linear-gradient(#a7c8ce 0 53%,#c29bd1 54%); box-shadow:0 0 45px color-mix(in srgb,var(--hf-glow) 12%,transparent); }
+#home-arcade-flow .hf-machine.gacha::before { content:""; position:absolute; inset:14px 12px 123px; border:3px solid #f7e4f0; border-radius:70px 70px 25px 25px; background:radial-gradient(circle at 25% 65%,#e4a7cd 0 19px,transparent 20px),radial-gradient(circle at 65% 30%,#dec686 0 20px,transparent 21px),radial-gradient(circle at 75% 79%,#b5a0d4 0 20px,transparent 21px),radial-gradient(circle at 32% 18%,#ded5ee 0 17px,transparent 18px),#658b9f; }
+#home-arcade-flow .hf-handle { position:absolute; width:47px; height:47px; left:calc(50% - 23px); bottom:64px; border-radius:50%; background:#f8e4ca; border:6px solid #887195; }
+#home-arcade-flow .hf-handle::after { content:""; position:absolute; width:33px; height:10px; top:12px; left:-2px; background:#725680; border-radius:5px; transform:rotate(-30deg); }
+#home-arcade-flow .hf-machine.gacha::after { content:""; position:absolute; width:73px; height:30px; left:calc(50% - 36px); bottom:13px; background:#3b2d4b; border-radius:25px 25px 6px 6px; }
+#home-arcade-flow .hf-machine.jukebox { border:8px double #f1d499; border-radius:100px 100px 20px 20px; background:linear-gradient(120deg,#a581bd,#60416f); }
+#home-arcade-flow .hf-record { position:absolute; width:115px; height:115px; left:calc(50% - 57px); top:25px; border-radius:50%; background:repeating-radial-gradient(circle,#362746 0 5px,#4f3b5f 6px 7px); }
+#home-arcade-flow .hf-record::after { content:""; position:absolute; inset:40px; background:#e7c496; border:10px solid #b490bf; border-radius:50%; }
+#home-arcade-flow .hf-machine.jukebox::after { content:""; position:absolute; inset:164px 32px 18px; border-radius:15px; background:repeating-linear-gradient(0deg,#dac6d3 0 4px,transparent 5px 11px); }
+#home-arcade-flow .hf-stage { max-width:720px; margin:auto; }
+#home-arcade-flow .hf-stage-layout { display:grid; gap:12px 32px; align-items:center; }
+#home-arcade-flow .hf-capsule { position:relative; width:140px; height:140px; margin:40px auto; border-radius:50%; background:linear-gradient(#d0b5ec 0 49%,#fff0d5 50%); border:5px solid #edd9f1; box-shadow:0 12px 30px #100c1d55; }
+#home-arcade-flow .hf-capsule::after { content:"✦"; position:absolute; inset:29px; display:grid; place-items:center; color:#684979; font-size:38px; }
+#home-arcade-flow .hf-ticket { color:#30213d; background:var(--hf-paper); padding:30px 24px; border-radius:3px 20px 3px 3px; text-align:center; margin:24px auto; max-width:500px; box-shadow:6px 6px #a78bb8; overflow-wrap:anywhere; }
+#home-arcade-flow .hf-ticket p { max-width:34ch; margin-inline:auto; }
+#home-arcade-flow .hf-ticket .hf-small { color:#6b5278; }
+#home-arcade-flow .hf-ticket-mark { width:65px; height:65px; margin:0 auto 20px; background:#b291d3; clip-path:polygon(50% 0,63% 34%,100% 50%,63% 63%,50% 100%,36% 64%,0 50%,36% 35%); }
+#home-arcade-flow .hf-mood { display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin:20px 0; }
+#home-arcade-flow select { min-height:44px; padding:10px 14px; max-width:100%; color:#30213d; background:var(--hf-paper); border:1px solid #b49bca; border-radius:4px; }
+#home-arcade-flow .hf-listening { color:#45304f; text-underline-offset:4px; display:inline-flex; align-items:center; min-height:44px; }
+#home-arcade-flow .hf-memory { border-bottom:1px solid #dac3e442; padding:18px 0; }
+#home-arcade-flow .hf-status { color:var(--hf-glow); margin:0 auto; padding:0 24px; max-width:1200px; text-align:center; }
+#home-arcade-flow .hf-footer { padding:24px; text-align:center; color:var(--hf-muted); font-size:13px; }
+#home-arcade-flow .hf-handoff { max-width:600px; margin:20px auto; text-align:center; }
+#home-arcade-flow .hf-handoff-art { height:180px; display:grid; place-items:center; margin:24px 0; background:radial-gradient(ellipse,#9870be55,transparent 65%); }
+#home-arcade-flow .hf-is-turning .hf-handle { animation:hf-turn .8s ease-in-out; }
+#home-arcade-flow .hf-is-finding .hf-record { animation:hf-spin .8s ease-in-out; }
+#home-arcade-flow .hf-drop { animation:hf-drop .4s ease-out; }
+@keyframes hf-turn { 0% {transform:rotate(0)} 100% {transform:rotate(360deg)} }
+@keyframes hf-spin { from {transform:rotate(0)} to {transform:rotate(180deg)} }
+@keyframes hf-drop { from {transform:translateY(-25px)} to {transform:translateY(0)} }
+@media(min-width:900px) { #home-arcade-flow .hf-home-layout { grid-template-columns:.85fr 1.3fr; gap:52px; } #home-arcade-flow .hf-place-art { height:265px; } #home-arcade-flow .hf-village { padding-top:55px; gap:35px; } #home-arcade-flow .hf-shop { width:175px; height:190px; } #home-arcade-flow .hf-arcade-building { width:185px; height:195px; } #home-arcade-flow .hf-stage-layout { grid-template-columns:1fr 1.15fr; } #home-arcade-flow .hf-content { padding:36px 48px; } }
+@media(max-width:520px) { #home-arcade-flow .hf-content { padding:20px 18px; } #home-arcade-flow .hf-top { padding:12px 18px; } #home-arcade-flow .hf-brand { font-size:17px; } #home-arcade-flow .hf-arcade-floor { grid-template-columns:1fr; gap:28px; } #home-arcade-flow .hf-quiet { font-size:13px; } }
+@media(prefers-reduced-motion:reduce) { #home-arcade-flow .hf-is-turning .hf-handle,#home-arcade-flow .hf-is-finding .hf-record,#home-arcade-flow .hf-drop { animation:none; } }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('home-arcade-flow');
+  const screen = root.querySelector('#hf-screen');
+  const live = root.querySelector('#hf-status');
+  const media = matchMedia('(prefers-reduced-motion: reduce)');
+  const rewards = [
+    ['Little Star','A little sparkle for the path ahead.'], ['Purple Cloud','A soft place to pause and breathe.'],
+    ['Pocket Moon','A quiet glow for your evening.'], ['Lucky Blossom','A tiny reminder that good things grow.'],
+    ['Golden Ticket','An invitation to follow your curiosity.'], ['Rainbow Ribbon','A colorful twist for an ordinary day.'],
+    ['Dreaming Lantern','A warm light to carry with you.']
+  ];
+  const songs = [
+    {title:'Spring Day',mood:'comfort',text:'A reflective song for a quiet moment.',url:'https://www.youtube.com/watch?v=xEeFrLSkMm8'},
+    {title:'Dynamite',mood:'energy',text:'A bright pick for a burst of energy.',url:'https://www.youtube.com/watch?v=gdZLi9oWNZg'}
+  ];
+  const allowed = ['home','arcade','gacha','music','keepsakes','ocean','magic'];
+  let view = 'home', backFromKeepsakes = 'home', mood = 'surprise';
+  let gacha = {phase:'ready',item:null}, music = {phase:'ready',item:null};
+  const kept = [];
+  let sequence = 0;
+  let pending = null, timer;
+  function machine(kind, active = false) { return `<div class="hf-machine ${kind} ${active ? kind === 'gacha' ? 'hf-is-turning' : 'hf-is-finding' : ''}" data-art-layer="arcade-${kind}" aria-hidden="true">${kind === 'gacha' ? '<span class="hf-handle"></span>' : '<span class="hf-record"></span>'}</div>`; }
+  function button(label, action, primary = false, disabled = false, focus = false) { return `<button type="button" class="${primary ? 'hf-primary' : 'hf-secondary'} cursor-interaction" data-action="${action}" ${disabled ? 'disabled' : ''} ${focus ? 'data-focus' : ''}>${label}</button>`; }
+  function back(destination, label) { return `<button type="button" class="hf-back cursor-interaction" data-go="${destination}" data-focus>← ${label}</button>`; }
+  function choose(items) { const value = new Uint32Array(1); crypto.getRandomValues(value); return items[value[0] % items.length]; }
+  function remember() { if (window.openai?.setWidgetState) window.openai.setWidgetState({modelContent:{view,gacha:gacha.item?.title || null,song:music.item?.title || null},privateContent:null}).catch(() => {}); }
+  function title(name) { return `<p class="hf-eyebrow">Bangtan Arcade</p><h1>${name}</h1>`; }
+  function render() {
+    root.querySelector('#hf-count').textContent = kept.length;
+    screen.setAttribute('aria-busy',pending ? 'true' : 'false');
+    let content = '';
+    if (view === 'home') content = `<div class="hf-home-layout"><div class="hf-intro"><p class="hf-eyebrow">Bangkok 2026 · A little world for ARMY</p><h1>A little magic found you.</h1><p class="hf-sub">Wander a little. Find something that feels like you.</p>${button('Visit the Purple Ocean','ocean',true,false,true)}<p class="hf-small">Come as you are.</p></div><div class="hf-village" data-art-layer="home-village"><div class="hf-place"><div class="hf-place-art" aria-hidden="true"><div class="hf-shop" data-art-layer="home-magic-shop"></div></div>${button('Magic Shop','magic')}<p class="hf-small">A little comfort</p></div><div class="hf-place"><div class="hf-place-art" aria-hidden="true"><div class="hf-arcade-building" data-art-layer="home-arcade"></div></div>${button('Bangtan Arcade','arcade')}<p class="hf-small">A little play</p></div><div class="hf-shore" data-art-layer="home-ocean-path">A shared sky, just beyond the village.</div></div></div><p class="hf-garden">Memory Garden · Still growing</p>`;
+    if (view === 'arcade') content = `${back('home','Back to the village')}<div class="hf-centered">${title('A little play goes a long way.')}<p class="hf-sub">Pick whatever makes you curious.</p></div><div class="hf-arcade-floor"><div class="hf-attraction">${machine('gacha')}<h2>Little Surprise Gacha</h2><p>Turn the handle. Unwrap a tiny discovery.</p>${button('Try the gacha','gacha',true)}</div><div class="hf-attraction">${machine('jukebox')}<h2>The Little Jukebox</h2><p>A song for the mood you brought with you.</p>${button('Find my song','music')}</div></div><p class="hf-small hf-centered">Always free. No rush.</p>`;
+    if (view === 'gacha') {
+      content = `${back('arcade','Back to the arcade')}<div class="hf-centered">${title(gacha.phase === 'revealed' ? 'Look what found you.' : 'A little surprise is waiting.')}<p class="hf-sub">A turn, a little wonder, something to carry away.</p></div><div class="hf-stage">`;
+      if (gacha.phase === 'ready' || gacha.phase === 'turning') content += `<div class="hf-centered">${machine('gacha',gacha.phase === 'turning')}${button(gacha.phase === 'turning' ? 'Your capsule is on its way…' : 'Turn the handle','turn',true,gacha.phase === 'turning')}</div>`;
+      if (gacha.phase === 'capsule') content += `<div class="hf-centered"><div class="hf-capsule hf-drop" data-art-layer="arcade-capsule" aria-hidden="true"></div><p>Your little capsule is here.</p>${button('Open my capsule','open',true)}</div>`;
+      if (gacha.phase === 'revealed') content += ticket(gacha.item) + `<div class="hf-actions">${keepButton(gacha.item)}${button('Another little surprise','again')}</div>`;
+      content += '<p class="hf-small hf-centered">Seven sample keepsakes. Every draw is free.</p></div>';
+    }
+    if (view === 'music') {
+      content = `${back('arcade','Back to the arcade')}<div class="hf-centered">${title('Let a song find you.')}<p class="hf-sub">Bring your mood. Leave with a little melody.</p></div><div class="hf-stage"><div class="hf-stage-layout"><div>${machine('jukebox',music.phase === 'finding')}</div><div class="hf-centered">`;
+      if (music.phase !== 'revealed') content += `<div class="hf-mood"><label for="hf-mood">Your mood</label><select id="hf-mood" ${music.phase === 'finding' ? 'disabled' : ''}><option value="surprise" ${mood === 'surprise' ? 'selected' : ''}>Surprise me</option><option value="comfort" ${mood === 'comfort' ? 'selected' : ''}>Comfort</option><option value="energy" ${mood === 'energy' ? 'selected' : ''}>Energy</option></select></div>${button(music.phase === 'finding' ? 'Finding your little melody…' : 'Let a song find me','pick',true,music.phase === 'finding')}`;
+      else content += ticket(music.item) + `<div class="hf-actions">${keepButton(music.item)}${button('Find another song','another-song')}</div>`;
+      content += '</div></div><p class="hf-small hf-centered">Two songs for this flow study. No autoplay.</p></div>';
+    }
+    if (view === 'keepsakes') content = `${back(backFromKeepsakes,'Back to exploring')}<div class="hf-stage"><p class="hf-eyebrow">Your little discoveries</p><h1>Kept for a moment.</h1><p class="hf-sub">These stay only in this preview.</p>${kept.length ? kept.map(item => `<article class="hf-memory"><h2>${item.title}</h2><p>${item.text}</p></article>`).join('') : '<p>Nothing kept in this preview yet.</p>'}</div>`;
+    if (view === 'ocean' || view === 'magic') content = `${back('home','Back to the village')}<div class="hf-handoff"><p class="hf-eyebrow">Village destination</p><h1>${view === 'ocean' ? 'Our Purple Ocean' : 'Magic Shop'}</h1><div class="hf-handoff-art" aria-hidden="true">${view === 'magic' ? '<div class="hf-shop"></div>' : '<span style="font-size:64px;color:var(--hf-glow)">✦</span>'}</div><p>${view === 'ocean' ? 'A shared sky. Every little light carries a story.' : 'A warm doorway. A little room to feel understood.'}</p><p class="hf-small">Connection point to the existing experience. This study stays here.</p>${button('Back to the village','home',true)}</div>`;
+    screen.innerHTML = `<div class="hf-content" data-view="${view}">${content}</div>`;
+  }
+  function ticket(item) { return `<article class="hf-ticket"><div class="hf-ticket-mark" data-art-layer="arcade-reward" aria-hidden="true"></div><h2>${item.title}</h2><p>${item.text}</p>${item.url ? `<a class="hf-listening" href="${item.url}" target="_blank" rel="noopener noreferrer">Listen on official YouTube ↗</a>` : ''}</article>`; }
+  function keepButton(item) { const exists = kept.some(value => value.id === item.id); return button(exists ? 'Kept in this preview' : 'Keep this little moment','keep',true,exists); }
+  function focusControl(action) { queueMicrotask(() => screen.querySelector('[data-action="'+action+'"]')?.focus({preventScroll:true})); }
+  function focusAction() { queueMicrotask(() => screen.querySelector('[data-focus]')?.focus({preventScroll:true})); }
+  function go(next) { if (!allowed.includes(next)) return; if (pending) pending(); if (next === 'keepsakes' && view !== 'keepsakes') backFromKeepsakes = view; view = next; live.textContent = ''; render(); focusAction(); remember(); }
+  function animate(finish) {
+    pending = () => { clearTimeout(timer); pending = null; finish(); render(); if (view === "gacha") focusControl("open"); if (view === "music") focusControl("keep"); };
+    if (media.matches) pending(); else { render(); timer = setTimeout(() => pending?.(), 850); }
+  }
+  root.addEventListener('click', event => {
+    const control = event.target.closest('button'); if (!control || control.disabled) return;
+    const action = control.dataset.action;
+    if (control.dataset.go) { go(control.dataset.go); return; }
+    if (allowed.includes(action)) { go(action); return; }
+    if (action === 'turn' && gacha.phase === 'ready') {
+      const selected = choose(rewards); gacha = {phase:'turning',item:{id:"preview-" + ++sequence,title:selected[0],text:selected[1]}};
+      animate(() => {gacha.phase = 'capsule';live.textContent = 'Your capsule is ready to open.';});
+    }
+    if (action === 'open') { gacha.phase = 'revealed'; live.textContent = 'Your little surprise is ready.'; render(); focusControl('keep'); }
+    if (action === 'again') { gacha = {phase:'ready',item:null}; live.textContent = ''; render(); focusControl('turn'); }
+    if (action === 'pick' && music.phase === 'ready') {
+      const options = mood === 'surprise' ? songs : songs.filter(song => song.mood === mood); const selected = choose(options);
+      music = {phase:'finding',item:{id:"preview-" + ++sequence,title:selected.title+' · BTS',text:selected.text,url:selected.url}};
+      animate(() => {music.phase = 'revealed';live.textContent = 'Your song is ready. Listening is your choice.';});
+    }
+    if (action === 'another-song') { music = {phase:'ready',item:null}; live.textContent = ''; render(); queueMicrotask(() => screen.querySelector('#hf-mood')?.focus()); }
+    if (action === 'keep') { const item = view === 'music' ? music.item : gacha.item; if (item && !kept.some(value => value.id === item.id)) kept.push(item); live.textContent = 'Kept in this preview only.'; render(); focusControl(view === 'music' ? 'another-song' : 'again'); }
+    remember();
+  });
+  root.addEventListener('change', event => { if (event.target.id === 'hf-mood' && ['surprise','comfort','energy'].includes(event.target.value)) mood = event.target.value; });
+  media.addEventListener('change', () => { if (media.matches && pending) pending(); });
+  function restore(state) { const next = state?.modelContent?.view; if (allowed.includes(next) && !pending) {view = next; render();} }
+  restore(window.openai?.widgetState); render();
+  window.addEventListener('openai:set_globals', event => restore(event.detail?.globals?.widgetState));
+  if (globalThis.Tweak) {
+    const appearance = {accent:'#edcc91',glow:.38};
+    const product = root.querySelector('.hf-product');
+    const tweak = new Tweak({container:product,onChange:() => {product.style.setProperty('--hf-glow',appearance.accent);product.style.setProperty('--hf-bloom',appearance.glow);}});
+    tweak.addColorPicker(appearance,'accent',{label:'Lantern accent',reference:'--hf-glow'});
+    tweak.addSlider(appearance,'glow',{label:'Atmosphere glow',min:0,max:1,step:.05,reference:'--hf-bloom'});
+  }
+})();
+</script>
